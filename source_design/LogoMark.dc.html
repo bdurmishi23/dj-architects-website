@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @keyframes dj-groove-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  </style>
+</helmet>
+<svg viewBox="16 4 76 84" width="{{ w }}" height="{{ h }}" fill="none" style="display:block" onMouseEnter="{{ onEnter }}" onMouseLeave="{{ onLeave }}">
+  <g stroke="{{ color }}" stroke-width="{{ stroke }}" stroke-linejoin="miter">
+    <path d="M20 72 V16 H48 A28 28 0 0 1 48 72 Z"></path>
+    <path d="M88 8 V64 A20 20 0 0 1 68 84" stroke-linecap="butt"></path>
+  </g>
+  <g stroke="{{ color }}" stroke-width="{{ grooveStroke }}" stroke-linecap="butt" style="{{ grooveStyle }}">
+    <sc-if value="{{ showFull }}" hint-placeholder-val="{{ true }}">
+      <path d="M50.60 31.77 A12.5 12.5 0 0 1 50.60 56.23"></path>
+      <path d="M51.33 28.35 A16 16 0 0 1 51.33 59.65"></path>
+      <path d="M52.05 24.93 A19.5 19.5 0 0 1 52.05 63.07"></path>
+      <path d="M52.99 20.53 A24 24 0 0 1 52.99 67.47"></path>
+    </sc-if>
+    <sc-if value="{{ showReduced }}" hint-placeholder-val="{{ false }}">
+      <path d="M50.91 30.31 A14 14 0 0 1 50.91 57.69"></path>
+      <path d="M52.16 24.44 A20 20 0 0 1 52.16 63.56"></path>
+    </sc-if>
+    <sc-if value="{{ showMin }}" hint-placeholder-val="{{ false }}">
+      <path d="M51.64 26.88 A17.5 17.5 0 0 1 51.64 61.12"></path>
+    </sc-if>
+  </g>
+  <circle cx="48" cy="44" r="9" fill="{{ color }}"></circle>
+  <circle cx="48" cy="44" r="{{ holeR }}" fill="{{ bg }}"></circle>
+</svg>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:220,&quot;height&quot;:240},&quot;w&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:199,&quot;tsType&quot;:&quot;number&quot;},&quot;h&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:220,&quot;tsType&quot;:&quot;number&quot;},&quot;color&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#EFE7D9&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bg&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#191715&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;detail&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;reduced&quot;,&quot;minimal&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;spin&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;none&quot;,&quot;loop&quot;,&quot;hover&quot;],&quot;default&quot;:&quot;none&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;duration&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:10,&quot;min&quot;:6,&quot;max&quot;:20,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;stroke&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:2.4,&quot;min&quot;:1,&quot;max&quot;:6,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grooveStroke&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.3,&quot;min&quot;:0.5,&quot;max&quot;:4,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;holeR&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:2.1,&quot;min&quot;:1,&quot;max&quot;:4,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { hovered: false };
+  renderVals() {
+    const d = this.props.detail || 'full';
+    const spin = this.props.spin || 'none';
+    const dur = this.props.duration ?? 10;
+    const base = { transformBox: 'view-box', transformOrigin: '48px 44px' };
+    let grooveStyle = base;
+    if (spin === 'loop' || spin === 'hover') {
+      grooveStyle = Object.assign({}, base, {
+        animation: `dj-groove-spin ${dur}s linear infinite`,
+        animationPlayState: spin === 'loop' || this.state.hovered ? 'running' : 'paused'
+      });
+    }
+    const hover = spin === 'hover';
+    return {
+      showFull: d === 'full',
+      showReduced: d === 'reduced',
+      showMin: d === 'minimal',
+      holeR: this.props.holeR ?? 2.1,
+      grooveStroke: this.props.grooveStroke ?? 1.3,
+      stroke: this.props.stroke ?? 2.4,
+      grooveStyle,
+      onEnter: hover ? () => this.setState({ hovered: true }) : undefined,
+      onLeave: hover ? () => this.setState({ hovered: false }) : undefined
+    };
+  }
+}
+</script>
+</body>
+</html>

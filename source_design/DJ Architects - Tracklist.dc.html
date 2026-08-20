@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Instrument+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #161412; }
+  a { color: #C9A15E; text-decoration: none; }
+  a:hover { color: #F3EDE4; }
+  ::selection { background: #C9A15E; color: #161412; }
+  image-slot { --image-slot-bg: #1e1b18; }
+</style>
+</helmet>
+
+<div style="{{ pageStyle }}">
+
+  <div style="{{ curtain }}">
+    <div style="{{ markWrap }}">
+      <dc-import name="LogoMark" w="145" h="160" color="#F3EDE4" bg="#161412" detail="full" stroke="2.6" groove-stroke="1.4" hole-r="2.1" spin="loop" duration="14" hint-size="145px,160px"></dc-import>
+    </div>
+    <div style="{{ wordWrap }}">
+      <div style="{{ wordText }}">DJ Architects</div>
+      <div style="{{ ruleStyle }}"></div>
+    </div>
+    <div style="{{ counterStyle }}">{{ counter }}</div>
+  </div>
+
+
+
+  <nav style="{{ navStyle }}">
+    <a href="#top" style="display:flex; align-items:center; gap:12px; color:{{ ink }}; flex:none">
+      <dc-import name="LogoMark" w="26" h="29" color="{{ ink }}" bg="{{ paper }}" detail="reduced" stroke="4.4" groove-stroke="2.6" hole-r="2.6" spin="hover" duration="14" hint-size="26px,29px"></dc-import>
+      <span style="font-family:'Newsreader',serif; font-size:21px; font-weight:400; letter-spacing:0.01em; white-space:nowrap">Architects</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:34px; font-size:14px; letter-spacing:0.02em">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+        <a href="{{ n.href }}" onClick="{{ n.onClick }}" onMouseEnter="{{ n.onEnter }}" onMouseLeave="{{ n.onLeave }}" style="{{ n.linkStyle }}">
+          {{ n.label }}
+          <span style="{{ n.dotStyle }}">{{ n.dots }}</span>
+        </a>
+      </sc-for>
+      <div style="{{ enalWrap }}">
+        <button onClick="{{ setEn }}" style="{{ enStyle }}">EN</button>
+        <span style="color:{{ subtleDim }}">/</span>
+        <button onClick="{{ setAl }}" style="{{ alStyle }}">AL</button>
+      </div>
+      <button onClick="{{ toggleMode }}" style="{{ modeBtnStyle }}">{{ modeIcon }}</button>
+    </div>
+  </nav>
+
+  <section id="top" style="position:relative; height:82vh; min-height:600px">
+    <image-slot id="hero-2" placeholder="Hero: moody warmly-lit interior render — walnut, ambient light, green and gold accents" style="position:absolute; inset:0; width:100%; height:100%"></image-slot>
+    <div style="{{ heroScrim }}"></div>
+    <svg viewBox="0 0 400 400" aria-hidden="true" style="position:absolute; right:-90px; top:50%; transform:translateY(-50%); width:520px; height:520px; opacity:{{ groovesOpacity }}; pointer-events:none">
+      <g fill="none" stroke="{{ ink }}" stroke-width="0.8">
+        <circle cx="200" cy="200" r="62" /><circle cx="200" cy="200" r="76" /><circle cx="200" cy="200" r="90" /><circle cx="200" cy="200" r="104" /><circle cx="200" cy="200" r="118" /><circle cx="200" cy="200" r="132" /><circle cx="200" cy="200" r="146" /><circle cx="200" cy="200" r="160" /><circle cx="200" cy="200" r="174" /><circle cx="200" cy="200" r="188" />
+      </g>
+      <circle cx="200" cy="200" r="3" fill="#C9A15E" />
+    </svg>
+    <div style="position:absolute; left:48px; right:48px; bottom:64px; display:flex; align-items:flex-end; justify-content:space-between; gap:60px; pointer-events:none">
+      <div style="{{ revealA }}">
+        <p style="max-width:640px; margin:0; font-family:'Newsreader',serif; font-weight:300; font-size:44px; line-height:1.22; letter-spacing:-0.01em; text-wrap:pretty; color:{{ ink }}">{{ heroLine }}</p>
+      </div>
+      <div style="{{ revealB }}">
+        <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:{{ subtle }}; text-align:right; line-height:2; white-space:nowrap">Tirana, AL<br />2026—</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" style="padding:120px 48px 40px">
+    <div style="{{ ruleUnderTitle }}">
+      <h2 style="margin:0; font-family:'Newsreader',serif; font-weight:300; font-size:34px; letter-spacing:-0.01em">{{ workTitle }}</h2>
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:{{ subtle }}; white-space:nowrap; flex:none">{{ workCount }}</span>
+    </div>
+
+    <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+      <sc-if value="{{ p.sideLabel }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ sideDividerStyle }}"><span style="flex:none; white-space:nowrap">{{ p.sideLabel }}</span><span style="{{ sideDividerLine }}"></span></div>
+      </sc-if>
+      <a href="#work" style="{{ p.rowStyle }}" style-hover="background:var(--hoverBg);border-left-color:#C9A15E">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; color:#C9A15E; width:34px; flex:none; padding-top:9px">{{ p.code }}</span>
+        <span style="width:44px; flex:none; padding-top:2px">{{ p.signature }}</span>
+        <span style="flex:1; min-width:0">
+          <span style="display:block; font-family:'Newsreader',serif; font-weight:300; font-size:{{ p.titleSize }}; line-height:1.15; letter-spacing:-0.01em">{{ p.name }}</span>
+          <span style="display:block; margin-top:9px; font-size:13px; color:{{ subtle }}; letter-spacing:0.01em">{{ p.meta }}</span>
+        </span>
+        <span style="{{ p.thumbStyle }}">
+          <image-slot id="{{ p.slotId }}" radius="10" placeholder="{{ p.name }}" style="width:100%; height:100%"></image-slot>
+        </span>
+      </a>
+    </sc-for>
+    <div style="display:flex; justify-content:center; padding-top:44px">
+      <a href="DJ Architects - All Projects.dc.html" style="{{ allProjectsStyle }}" style-hover="border-color:#C9A15E;color:#C9A15E;gap:20px">{{ allProjectsLabel }}</a>
+    </div>
+  </section>
+
+  <section id="rooms" style="padding:100px 48px 40px">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:40px; margin-bottom:36px">
+      <h2 style="margin:0; font-family:'Newsreader',serif; font-weight:300; font-size:34px; letter-spacing:-0.01em">{{ roomsTitle }}</h2>
+      <span style="max-width:340px; font-size:13px; line-height:1.7; color:{{ subtle }}; text-align:right">{{ roomsNote }}</span>
+    </div>
+    <div style="{{ roomsGridStyle }}">
+      <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="6">
+        <a href="{{ r.href }}" style="{{ roomCardStyle }}" style-hover="background:var(--hoverBg);box-shadow:inset 0 0 0 1px #C9A15E">
+          <span style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; color:#C9A15E">
+            <span style="display:flex; align-items:center; gap:14px">{{ r.code }}<span style="display:block">{{ r.signature }}</span></span>
+            <span style="color:{{ subtle }}; letter-spacing:0.08em">{{ r.count }}</span>
+          </span>
+          <span style="font-family:'Newsreader',serif; font-weight:300; font-size:26px; line-height:1.15">{{ r.name }}</span>
+          <span style="font-size:13px; line-height:1.65; color:{{ subtle }}; text-wrap:pretty">{{ r.note }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="about" style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:80px; align-items:start; padding:120px 48px">
+    <div>
+      <p style="margin:0 0 28px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:{{ subtle }}">{{ aboutKicker }}</p>
+      <p style="margin:0; max-width:600px; font-family:'Newsreader',serif; font-weight:300; font-size:30px; line-height:1.34; letter-spacing:-0.01em; text-wrap:pretty">{{ aboutLead }}</p>
+      <div style="{{ dialogWrap }}">
+        <p style="{{ dialogLine }}"><span style="display:block; margin-bottom:4px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:#C9A15E">Deni</span>{{ quoteDeni }}</p>
+        <p style="{{ dialogLine }}"><span style="display:block; margin-bottom:4px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:#C9A15E">Jurgen</span>{{ quoteJurgen }}</p>
+      </div>
+    </div>
+    <div style="min-width:0">
+      <div style="width:100%; height:520px; border-radius:12px; overflow:hidden">
+        <image-slot id="about-portrait" radius="12" placeholder="Studio portrait — Deni &amp; Jurgen in the Tirana studio" style="display:block; width:100%; height:100%"></image-slot>
+      </div>
+      <p style="margin:14px 0 0; font-size:12.5px; color:{{ subtle }}">{{ portraitCaption }}</p>
+    </div>
+  </section>
+
+  <section id="contact" style="padding:20px 48px 120px">
+    <div style="{{ contactPanelStyle }}">
+      <div>
+        <p style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:300; font-size:32px; letter-spacing:-0.01em">{{ contactLead }}</p>
+        <p style="margin:0; font-size:14px; color:{{ subtle }}">{{ contactNote }}</p>
+      </div>
+      <a href="mailto:studio@djarchitects.al" style="{{ ctaStyle }}" style-hover="border-color:#C9A15E;color:#C9A15E">studio@djarchitects.al</a>
+    </div>
+  </section>
+
+  <footer style="{{ footerStyle }}">
+    <div>
+      <p style="margin:0 0 10px; font-family:'Newsreader',serif; font-size:20px">DJ Architects</p>
+      <p style="margin:0; max-width:280px; font-size:13px; line-height:1.7; color:{{ subtle }}">{{ tagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:{{ subtle }}">
+      <span>Rruga Ibrahim Rugova 12</span>
+      <span>Tirana 1019, Albania</span>
+      <a href="tel:+355682000000">+355 68 200 0000</a>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; font-size:13px">
+      <a href="#contact">Instagram</a>
+      <a href="#contact">Pinterest</a>
+      <a href="#contact">LinkedIn</a>
+      <span style="{{ copyrightStyle }}">Tirana · 2026—</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;intro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;introSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;×&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+const COPY = {
+  en: {
+    hero: "We design warm, evening-lit interiors for a city that lives after dark.",
+    workTitle: "Selected work",
+    roomsTitle: "Browse by room",
+    roomsNote: "Our archive is indexed by room, not by project type — most clients arrive knowing which space they want to change.",
+    aboutKicker: "About the studio",
+    aboutLead: "Deni and Jurgen met in their first year of architecture school. Five years later they built the thing they kept talking about. We work slowly, by hand, close to the people who will live in the rooms.",
+    quoteDeni: "\u201CDraw the route through the room first. The furniture comes after.\u201D",
+    quoteJurgen: "\u201CAnd keep one wall quiet, so the light has somewhere to land.\u201D",
+    portraitCaption: "Deni and Jurgen in the Tirana studio.",
+    contactLead: "Tell us about the space.",
+    contactNote: "One email is enough — no forms, no briefs. We usually reply within two days.",
+    tagline: "Architecture, interiors and light. Tirana, Albania.",
+    nav: ["Work", "Rooms", "About", "Contact"],
+    allProjects: "All projects",
+    countLabel: (n) => n + " projects · 2025—2026"
+  },
+  al: {
+    hero: "Projektojmë ambiente të ngrohta, të ndriçuara në mbrëmje, për një qytet që jeton pas mbrëmjes.",
+    workTitle: "Punë të përzgjedhura",
+    roomsTitle: "Shfleto sipas ambientit",
+    roomsNote: "Arkivi është i indeksuar sipas ambientit, jo sipas tipit të projektit — klientët e dinë hapësirën që duan të ndryshojnë.",
+    aboutKicker: "Rreth studios",
+    aboutLead: "Deni dhe Jurgen u njohën në vitin e parë të arkitekturës. Pesë vjet më vonë ndërtuan atë për të cilën vazhdimisht flisnin. Punojmë ngadalë, me dorë, pranë njerëzve që do t'i banojnë ambientet.",
+    quoteDeni: "\u201CVizato së pari rrugën përmes dhomës. Mobiliet vijnë pas.\u201D",
+    quoteJurgen: "\u201CDhe lër një mur të qetë, që drita të ketë ku të bjerë.\u201D",
+    portraitCaption: "Deni dhe Jurgen në studion e Tiranës.",
+    contactLead: "Tregoni për hapësirën.",
+    contactNote: "Një email mjafton — pa formularë. Përgjigjemi brenda dy ditësh.",
+    tagline: "Arkitekturë, interier dhe dritë. Tiranë, Shqipëri.",
+    nav: ["Punë", "Ambiente", "Rreth", "Kontakt"],
+    allProjects: "Të gjitha projektet",
+    countLabel: (n) => n + " projekte · 2025—2026"
+  }
+};
+
+// Floor-plan silhouettes. Each carries exactly two marked points:
+// entry (filled brass dot) and a key sightline/window (open ivory ring).
+const SIG = {
+  a1: { d: "M2 30 L2 6 L20 6 L20 18 L34 18 L34 30 Z M20 6 L20 18 M12 30 L12 18", entry: [12, 30], eye: [34, 22] },
+  a2: { d: "M3 4 L41 4 L41 30 L3 30 Z M3 17 L27 17 M27 4 L27 30 M33 17 L41 17", entry: [3, 24], eye: [41, 10] },
+  a3: { d: "M4 28 C4 12 14 4 26 4 L40 4 L40 28 Z M26 4 L26 28 M14 12 L14 28", entry: [26, 28], eye: [40, 14] },
+  b1: { d: "M2 8 L30 2 L42 12 L42 30 L2 30 Z M14 30 L14 14 L30 14 M30 2 L30 14", entry: [14, 30], eye: [42, 20] },
+  b2: { d: "M6 2 L6 30 M6 2 L38 8 L38 30 L6 30 M20 30 L20 16 L38 16 M28 8 L28 16", entry: [20, 30], eye: [38, 11] },
+  b3: { d: "M4 6 L24 6 L24 20 L40 20 L40 32 L4 32 Z M24 20 L4 20 M14 6 L14 20", entry: [14, 32], eye: [40, 26] }
+};
+
+const ROOM_SIG = {
+  living: { d: "M3 30 L3 6 L28 6 L28 18 L41 18 L41 30 Z M28 18 L28 30", entry: [15, 30], eye: [41, 24] },
+  kitchen: { d: "M3 6 L41 6 L41 30 L3 30 Z M3 20 L30 20 M30 6 L30 30", entry: [3, 26], eye: [41, 13] },
+  bedroom: { d: "M4 4 L40 4 L40 30 L4 30 Z M4 22 L22 22 L22 30", entry: [13, 30], eye: [40, 12] },
+  bath: { d: "M6 4 L34 4 L34 20 L20 20 L20 32 L6 32 Z M20 20 L6 20", entry: [6, 26], eye: [34, 11] },
+  entrance: { d: "M8 2 L8 32 M8 2 L38 8 L38 32 L8 32 M20 32 L20 18 L38 18", entry: [8, 30], eye: [38, 25] },
+  terrace: { d: "M3 12 L41 4 L41 30 L3 30 Z M3 20 L41 20", entry: [3, 26], eye: [41, 11] }
+};
+
+const PROJECTS = [
+  { code: "A1", key: "a1", name: "Villa Dajti", cat: { en: "Residential renovation", al: "Rikonstruksion banimi" }, loc: "Tirana", year: "2026", size: 1 },
+  { code: "A2", key: "a2", name: "Apartament Rugova", cat: { en: "Interior", al: "Interier" }, loc: "Tirana", year: "2026", size: 0 },
+  { code: "A3", key: "a3", name: "Kafe Bianco", cat: { en: "Hospitality", al: "Hoteleri" }, loc: "Durrës", year: "2026", size: 2 },
+  { code: "B1", key: "b1", name: "House on the ridge", cat: { en: "New build", al: "Ndërtim i ri" }, loc: "Krujë", year: "2025", size: 0 },
+  { code: "B2", key: "b2", name: "Studio Nova", cat: { en: "Workspace", al: "Zyra" }, loc: "Tirana", year: "2025", size: 1 },
+  { code: "B3", key: "b3", name: "Guesthouse Theth", cat: { en: "Hospitality", al: "Hoteleri" }, loc: "Theth", year: "2025", size: 0 }
+];
+
+const ROOMS = [
+  { code: "A1", sig: "living", en: ["Living rooms", "Boucle, walnut, low light."], al: ["Dhoma ndenjeje", "Bukle, arrë, dritë e ulët."], count: "08" },
+  { code: "A2", sig: "kitchen", en: ["Kitchens", "Working surfaces in stone and brass."], al: ["Kuzhina", "Sipërfaqe pune në gur dhe bronz."], count: "06" },
+  { code: "A3", sig: "bedroom", en: ["Bedrooms", "Curtains, warm floors, no ceiling light."], al: ["Dhoma gjumi", "Perde, dysheme e ngrohtë, pa dritë tavani."], count: "07" },
+  { code: "B1", sig: "bath", en: ["Bathrooms", "Travertine, green tile, soft edges."], al: ["Banjo", "Travertin, pllakë e gjelbër, buzë të lëmuara."], count: "05" },
+  { code: "B2", sig: "entrance", en: ["Entrances", "The first two metres of every plan."], al: ["Hyrje", "Dy metrat e parë të çdo plani."], count: "04" },
+  { code: "B3", sig: "terrace", en: ["Terraces", "Evening rooms, half outside."], al: ["Tarraca", "Dhoma mbrëmjeje, gjysmë jashtë."], count: "03" }
+];
+
+const THUMBS = [
+  { w: "300px", h: "200px" },
+  { w: "230px", h: "150px" },
+  { w: "360px", h: "230px" }
+];
+
+const NAV = [
+  { href: "#work", key: 0 },
+  { href: "#rooms", key: 1 },
+  { href: "#about", key: 2 },
+  { href: "#contact", key: 3 }
+];
+
+const EASE = "cubic-bezier(0.22,0.61,0.36,1)";
+
+const THEMES = {
+  night: { paper: "#161412", ink: "#F3EDE4", subtle: "#A79E92", subtleDim: "rgba(243,237,228,0.2)", navBg: "rgba(22,20,18,0.82)", navBorder: "rgba(243,237,228,0.07)", hairline: "rgba(243,237,228,0.12)", rowHover: "rgba(243,237,228,0.035)", roomBg: "#161412", roomHover: "#1c1917", scrim: "linear-gradient(180deg, rgba(22,20,18,0.55) 0%, rgba(22,20,18,0.25) 45%, rgba(22,20,18,0.96) 100%)", groovesOp: 0.16, dialogBorder: "rgba(201,161,94,0.4)", panelBorder: "rgba(243,237,228,0.12)", ctaBorder: "rgba(243,237,228,0.28)", footerBorder: "rgba(243,237,228,0.1)", copyDim: "rgba(167,158,146,0.6)" },
+  day: { paper: "#F6F1E8", ink: "#21201C", subtle: "#6B6357", subtleDim: "rgba(33,32,28,0.22)", navBg: "rgba(246,241,232,0.86)", navBorder: "rgba(33,32,28,0.09)", hairline: "rgba(33,32,28,0.14)", rowHover: "rgba(33,32,28,0.04)", roomBg: "#F6F1E8", roomHover: "#EFE8DA", scrim: "linear-gradient(180deg, rgba(246,241,232,0.35) 0%, rgba(33,32,28,0.12) 45%, rgba(246,241,232,0.97) 100%)", groovesOp: 0.14, dialogBorder: "rgba(169,120,46,0.5)", panelBorder: "rgba(33,32,28,0.14)", ctaBorder: "rgba(33,32,28,0.28)", footerBorder: "rgba(33,32,28,0.12)", copyDim: "rgba(107,99,87,0.7)" }
+};
+const MODE_LABEL = { night: { en: "Day", al: "Ditë" }, day: { en: "Night", al: "Natë" } };
+const THEME_TRANS = "background-color 560ms cubic-bezier(0.22,0.61,0.36,1), color 560ms cubic-bezier(0.22,0.61,0.36,1), border-color 560ms cubic-bezier(0.22,0.61,0.36,1)";
+
+class Component extends DCLogic {
+  state = { lang: "en", navHover: null, navActive: 0, phase: 0, pct: 0, mode: "night" };
+
+  componentDidMount() { this.runIntro(); }
+  componentWillUnmount() { this.clearIntro(); }
+
+  smoothTo(hash, e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const el = document.querySelector(hash);
+    if (!el) return;
+    const nav = document.querySelector("nav");
+    const offset = nav ? nav.getBoundingClientRect().height : 0;
+    const start = window.scrollY;
+    const end = start + el.getBoundingClientRect().top - offset;
+    const dist = end - start;
+    if (Math.abs(dist) < 2) return;
+    // duration scales with distance so near and far jumps feel equally weighted
+    const dur = Math.min(2200, Math.max(950, Math.abs(dist) * 0.8));
+    if (this.scrollRaf) cancelAnimationFrame(this.scrollRaf);
+    const t0 = performance.now();
+    const ease = (x) => 1 - Math.pow(1 - x, 4); // slower, smoother ease-out, no overshoot
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / dur);
+      window.scrollTo(0, start + dist * ease(k));
+      if (k < 1) this.scrollRaf = requestAnimationFrame(step);
+    };
+    this.scrollRaf = requestAnimationFrame(step);
+  }
+
+  clearIntro() {
+    if (this.scrollRaf) cancelAnimationFrame(this.scrollRaf);
+    (this.timers || []).forEach(clearTimeout);
+    if (this.tick) clearInterval(this.tick);
+  }
+
+  runIntro() {
+    this.clearIntro();
+    if (this.props.intro === false) { this.setState({ phase: 9, pct: 100 }); return; }
+    const s = this.props.introSpeed ?? 1;
+    const at = (ms, phase) => setTimeout(() => this.setState({ phase }), ms * s);
+    this.setState({ phase: 0, pct: 0 });
+    this.timers = [at(80, 1), at(1000, 2), at(3400, 3), at(3900, 4), at(4400, 5), at(4560, 6)];
+    const t0 = Date.now();
+    this.tick = setInterval(() => {
+      const p = Math.min(100, Math.round((Date.now() - t0) / (3400 * s) * 100));
+      this.setState({ pct: p });
+      if (p >= 100) clearInterval(this.tick);
+    }, 60);
+  }
+
+  langBtn(active) {
+    return {
+      background: "none", border: "none", padding: 0, cursor: "pointer",
+      fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, letterSpacing: "0.06em",
+      color: active ? "#C9A15E" : THEMES[this.state.mode].subtle,
+      transition: "color 400ms " + EASE
+    };
+  }
+
+  // The one unified mark: plan silhouette + two marked points.
+  planMark(spec, scale) {
+    const s = scale || 1;
+    const th = THEMES[this.state.mode];
+    const lineCol = th.ink === "#F3EDE4" ? "rgba(243,237,228,0.78)" : "rgba(33,32,28,0.72)";
+    return React.createElement("svg", {
+      width: 44 * s, height: 36 * s, viewBox: "0 0 44 36", "aria-hidden": true, style: { display: "block", overflow: "visible" }
+    },
+      React.createElement("path", { d: spec.d, fill: "none", stroke: lineCol, strokeWidth: 1, strokeLinejoin: "round" }),
+      React.createElement("circle", { cx: spec.entry[0], cy: spec.entry[1], r: 1.9, fill: "#C9A15E" }),
+      React.createElement("circle", { cx: spec.eye[0], cy: spec.eye[1], r: 1.9, fill: th.paper, stroke: th.ink, strokeWidth: 0.9 })
+    );
+  }
+
+  modeIconMark() {
+    // same entry/eye dot pair as the plan marks — filled swaps sides between modes
+    const night = this.state.mode === "night";
+    const th = THEMES[this.state.mode];
+    return React.createElement("svg", { width: 22, height: 10, viewBox: "0 0 22 10", "aria-hidden": true, style: { display: "block" } },
+      React.createElement("line", { x1: 3, y1: 5, x2: 19, y2: 5, stroke: th.subtle, strokeWidth: 0.8, strokeDasharray: "1.4 2.2" }),
+      React.createElement("circle", { cx: night ? 3 : 19, cy: 5, r: 3, fill: "#C9A15E" }),
+      React.createElement("circle", { cx: night ? 19 : 3, cy: 5, r: 3, fill: th.paper, stroke: th.ink, strokeWidth: 1 })
+    );
+  }
+
+  navDots() {
+    const th = THEMES[this.state.mode];
+    return React.createElement("svg", { width: 16, height: 4, viewBox: "0 0 16 4", "aria-hidden": true, style: { display: "block" } },
+      React.createElement("circle", { cx: 2, cy: 2, r: 1.6, fill: "#C9A15E" }),
+      React.createElement("circle", { cx: 13, cy: 2, r: 1.6, fill: th.paper, stroke: "#C9A15E", strokeWidth: 0.8 })
+    );
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = COPY[lang];
+    const th = THEMES[this.state.mode];
+    const p = this.state.phase;
+    const lockupOut = p >= 3;
+    const done = p >= 4;
+    const reveal = (on, delay) => ({
+      opacity: on ? 1 : 0,
+      transform: on ? "translateY(0)" : "translateY(14px)",
+      transition: "opacity 700ms " + EASE + " " + delay + "ms, transform 700ms " + EASE + " " + delay + "ms"
+    });
+    return {
+      pageStyle: { background: th.paper, color: th.ink, fontFamily: "'Instrument Sans',system-ui,sans-serif", minHeight: "100vh", overflowX: "hidden", transition: THEME_TRANS },
+      ink: th.ink,
+      paper: th.paper,
+      subtle: th.subtle,
+      subtleDim: th.subtleDim,
+      toggleMode: () => this.setState(s => ({ mode: s.mode === "night" ? "day" : "night" })),
+      modeIcon: this.modeIconMark(),
+      modeBtnStyle: { background: "none", border: "none", padding: 0, marginLeft: 8, cursor: "pointer", display: "flex", alignItems: "center", transition: "opacity 400ms " + EASE },
+      navStyle: { position: "sticky", top: 0, zIndex: 20, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "22px 48px", background: th.navBg, backdropFilter: "blur(14px)", borderBottom: "1px solid " + th.navBorder, transition: THEME_TRANS },
+      enalWrap: { display: "flex", alignItems: "center", gap: 8, paddingLeft: 20, borderLeft: "1px solid " + th.hairline, fontFamily: "'IBM Plex Mono',monospace", fontSize: 12, letterSpacing: "0.06em" },
+      heroScrim: { position: "absolute", inset: 0, background: th.scrim, pointerEvents: "none", transition: THEME_TRANS },
+      groovesOpacity: th.groovesOp,
+      ruleUnderTitle: { display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 40, paddingBottom: 26, borderBottom: "1px solid " + th.hairline },
+      sideDividerStyle: { display: "flex", alignItems: "center", gap: 16, padding: "34px 18px 14px", fontFamily: "'IBM Plex Mono',monospace", fontSize: 11, letterSpacing: "0.16em", color: th.subtle },
+      sideDividerLine: { flex: 1, height: 1, background: th.hairline },
+      rowHoverStyle: "background:var(--hoverBg);border-left-color:#C9A15E",
+      roomsGridStyle: { display: "grid", gridTemplateColumns: "repeat(3,minmax(0,1fr))", gap: 1, background: th.hairline },
+      roomCardStyle: { display: "flex", flexDirection: "column", gap: 16, padding: "26px 28px 30px", background: th.roomBg, color: th.ink, minWidth: 0, boxShadow: "inset 0 0 0 1px transparent", "--hoverBg": "rgba(201,161,94,0.1)", transition: THEME_TRANS + ", box-shadow 400ms " + EASE + ", background 400ms " + EASE },
+      roomCardHoverStyle: "background:var(--hoverBg);box-shadow:inset 0 0 0 1px #C9A15E",
+      dialogWrap: { display: "flex", flexDirection: "column", gap: 16, maxWidth: 480, marginTop: 40, paddingLeft: 22, borderLeft: "1px solid " + th.dialogBorder },
+      dialogLine: { margin: 0, fontSize: 14.5, lineHeight: 1.7, color: th.subtle, textWrap: "pretty" },
+      contactPanelStyle: { display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 40, padding: "56px 48px", border: "1px solid " + th.panelBorder, borderRadius: 16, transition: THEME_TRANS },
+      ctaStyle: { padding: "15px 28px", border: "1px solid " + th.ctaBorder, borderRadius: 100, background: "none", color: th.ink, fontSize: 15, letterSpacing: "0.01em", whiteSpace: "nowrap", transition: "border-color 520ms " + EASE + ", color 520ms " + EASE },
+
+      footerStyle: { display: "grid", gridTemplateColumns: "minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr)", gap: 60, padding: "52px 48px 60px", borderTop: "1px solid " + th.footerBorder, transition: THEME_TRANS },
+      allProjectsLabel: t.allProjects,
+      allProjectsStyle: { display: "inline-flex", alignItems: "center", gap: 14, padding: "14px 30px", border: "1px solid " + th.ctaBorder, borderRadius: 100, background: "none", color: th.ink, fontSize: 14, letterSpacing: "0.02em", whiteSpace: "nowrap", transition: "border-color 520ms " + EASE + ", color 520ms " + EASE + ", gap 520ms " + EASE },
+      copyrightStyle: { marginTop: 14, fontFamily: "'IBM Plex Mono',monospace", fontSize: 11, letterSpacing: "0.1em", color: th.copyDim, whiteSpace: "nowrap" },
+      curtain: {
+        position: "fixed", inset: 0, zIndex: 60, background: th.paper,
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 38,
+        transform: done ? "translateY(-100%)" : "translateY(0)",
+        pointerEvents: done ? "none" : "auto",
+        transition: "transform 1100ms cubic-bezier(0.76,0,0.24,1)"
+      },
+      markWrap: {
+        opacity: lockupOut ? 0 : (p >= 1 ? 1 : 0),
+        transform: lockupOut ? "translateY(-10px)" : "translateY(0)",
+        transition: "opacity 900ms " + EASE + ", transform 500ms " + EASE
+      },
+      wordWrap: {
+        display: "flex", flexDirection: "column", alignItems: "center", gap: 16,
+        opacity: lockupOut ? 0 : (p >= 2 ? 1 : 0),
+        transform: lockupOut ? "translateY(-10px)" : "translateY(0)",
+        transition: "opacity 800ms " + EASE + ", transform 500ms " + EASE
+      },
+      wordText: {
+        fontFamily: "'Newsreader',serif", fontWeight: 300, fontSize: 30,
+        textTransform: "uppercase", whiteSpace: "nowrap", color: th.ink,
+        letterSpacing: p >= 2 && !lockupOut ? "9px" : "18.6px",
+        paddingLeft: p >= 2 && !lockupOut ? "9px" : "18.6px",
+        transition: "letter-spacing 2200ms " + EASE + ", padding-left 2200ms " + EASE
+      },
+      ruleStyle: {
+        height: 1, background: "#C9A15E",
+        width: p >= 2 && !lockupOut ? 64 : 0,
+        transition: "width 1400ms " + EASE
+      },
+      counterStyle: {
+        position: "absolute", bottom: 34, fontFamily: "'IBM Plex Mono',monospace",
+        fontSize: 10, letterSpacing: "0.24em", color: "#6E655D",
+        opacity: lockupOut ? 0 : 1, transition: "opacity 300ms linear"
+      },
+      counter: String(this.state.pct).padStart(3, "0"),
+      revealA: reveal(p >= 5, 0),
+      revealB: reveal(p >= 5, 140),
+      heroLine: t.hero,
+      workTitle: t.workTitle,
+      workCount: t.countLabel(PROJECTS.length),
+      roomsTitle: t.roomsTitle,
+      roomsNote: t.roomsNote,
+      aboutKicker: t.aboutKicker,
+      aboutLead: t.aboutLead,
+      quoteDeni: t.quoteDeni,
+      quoteJurgen: t.quoteJurgen,
+      portraitCaption: t.portraitCaption,
+      contactLead: t.contactLead,
+      contactNote: t.contactNote,
+      tagline: t.tagline,
+      enStyle: this.langBtn(lang === "en"),
+      alStyle: this.langBtn(lang === "al"),
+      setEn: () => this.setState({ lang: "en" }),
+      setAl: () => this.setState({ lang: "al" }),
+      navItems: NAV.map(n => {
+        const on = this.state.navHover === n.key || (this.state.navHover === null && this.state.navActive === n.key);
+        return {
+          href: n.href,
+          label: t.nav[n.key],
+          dots: this.navDots(),
+          onClick: (e) => { this.setState({ navActive: n.key }); this.smoothTo(n.href, e); },
+          onEnter: () => this.setState({ navHover: n.key }),
+          onLeave: () => this.setState({ navHover: null }),
+          linkStyle: {
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 5,
+            color: on ? th.ink : th.subtle,
+            whiteSpace: "nowrap",
+            transition: "color 400ms " + EASE
+          },
+          dotStyle: {
+            display: "block", height: 4,
+            opacity: on ? 1 : 0,
+            transform: on ? "translateY(0)" : "translateY(-2px)",
+            transition: "opacity 400ms " + EASE + ", transform 400ms " + EASE
+          }
+        };
+      }),
+      projects: PROJECTS.map((p, i) => {
+        const thumb = THUMBS[p.size];
+        return {
+          code: p.code,
+          name: p.name,
+          sideLabel: p.code === "A1" ? "Side A · 2026" : p.code === "B1" ? "Side B · 2025" : false,
+          meta: p.cat[lang] + " · " + p.loc + " · " + p.year,
+          titleSize: p.size === 2 ? "40px" : p.size === 1 ? "34px" : "29px",
+          slotId: "work-" + p.key,
+          signature: this.planMark(SIG[p.key]),
+          rowStyle: {
+            display: "flex", alignItems: "flex-start", gap: 26,
+            padding: (p.size === 2 ? "34px" : "26px") + " 18px",
+            paddingLeft: 15 + (i % 2 ? 40 : 0),
+            marginLeft: -18, marginRight: -18,
+            paddingRight: 36,
+            borderBottom: "1px solid " + th.hairline,
+            borderLeftWidth: 3, borderLeftStyle: "solid", borderLeftColor: "transparent",
+            color: th.ink,
+            "--hoverBg": "rgba(201,161,94,0.09)",
+            transition: "background 400ms " + EASE + ", border-left-color 400ms " + EASE + ", " + THEME_TRANS
+          },
+          thumbStyle: {
+            flex: "none", width: thumb.w, height: thumb.h,
+            marginRight: i % 3 === 1 ? 60 : 0,
+            borderRadius: 10, overflow: "hidden"
+          }
+        };
+      }),
+      rooms: ROOMS.map(r => ({
+        code: r.code, count: r.count, name: r[lang][0], note: r[lang][1],
+        signature: this.planMark(ROOM_SIG[r.sig], 0.62),
+        href: "DJ Architects - Room.dc.html?room=" + r.sig
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

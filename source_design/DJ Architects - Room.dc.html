@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Instrument+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #161412; }
+  a { color: #C9A15E; text-decoration: none; text-underline-offset: 3px; }
+  a:hover { color: #F3EDE4; text-decoration: underline; }
+  ::selection { background: #C9A15E; color: #161412; }
+  image-slot { --image-slot-bg: #1e1b18; }
+</style>
+</helmet>
+
+<div style="{{ pageStyle }}">
+
+  <nav style="{{ navStyle }}">
+    <a href="DJ Architects - Tracklist.dc.html" style="display:flex; align-items:center; gap:12px; color:{{ ink }}; flex:none">
+      <dc-import name="LogoMark" w="26" h="29" color="{{ ink }}" bg="{{ paper }}" detail="reduced" stroke="4.4" groove-stroke="2.6" hole-r="2.6" spin="hover" duration="14" hint-size="26px,29px"></dc-import>
+      <span style="font-family:'Newsreader',serif; font-size:21px; font-weight:400; letter-spacing:0.01em; white-space:nowrap">Architects</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:34px; font-size:14px; letter-spacing:0.02em">
+      <a href="DJ Architects - Tracklist.dc.html#work" style="color:{{ subtle }}">{{ workLabel }}</a>
+      <a href="DJ Architects - Tracklist.dc.html#about" style="color:{{ subtle }}">{{ aboutLabel }}</a>
+      <a href="DJ Architects - Tracklist.dc.html#contact" style="color:{{ subtle }}">{{ contactLabel }}</a>
+      <div style="{{ enalWrap }}">
+        <button onClick="{{ setEn }}" style="{{ enStyle }}">EN</button>
+        <span style="color:{{ subtleDim }}">/</span>
+        <button onClick="{{ setAl }}" style="{{ alStyle }}">AL</button>
+      </div>
+      <button onClick="{{ toggleMode }}" style="{{ modeBtnStyle }}">{{ modeIcon }}</button>
+    </div>
+  </nav>
+
+  <section style="padding:44px 48px 20px">
+<a href="DJ Architects - Tracklist.dc.html#rooms" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:34px; padding:9px 18px 9px 14px; border:1px solid {{ hairline }}; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; color:{{ subtle }}; transition:border-color 400ms cubic-bezier(0.22,0.61,0.36,1), color 400ms cubic-bezier(0.22,0.61,0.36,1); text-decoration:none" style-hover="border-color:#C9A15E;color:#C9A15E;text-decoration:none"><span style="font-size:13px">←</span>{{ backLabel }}</a>
+    <div style="display:flex; align-items:flex-start; gap:26px">
+      <span style="width:60px; flex:none; padding-top:6px">{{ signature }}</span>
+      <div>
+        <span style="display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; color:#C9A15E; margin-bottom:12px">{{ code }}</span>
+        <h1 style="margin:0; font-family:'Newsreader',serif; font-weight:300; font-size:48px; letter-spacing:-0.01em">{{ name }}</h1>
+        <p style="max-width:480px; margin:18px 0 0; font-size:15px; line-height:1.75; color:{{ subtle }}">{{ note }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:44px 48px 40px">
+    <div style="{{ galleryGrid }}">
+      <sc-for list="{{ shots }}" as="s" hint-placeholder-count="4">
+        <div style="{{ s.style }}">
+          <image-slot id="{{ s.id }}" radius="10" placeholder="{{ name }} — {{ s.caption }}" style="width:100%; height:100%"></image-slot>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:20px 48px 130px">
+    <div style="{{ relatedRule }}">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:{{ subtle }}">{{ relatedLabel }}</span>
+    </div>
+    <div style="{{ relatedGrid }}">
+      <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
+        <a href="DJ Architects - Tracklist.dc.html#work" style="{{ relatedCard }}" style-hover="background:var(--hoverBg);border-color:#C9A15E">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#C9A15E">{{ p.code }}</span>
+          <span style="font-family:'Newsreader',serif; font-weight:300; font-size:20px; line-height:1.2">{{ p.name }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="{{ footerStyle }}">
+    <div>
+      <p style="margin:0 0 10px; font-family:'Newsreader',serif; font-size:20px">DJ Architects</p>
+      <p style="margin:0; max-width:280px; font-size:13px; line-height:1.7; color:{{ subtle }}">{{ tagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:{{ subtle }}">
+      <span>Rruga Ibrahim Rugova 12</span>
+      <span>Tirana 1019, Albania</span>
+      <a href="tel:+355682000000">+355 68 200 0000</a>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; font-size:13px">
+      <a href="DJ Architects - Tracklist.dc.html#contact">Instagram</a>
+      <a href="DJ Architects - Tracklist.dc.html#contact">Pinterest</a>
+      <a href="DJ Architects - Tracklist.dc.html#contact">LinkedIn</a>
+      <span style="{{ copyrightStyle }}">Tirana · 2026—</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const ROOM_SIG = {
+  living: { d: "M3 30 L3 6 L28 6 L28 18 L41 18 L41 30 Z M28 18 L28 30", entry: [15, 30], eye: [41, 24] },
+  kitchen: { d: "M3 6 L41 6 L41 30 L3 30 Z M3 20 L30 20 M30 6 L30 30", entry: [3, 26], eye: [41, 13] },
+  bedroom: { d: "M4 4 L40 4 L40 30 L4 30 Z M4 22 L22 22 L22 30", entry: [13, 30], eye: [40, 12] },
+  bath: { d: "M6 4 L34 4 L34 20 L20 20 L20 32 L6 32 Z M20 20 L6 20", entry: [6, 26], eye: [34, 11] },
+  entrance: { d: "M8 2 L8 32 M8 2 L38 8 L38 32 L8 32 M20 32 L20 18 L38 18", entry: [8, 30], eye: [38, 25] },
+  terrace: { d: "M3 12 L41 4 L41 30 L3 30 Z M3 20 L41 20", entry: [3, 26], eye: [41, 11] }
+};
+
+const ROOMS = {
+  living: { code: "A1", en: ["Living rooms", "Boucle, walnut, low light. The room built around one seat that catches the evening best."], al: ["Dhoma ndenjeje", "Bukle, arrë, dritë e ulët. Dhoma e ndërtuar rreth vendit që kap më mirë dritën e mbrëmjes."] },
+  kitchen: { code: "A2", en: ["Kitchens", "Working surfaces in stone and brass, sized for two people cooking without stepping around each other."], al: ["Kuzhina", "Sipërfaqe pune në gur dhe bronz, të mata për dy veta që gatuajnë pa u shqetësuar."] },
+  bedroom: { code: "A3", en: ["Bedrooms", "Curtains, warm floors, no ceiling light — the room where the plan gets quietest."], al: ["Dhoma gjumi", "Perde, dysheme e ngrohtë, pa dritë tavani — dhoma ku plani bëhet më i qetë."] },
+  bath: { code: "B1", en: ["Bathrooms", "Travertine, green tile, soft edges. Small rooms treated with the same care as the large ones."], al: ["Banjo", "Travertin, pllakë e gjelbër, buzë të lëmuara. Dhoma të vogla me të njëjtën kujdes si të mëdhat."] },
+  entrance: { code: "B2", en: ["Entrances", "The first two metres of every plan — where a project introduces itself."], al: ["Hyrje", "Dy metrat e parë të çdo plani — ku projekti prezantohet."] },
+  terrace: { code: "B3", en: ["Terraces", "Evening rooms, half outside. Furniture chosen to survive weather and still feel soft."], al: ["Tarraca", "Dhoma mbrëmjeje, gjysmë jashtë. Mobilie që i mbijetojnë motit dhe mbeten të buta."] }
+};
+
+const RELATED = {
+  living: [{ code: "A1", name: "Villa Dajti" }, { code: "B2", name: "Studio Nova" }, { code: "B3", name: "Guesthouse Theth" }],
+  kitchen: [{ code: "A2", name: "Apartament Rugova" }, { code: "A1", name: "Villa Dajti" }, { code: "B1", name: "House on the ridge" }],
+  bedroom: [{ code: "A1", name: "Villa Dajti" }, { code: "B1", name: "House on the ridge" }, { code: "A2", name: "Apartament Rugova" }],
+  bath: [{ code: "A2", name: "Apartament Rugova" }, { code: "B3", name: "Guesthouse Theth" }, { code: "A1", name: "Villa Dajti" }],
+  entrance: [{ code: "A3", name: "Kafe Bianco" }, { code: "B2", name: "Studio Nova" }, { code: "A1", name: "Villa Dajti" }],
+  terrace: [{ code: "B3", name: "Guesthouse Theth" }, { code: "A1", name: "Villa Dajti" }, { code: "B1", name: "House on the ridge" }]
+};
+
+const NAV_COPY = {
+  en: { work: "Work", about: "About", contact: "Contact", back: "Back to rooms", related: "Also seen in", tagline: "Architecture, interiors and light. Tirana, Albania." },
+  al: { work: "Punë", about: "Rreth", contact: "Kontakt", back: "Kthehu te ambientet", related: "Shfaqet gjithashtu në", tagline: "Arkitekturë, interier dhe dritë. Tiranë, Shqipëri." }
+};
+
+const EASE = "cubic-bezier(0.22,0.61,0.36,1)";
+const THEMES = {
+  night: { paper: "#161412", ink: "#F3EDE4", subtle: "#A79E92", subtleDim: "rgba(243,237,228,0.2)", navBg: "rgba(22,20,18,0.82)", navBorder: "rgba(243,237,228,0.07)", hairline: "rgba(243,237,228,0.12)", footerBorder: "rgba(243,237,228,0.1)", copyDim: "rgba(167,158,146,0.6)", cardHover: "rgba(243,237,228,0.035)" },
+  day: { paper: "#F6F1E8", ink: "#21201C", subtle: "#6B6357", subtleDim: "rgba(33,32,28,0.22)", navBg: "rgba(246,241,232,0.86)", navBorder: "rgba(33,32,28,0.09)", hairline: "rgba(33,32,28,0.14)", footerBorder: "rgba(33,32,28,0.12)", copyDim: "rgba(107,99,87,0.7)", cardHover: "rgba(33,32,28,0.04)" }
+};
+const THEME_TRANS = "background-color 560ms " + EASE + ", color 560ms " + EASE + ", border-color 560ms " + EASE;
+
+class Component extends DCLogic {
+  state = { lang: "en", mode: "night", roomKey: "living" };
+
+  componentDidMount() {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get("room");
+    if (r && ROOMS[r]) this.setState({ roomKey: r });
+  }
+
+  planMark(spec, scale) {
+    const s = scale || 1;
+    const th = THEMES[this.state.mode];
+    const lineCol = th.ink === "#F3EDE4" ? "rgba(243,237,228,0.78)" : "rgba(33,32,28,0.72)";
+    return React.createElement("svg", { width: 44 * s, height: 36 * s, viewBox: "0 0 44 36", "aria-hidden": true, style: { display: "block", overflow: "visible" } },
+      React.createElement("path", { d: spec.d, fill: "none", stroke: lineCol, strokeWidth: 1, strokeLinejoin: "round" }),
+      React.createElement("circle", { cx: spec.entry[0], cy: spec.entry[1], r: 1.9, fill: "#C9A15E" }),
+      React.createElement("circle", { cx: spec.eye[0], cy: spec.eye[1], r: 1.9, fill: th.paper, stroke: th.ink, strokeWidth: 0.9 })
+    );
+  }
+
+  modeIconMark() {
+    const night = this.state.mode === "night";
+    const th = THEMES[this.state.mode];
+    return React.createElement("svg", { width: 22, height: 10, viewBox: "0 0 22 10", "aria-hidden": true, style: { display: "block" } },
+      React.createElement("line", { x1: 3, y1: 5, x2: 19, y2: 5, stroke: th.subtle, strokeWidth: 0.8, strokeDasharray: "1.4 2.2" }),
+      React.createElement("circle", { cx: night ? 3 : 19, cy: 5, r: 3, fill: "#C9A15E" }),
+      React.createElement("circle", { cx: night ? 19 : 3, cy: 5, r: 3, fill: th.paper, stroke: th.ink, strokeWidth: 1 })
+    );
+  }
+
+  langBtn(active) {
+    return { background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, letterSpacing: "0.06em", color: active ? "#C9A15E" : THEMES[this.state.mode].subtle, transition: "color 400ms " + EASE };
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const th = THEMES[this.state.mode];
+    const nc = NAV_COPY[lang];
+    const key = this.state.roomKey;
+    const r = ROOMS[key];
+    return {
+      pageStyle: { background: th.paper, color: th.ink, fontFamily: "'Instrument Sans',system-ui,sans-serif", minHeight: "100vh", overflowX: "hidden", transition: THEME_TRANS },
+      ink: th.ink, paper: th.paper, subtle: th.subtle, subtleDim: th.subtleDim, hairline: th.hairline,
+      navStyle: { position: "sticky", top: 0, zIndex: 20, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "22px 48px", background: th.navBg, backdropFilter: "blur(14px)", borderBottom: "1px solid " + th.navBorder, transition: THEME_TRANS },
+      enalWrap: { display: "flex", alignItems: "center", gap: 8, paddingLeft: 20, borderLeft: "1px solid " + th.hairline, fontFamily: "'IBM Plex Mono',monospace", fontSize: 12, letterSpacing: "0.06em" },
+      workLabel: nc.work, aboutLabel: nc.about, contactLabel: nc.contact, backLabel: nc.back, relatedLabel: nc.related, tagline: nc.tagline,
+      enStyle: this.langBtn(lang === "en"), alStyle: this.langBtn(lang === "al"),
+      setEn: () => this.setState({ lang: "en" }), setAl: () => this.setState({ lang: "al" }),
+      toggleMode: () => this.setState(s => ({ mode: s.mode === "night" ? "day" : "night" })),
+      modeIcon: this.modeIconMark(),
+      modeBtnStyle: { background: "none", border: "none", padding: 0, marginLeft: 8, cursor: "pointer", display: "flex", alignItems: "center" },
+      code: r.code,
+      name: r[lang][0],
+      note: r[lang][1],
+      signature: this.planMark(ROOM_SIG[key]),
+      galleryGrid: { display: "grid", gridTemplateColumns: "1.4fr 1fr", gridTemplateRows: "220px 220px", gap: 16 },
+      shots: [
+        { id: "room-" + key + "-1", caption: "01", style: { gridRow: "1 / 3", borderRadius: 10, overflow: "hidden" } },
+        { id: "room-" + key + "-2", caption: "02", style: { borderRadius: 10, overflow: "hidden" } },
+        { id: "room-" + key + "-3", caption: "03", style: { borderRadius: 10, overflow: "hidden" } }
+      ],
+      relatedRule: { paddingBottom: 18, marginBottom: 26, borderBottom: "1px solid " + th.hairline },
+      relatedGrid: { display: "grid", gridTemplateColumns: "repeat(3,minmax(0,1fr))", gap: 16 },
+      relatedCard: { display: "flex", flexDirection: "column", gap: 8, padding: "20px 22px", border: "1px solid " + th.hairline, borderRadius: 10, color: th.ink, "--hoverBg": th.cardHover, transition: "background 400ms " + EASE + ", border-color 400ms " + EASE },
+      related: RELATED[key],
+      footerStyle: { display: "grid", gridTemplateColumns: "minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr)", gap: 60, padding: "52px 48px 60px", borderTop: "1px solid " + th.footerBorder },
+      copyrightStyle: { marginTop: 14, fontFamily: "'IBM Plex Mono',monospace", fontSize: 11, letterSpacing: "0.1em", color: th.copyDim, whiteSpace: "nowrap" }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
