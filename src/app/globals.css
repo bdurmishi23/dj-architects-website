@@ -29,6 +29,15 @@
   --row-hover-tint: rgba(201, 161, 94, 0.09);
   --card-hover-tint: rgba(201, 161, 94, 0.1);
   --plan-line: rgba(33, 32, 28, 0.72);
+  --intro-tracking-wide: 18.6px;
+  --intro-tracking-narrow: 9px;
+}
+
+@media (max-width: 480px) {
+  :root {
+    --intro-tracking-wide: 7px;
+    --intro-tracking-narrow: 3px;
+  }
 }
 
 .dark {

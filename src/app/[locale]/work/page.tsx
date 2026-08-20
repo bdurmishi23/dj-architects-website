@@ -22,7 +22,7 @@ export default async function WorkPage({
   ]);
 
   return (
-    <section className="px-6 pb-[140px] pt-24 md:px-12">
+    <section className="px-6 pb-[140px] pt-16 sm:pt-24 md:px-12">
       <Link
         href="/"
         className="mb-[30px] inline-flex items-center gap-[10px] rounded-pill border py-[9px] pl-[14px] pr-[18px] font-mono text-[11px] tracking-[0.1em] transition-colors duration-300 ease-editorial hover:border-brass hover:text-brass"
@@ -32,8 +32,13 @@ export default async function WorkPage({
         {t("back")}
       </Link>
 
-      <div className="flex items-baseline justify-between gap-10 border-b pb-[26px]" style={{ borderColor: "var(--hairline)" }}>
-        <h1 className="font-serif text-[46px] font-light tracking-[-0.01em]">{t("title")}</h1>
+      <div
+        className="flex flex-col gap-2 border-b pb-[26px] sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
+        style={{ borderColor: "var(--hairline)" }}
+      >
+        <h1 className="font-serif text-[32px] font-light tracking-[-0.01em] sm:text-[40px] lg:text-[46px]">
+          {t("title")}
+        </h1>
         <span
           className="flex-none whitespace-nowrap font-mono text-[11px] tracking-[0.14em]"
           style={{ color: "var(--subtle)" }}

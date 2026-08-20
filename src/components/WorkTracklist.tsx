@@ -7,10 +7,10 @@ import PlanMark from "@/components/icons/PlanMark";
 import type { Project, Emphasis } from "@/lib/sanity/types";
 import type { Locale } from "@/i18n/routing";
 
-const SIZE_MAP: Record<Emphasis, { title: string; w: number; h: number; py: string }> = {
-  compact: { title: "text-[29px]", w: 230, h: 150, py: "py-[26px]" },
-  medium: { title: "text-[34px]", w: 300, h: 200, py: "py-[26px]" },
-  feature: { title: "text-[40px]", w: 360, h: 230, py: "py-[34px]" },
+const SIZE_MAP: Record<Emphasis, { title: string; w: number; h: number; py: number }> = {
+  compact: { title: "text-2xl sm:text-[29px]", w: 230, h: 150, py: 26 },
+  medium: { title: "text-2xl sm:text-[34px]", w: 300, h: 200, py: 26 },
+  feature: { title: "text-3xl sm:text-[40px]", w: 360, h: 230, py: 34 },
 };
 
 function Row({
@@ -29,15 +29,20 @@ function Row({
 
   return (
     <div
-      className="group -mx-[18px] flex items-start gap-[26px] border-b border-hairline px-[18px] pr-9 border-l-[3px] border-l-transparent transition-[background-color,border-color] duration-300 ease-editorial hover:border-l-brass hover:bg-[var(--row-hover-tint)]"
-      style={{ paddingTop: size.py === "py-[34px]" ? 34 : 26, paddingBottom: size.py === "py-[34px]" ? 34 : 26 }}
+      className="group -mx-[18px] flex flex-col gap-4 border-b border-l-[3px] border-l-transparent px-[18px] py-6 transition-[background-color,border-color] duration-300 ease-editorial hover:border-l-brass hover:bg-[var(--row-hover-tint)] sm:flex-row sm:items-start sm:gap-[26px] sm:py-[var(--row-py)] sm:pr-9"
+      style={{
+        borderBottomColor: "var(--hairline)",
+        ["--row-py" as string]: `${size.py}px`,
+      }}
     >
-      <span className="w-[34px] flex-none pt-[9px] font-mono text-xs tracking-[0.1em] text-brass">
-        {code}
-      </span>
-      <span className="w-11 flex-none pt-[2px]">
-        <PlanMark spec={mark} />
-      </span>
+      <div className="flex items-center gap-4 sm:contents">
+        <span className="w-[34px] flex-none font-mono text-xs tracking-[0.1em] text-brass sm:pt-[9px]">
+          {code}
+        </span>
+        <span className="w-11 flex-none sm:pt-[2px]">
+          <PlanMark spec={mark} />
+        </span>
+      </div>
       <span className="min-w-0 flex-1">
         <span className={`block font-serif font-light leading-[1.15] tracking-[-0.01em] ${size.title}`}>
           {project.name}
@@ -48,10 +53,19 @@ function Row({
       </span>
       {src && (
         <span
-          className="flex-none overflow-hidden rounded-card"
-          style={{ width: size.w, height: size.h }}
+          className="block w-full flex-none overflow-hidden rounded-card sm:w-[var(--thumb-w)]"
+          style={{
+            aspectRatio: `${size.w} / ${size.h}`,
+            ["--thumb-w" as string]: `${size.w}px`,
+          }}
         >
-          <Image src={src} alt={project.name} width={size.w} height={size.h} className="h-full w-full object-cover" />
+          <Image
+            src={src}
+            alt={project.name}
+            width={size.w}
+            height={size.h}
+            className="h-full w-full object-cover"
+          />
         </span>
       )}
     </div>

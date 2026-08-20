@@ -48,12 +48,12 @@ export default async function HomePage({
         yearLine="2026—"
       />
 
-      <section id="work" className="px-6 pb-10 pt-[120px] md:px-12">
+      <section id="work" className="px-6 pb-10 pt-16 sm:pt-[120px] md:px-12">
         <div
-          className="flex items-baseline justify-between gap-10 border-b pb-[26px]"
+          className="flex flex-col gap-2 border-b pb-[26px] sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
           style={{ borderColor: "var(--hairline)" }}
         >
-          <h2 className="font-serif text-[34px] font-light tracking-[-0.01em]">
+          <h2 className="font-serif text-[26px] font-light tracking-[-0.01em] sm:text-[34px]">
             {t("workTitle")}
           </h2>
           <span
@@ -77,13 +77,13 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section id="rooms" className="px-6 pb-10 pt-[100px] md:px-12">
-        <div className="mb-9 flex items-baseline justify-between gap-10">
-          <h2 className="font-serif text-[34px] font-light tracking-[-0.01em]">
+      <section id="rooms" className="px-6 pb-10 pt-16 sm:pt-[100px] md:px-12">
+        <div className="mb-9 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10">
+          <h2 className="font-serif text-[26px] font-light tracking-[-0.01em] sm:text-[34px]">
             {t("roomsTitle")}
           </h2>
           <span
-            className="max-w-[340px] text-right text-[13px] leading-[1.7]"
+            className="max-w-[340px] text-[13px] leading-[1.7] sm:text-right"
             style={{ color: "var(--subtle)" }}
           >
             {t("roomsNote")}

@@ -105,10 +105,16 @@ export default function Hero({
             }}
           >
             <div
-              className="whitespace-nowrap font-serif text-[30px] font-light uppercase"
+              className="whitespace-nowrap font-serif text-[20px] font-light uppercase sm:text-[26px] md:text-[30px]"
               style={{
-                letterSpacing: phase >= 2 && !lockupOut ? "9px" : "18.6px",
-                paddingLeft: phase >= 2 && !lockupOut ? "9px" : "18.6px",
+                letterSpacing:
+                  phase >= 2 && !lockupOut
+                    ? "var(--intro-tracking-narrow)"
+                    : "var(--intro-tracking-wide)",
+                paddingLeft:
+                  phase >= 2 && !lockupOut
+                    ? "var(--intro-tracking-narrow)"
+                    : "var(--intro-tracking-wide)",
                 transition: `letter-spacing 2200ms ${EASE}, padding-left 2200ms ${EASE}`,
               }}
             >
@@ -135,7 +141,7 @@ export default function Hero({
         </div>
       )}
 
-      <section id="top" className="relative h-[82vh] min-h-[600px]">
+      <section id="top" className="relative h-[82vh] min-h-[520px] overflow-hidden sm:min-h-[600px]">
         {imageSrc && (
           <Image
             src={imageSrc}
@@ -150,7 +156,7 @@ export default function Hero({
         <svg
           viewBox="0 0 400 400"
           aria-hidden="true"
-          className="pointer-events-none absolute right-[-90px] top-1/2 h-[520px] w-[520px] -translate-y-1/2"
+          className="pointer-events-none absolute right-[-50px] top-1/2 h-[240px] w-[240px] -translate-y-1/2 sm:right-[-70px] sm:h-[360px] sm:w-[360px] lg:right-[-90px] lg:h-[520px] lg:w-[520px]"
           style={{ opacity: "var(--grooves-opacity)" }}
         >
           <g fill="none" stroke="var(--ink)" strokeWidth={0.8}>
@@ -160,15 +166,15 @@ export default function Hero({
           </g>
           <circle cx={200} cy={200} r={3} fill="var(--brass)" />
         </svg>
-        <div className="absolute inset-x-6 bottom-16 flex items-end justify-between gap-[60px] pointer-events-none md:inset-x-12">
+        <div className="pointer-events-none absolute inset-x-6 bottom-10 flex flex-col items-start gap-6 sm:bottom-16 sm:flex-row sm:items-end sm:justify-between sm:gap-[60px] md:inset-x-12">
           <div style={reveal(revealed, 0)}>
-            <p className="m-0 max-w-[640px] font-serif text-[44px] font-light leading-[1.22] tracking-[-0.01em]">
+            <p className="m-0 max-w-[640px] font-serif text-[28px] font-light leading-[1.22] tracking-[-0.01em] sm:text-[34px] lg:text-[44px]">
               {heroLine}
             </p>
           </div>
           <div style={reveal(revealed, 140)}>
             <p
-              className="m-0 whitespace-nowrap text-right font-mono text-[11px] leading-[2] tracking-[0.14em]"
+              className="m-0 whitespace-nowrap font-mono text-[11px] leading-[2] tracking-[0.14em] sm:text-right"
               style={{ color: "var(--subtle)" }}
             >
               {locationLine}

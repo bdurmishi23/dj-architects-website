@@ -20,13 +20,13 @@ export default function AboutSection({
   return (
     <section
       id="about"
-      className="grid grid-cols-1 gap-20 px-6 py-[120px] md:grid-cols-[1.05fr_0.95fr] md:items-start md:px-12"
+      className="grid grid-cols-1 gap-14 px-6 py-16 sm:py-24 md:grid-cols-[1.05fr_0.95fr] md:items-start md:gap-20 md:px-12 lg:py-[120px]"
     >
       <div>
         <p className="mb-7 font-mono text-xs tracking-[0.14em]" style={{ color: "var(--subtle)" }}>
           {settings ? pick(locale, settings.aboutKickerEn, settings.aboutKickerAl) : ""}
         </p>
-        <p className="max-w-[600px] font-serif text-[30px] font-light leading-[1.34] tracking-[-0.01em]">
+        <p className="max-w-[600px] font-serif text-[22px] font-light leading-[1.34] tracking-[-0.01em] sm:text-[26px] lg:text-[30px]">
           {settings ? pick(locale, settings.aboutLeadEn, settings.aboutLeadAl) : ""}
         </p>
         <div
@@ -48,7 +48,7 @@ export default function AboutSection({
         </div>
       </div>
       <div className="min-w-0">
-        <div className="h-[520px] w-full overflow-hidden rounded-portrait">
+        <div className="h-[320px] w-full overflow-hidden rounded-portrait sm:h-[400px] md:h-[440px] lg:h-[520px]">
           {portraitSrc && (
             <Image
               src={portraitSrc}

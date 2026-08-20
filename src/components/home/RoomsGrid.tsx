@@ -21,7 +21,7 @@ export default function RoomsGrid({
 
   return (
     <div
-      className="grid grid-cols-1 gap-px sm:grid-cols-3"
+      className="grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-3"
       style={{ background: "var(--hairline)" }}
     >
       {ordered.map((room) => (

@@ -63,7 +63,7 @@ export default function SiteNav() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-[34px] text-sm tracking-[0.02em] md:flex">
+        <nav className="hidden items-center gap-[26px] text-sm tracking-[0.02em] lg:flex xl:gap-[34px]">
           {LINKS.map((link) => {
             const on = hovered === link.key || (hovered === null && active === link.key);
             return (
@@ -73,7 +73,7 @@ export default function SiteNav() {
                 onClick={(e) => handleNavClick(e, link.hash)}
                 onMouseEnter={() => setHovered(link.key)}
                 onMouseLeave={() => setHovered(null)}
-                className="flex flex-col items-center gap-[5px] whitespace-nowrap transition-colors duration-300 ease-editorial"
+                className="flex flex-col items-center gap-[5px] whitespace-nowrap py-2 transition-colors duration-300 ease-editorial"
                 style={{ color: on ? "var(--ink)" : "var(--subtle)" }}
               >
                 {t(link.key)}
@@ -90,13 +90,13 @@ export default function SiteNav() {
             );
           })}
 
-          <div className="flex items-center gap-2 border-l border-hairline pl-5 font-mono text-xs tracking-[0.06em]">
+          <div className="flex items-center gap-1 border-l border-hairline pl-4 font-mono text-xs tracking-[0.06em] xl:pl-5">
             {routing.locales.map((loc, i) => (
-              <span key={loc} className="flex items-center gap-2">
+              <span key={loc} className="flex items-center gap-1">
                 <button
                   type="button"
                   onClick={() => router.replace(pathname, { locale: loc })}
-                  className="uppercase transition-colors duration-300 ease-editorial"
+                  className="flex min-h-11 min-w-8 items-center justify-center uppercase transition-colors duration-300 ease-editorial"
                   style={{ color: loc === locale ? "var(--brass)" : "var(--subtle)" }}
                 >
                   {loc}
@@ -112,7 +112,7 @@ export default function SiteNav() {
             type="button"
             aria-label="Toggle day/night mode"
             onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-            className="ml-2 flex items-center"
+            className="flex min-h-11 min-w-11 items-center justify-center"
           >
             {mounted ? (
               <ModeDots isDark={resolvedTheme === "dark"} />
@@ -124,7 +124,7 @@ export default function SiteNav() {
 
         <button
           type="button"
-          className="text-sm text-ink md:hidden"
+          className="flex min-h-11 min-w-11 items-center justify-center text-sm text-ink lg:hidden"
           aria-expanded={mobileOpen}
           aria-label="Toggle menu"
           onClick={() => setMobileOpen((v) => !v)}
@@ -134,26 +134,26 @@ export default function SiteNav() {
       </div>
 
       {mobileOpen && (
-        <nav className="flex flex-col gap-1 border-t border-hairline px-6 pb-6 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-hairline px-6 pb-6 lg:hidden">
           {LINKS.map((link) => (
             <Link
               key={link.key}
               href={isHome ? link.hash : `/${link.hash}`}
               onClick={(e) => handleNavClick(e, link.hash)}
-              className="py-3 text-sm"
+              className="flex min-h-11 items-center text-sm"
               style={{ color: "var(--subtle)" }}
             >
               {t(link.key)}
             </Link>
           ))}
           <div className="flex items-center gap-4 pt-3">
-            <div className="flex items-center gap-2 font-mono text-xs tracking-[0.06em]">
+            <div className="flex items-center gap-1 font-mono text-xs tracking-[0.06em]">
               {routing.locales.map((loc, i) => (
-                <span key={loc} className="flex items-center gap-2">
+                <span key={loc} className="flex items-center gap-1">
                   <button
                     type="button"
                     onClick={() => router.replace(pathname, { locale: loc })}
-                    className="uppercase"
+                    className="flex min-h-11 min-w-8 items-center justify-center uppercase"
                     style={{ color: loc === locale ? "var(--brass)" : "var(--subtle)" }}
                   >
                     {loc}
@@ -168,6 +168,7 @@ export default function SiteNav() {
               type="button"
               aria-label="Toggle day/night mode"
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              className="flex min-h-11 min-w-11 items-center justify-center"
             >
               {mounted ? (
                 <ModeDots isDark={resolvedTheme === "dark"} />

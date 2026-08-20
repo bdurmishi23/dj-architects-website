@@ -10,13 +10,13 @@ export default function ContactSection({
   locale: Locale;
 }) {
   return (
-    <section id="contact" className="px-6 pb-[120px] pt-5 md:px-12">
+    <section id="contact" className="px-6 pb-16 pt-5 sm:pb-[120px] md:px-12">
       <div
-        className="flex flex-wrap items-center justify-between gap-10 rounded-panel border p-14"
+        className="flex flex-wrap items-center justify-between gap-8 rounded-panel border p-6 sm:gap-10 sm:p-10 lg:p-14"
         style={{ borderColor: "var(--panel-border)" }}
       >
         <div>
-          <p className="mb-3 font-serif text-[32px] font-light tracking-[-0.01em]">
+          <p className="mb-3 font-serif text-[24px] font-light tracking-[-0.01em] sm:text-[28px] lg:text-[32px]">
             {settings ? pick(locale, settings.contactLeadEn, settings.contactLeadAl) : ""}
           </p>
           <p className="text-sm" style={{ color: "var(--subtle)" }}>

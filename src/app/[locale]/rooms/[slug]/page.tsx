@@ -58,7 +58,7 @@ export default async function RoomPage({ params }: Props) {
           <span className="text-[13px]">←</span>
           {t("back")}
         </Link>
-        <div className="flex items-start gap-[26px]">
+        <div className="flex items-start gap-4 sm:gap-[26px]">
           <span className="flex-none pt-[6px]">
             <PlanMark spec={ROOM_MARKS[slug]} scale={60 / 44} />
           </span>
@@ -66,7 +66,9 @@ export default async function RoomPage({ params }: Props) {
             <span className="mb-3 block font-mono text-[11px] tracking-[0.16em] text-brass">
               {ROOM_CODES[slug]}
             </span>
-            <h1 className="font-serif text-[48px] font-light tracking-[-0.01em]">{name}</h1>
+            <h1 className="font-serif text-[32px] font-light tracking-[-0.01em] sm:text-[40px] lg:text-[48px]">
+              {name}
+            </h1>
             <p className="mt-[18px] max-w-[480px] text-[15px] leading-[1.75]" style={{ color: "var(--subtle)" }}>
               {description}
             </p>
@@ -76,12 +78,12 @@ export default async function RoomPage({ params }: Props) {
 
       {images.length > 0 && (
         <div className="px-6 pb-10 pt-11 md:px-12">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1.4fr_1fr] sm:grid-rows-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1.4fr_1fr] md:grid-rows-2">
             {images.map((src, i) => (
               <div
                 key={i}
                 className={`overflow-hidden rounded-card ${
-                  i === 0 ? "h-[220px] sm:row-span-2 sm:h-auto" : "h-[220px]"
+                  i === 0 ? "h-[220px] md:row-span-2 md:h-auto" : "h-[220px]"
                 }`}
               >
                 <Image
@@ -104,7 +106,7 @@ export default async function RoomPage({ params }: Props) {
               {t("related")}
             </span>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((project) => (
               <Link
                 key={project._id}
