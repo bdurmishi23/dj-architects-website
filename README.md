@@ -1,3 +1,79 @@
+# DJ Architects
+
+Bilingual (English / Albanian) portfolio site for DJ Architects, a
+Tirana-based architecture and interior design studio. Built with
+Next.js 14 (App Router, TypeScript), Tailwind CSS (`darkMode: 'class'`
+for the day/night toggle), Sanity CMS (embedded Studio at `/studio`),
+next-intl for locale routing, next-themes for the theme toggle, and
+Framer Motion / hand-written CSS transitions for the weighted,
+no-bounce motion throughout.
+
+The design below (`## Handoff: ...` onward) is the studio's original
+design brief, delivered as four `.dc.html` prototype exports plus this
+written spec — kept in place as the durable source of truth for colors,
+type, spacing, copy, and motion timing. Everything above this line is
+the actual implementation notes; everything from here down is the
+design reference itself.
+
+## Content model
+
+Rebuilt around the delivered design's room-first IA, which has **no
+individual project detail page** — projects only ever appear as rows in
+a tracklist (homepage "Selected work" and the "All projects" page); the
+deep-dive experience lives at the room level instead.
+
+- **`project`** (Sanity document): `name`, `discipline`
+  (architecture/interiors/hospitality — groups the All projects page),
+  `categoryEn`/`categoryAl` (short listing label), `location`, `year`,
+  `status` (built/construction/design), `rooms` (which of the six room
+  types this project appears under), `coverImage`, `signatureMark` (a
+  preset abstract plan-icon, picked from a fixed library — see
+  `src/lib/marks.ts`), `emphasis` (compact/medium/feature — controls
+  row size on the homepage), `featuredOnHome`, `order`.
+- **`roomType`** (Sanity document, six fixed slugs — living, kitchen,
+  bedroom, bath, entrance, terrace): `nameEn`/`nameAl`,
+  `descriptionEn`/`descriptionAl`, `gallery`. The slug, code (A1-B3),
+  and plan-mark icon per room are structural (`src/lib/marks.ts`), not
+  editorial — founders edit the copy and photos, not the room set
+  itself.
+- **`siteSettings`** (singleton): hero image/line, about kicker/lead/
+  founder quotes/portrait, contact lead/note/email/phone/address/social
+  links, footer tagline.
+
+## Running it
+
+```bash
+npm install
+cp .env.local.example .env.local
+# fill in NEXT_PUBLIC_SANITY_PROJECT_ID (see below)
+npm run dev
+```
+
+- Site: http://localhost:3000/al (or `/en`)
+- Studio: http://localhost:3000/studio
+
+### Connecting Sanity and adding content
+
+1. Set `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET`
+   in `.env.local`, then restart `npm run dev`.
+2. Log into `/studio` with the Sanity account that owns the project.
+3. Create the **Site settings** document first (sidebar, above
+   Projects) — the homepage hero/about/contact sections read from it.
+4. Create the six **Room type** documents (one per slug: living,
+   kitchen, bedroom, bath, entrance, terrace). Until a given one
+   exists, its homepage grid card is simply absent and its
+   `/rooms/{slug}` page correctly 404s (it's a resource lookup, not an
+   empty state).
+5. Add **Project** documents. Give at least one `emphasis: "feature"`
+   to lead the tracklist, and check `featuredOnHome` on the ones that
+   should appear on the homepage.
+
+Until a project ID is set, the site still builds and renders — every
+section is simply empty, since data-fetching is guarded to skip calls
+when unconfigured.
+
+---
+
 # Handoff: DJ Architects — bilingual portfolio site
 
 ## Overview
