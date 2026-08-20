@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "work": "Punë",
+    "rooms": "Ambiente",
+    "about": "Rreth",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "workTitle": "Punë të përzgjedhura",
+    "workCount": "{count} projekte · 2025—2026",
+    "allProjects": "Të gjitha projektet",
+    "roomsTitle": "Shfleto sipas ambientit",
+    "roomsNote": "Arkivi është i indeksuar sipas ambientit, jo sipas tipit të projektit — klientët e dinë hapësirën që duan të ndryshojnë.",
+    "portraitCaption": "Deni dhe Jurgen në studion e Tiranës.",
+    "sideA": "Ana A",
+    "sideB": "Ana B"
+  },
+  "allProjects": {
+    "title": "Të gjitha projektet",
+    "back": "Kthehu te faqja kryesore",
+    "intro": "Katalogu i plotë, sipas rendit kronologjik — çdo projekt mban të njëjtin kod, shenjë dhe metadhëna si përzgjedhja në faqen kryesore.",
+    "count": "{count} projekte · 2026"
+  },
+  "room": {
+    "back": "Kthehu te ambientet",
+    "related": "Shfaqet gjithashtu në"
+  },
+  "discipline": {
+    "architecture": "Arkitekturë",
+    "interiors": "Interier",
+    "hospitality": "Hoteleri"
+  },
+  "status": {
+    "built": "Përfunduar",
+    "construction": "Në ndërtim",
+    "design": "Në projektim"
+  },
+  "footer": {
+    "instagram": "Instagram",
+    "pinterest": "Pinterest",
+    "linkedin": "LinkedIn",
+    "copyright": "Tiranë · 2026—"
+  }
+}

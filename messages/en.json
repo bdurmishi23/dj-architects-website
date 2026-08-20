@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "work": "Work",
+    "rooms": "Rooms",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "workTitle": "Selected work",
+    "workCount": "{count} projects · 2025—2026",
+    "allProjects": "All projects",
+    "roomsTitle": "Browse by room",
+    "roomsNote": "Our archive is indexed by room, not by project type — most clients arrive knowing which space they want to change.",
+    "portraitCaption": "Deni and Jurgen in the Tirana studio.",
+    "sideA": "Side A",
+    "sideB": "Side B"
+  },
+  "allProjects": {
+    "title": "All projects",
+    "back": "Back to homepage",
+    "intro": "The full catalogue, side by side, in the order it was made — every project carries the same code, mark and metadata as the selection on the homepage.",
+    "count": "{count} projects · 2026"
+  },
+  "room": {
+    "back": "Back to rooms",
+    "related": "Also seen in"
+  },
+  "discipline": {
+    "architecture": "Architecture",
+    "interiors": "Interiors",
+    "hospitality": "Hospitality"
+  },
+  "status": {
+    "built": "Completed",
+    "construction": "Under construction",
+    "design": "In design"
+  },
+  "footer": {
+    "instagram": "Instagram",
+    "pinterest": "Pinterest",
+    "linkedin": "LinkedIn",
+    "copyright": "Tirana · 2026—"
+  }
+}
