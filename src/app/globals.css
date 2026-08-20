@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #f6f1e8;
+  --ink: #21201c;
+  --subtle: #6b6357;
+  --subtle-dim: rgba(33, 32, 28, 0.22);
+  --hairline: rgba(33, 32, 28, 0.14);
+  --nav-bg: rgba(246, 241, 232, 0.86);
+  --nav-border: rgba(33, 32, 28, 0.09);
+  --room-bg: #f6f1e8;
+  --room-hover: #efe8da;
+  --scrim: linear-gradient(
+    180deg,
+    rgba(246, 241, 232, 0.35) 0%,
+    rgba(33, 32, 28, 0.12) 45%,
+    rgba(246, 241, 232, 0.97) 100%
+  );
+  --grooves-opacity: 0.14;
+  --dialog-border: rgba(169, 120, 46, 0.5);
+  --panel-border: rgba(33, 32, 28, 0.14);
+  --cta-border: rgba(33, 32, 28, 0.28);
+  --footer-border: rgba(33, 32, 28, 0.12);
+  --copy-dim: rgba(107, 99, 87, 0.7);
+  --card-hover: rgba(33, 32, 28, 0.04);
+  --brass: #a9782e;
+  --row-hover-tint: rgba(201, 161, 94, 0.09);
+  --card-hover-tint: rgba(201, 161, 94, 0.1);
+  --plan-line: rgba(33, 32, 28, 0.72);
+}
+
+.dark {
+  --paper: #161412;
+  --ink: #f3ede4;
+  --subtle: #a79e92;
+  --subtle-dim: rgba(243, 237, 228, 0.2);
+  --hairline: rgba(243, 237, 228, 0.12);
+  --nav-bg: rgba(22, 20, 18, 0.82);
+  --nav-border: rgba(243, 237, 228, 0.07);
+  --room-bg: #161412;
+  --room-hover: #1c1917;
+  --scrim: linear-gradient(
+    180deg,
+    rgba(22, 20, 18, 0.55) 0%,
+    rgba(22, 20, 18, 0.25) 45%,
+    rgba(22, 20, 18, 0.96) 100%
+  );
+  --grooves-opacity: 0.16;
+  --dialog-border: rgba(201, 161, 94, 0.4);
+  --panel-border: rgba(243, 237, 228, 0.12);
+  --cta-border: rgba(243, 237, 228, 0.28);
+  --footer-border: rgba(243, 237, 228, 0.1);
+  --copy-dim: rgba(167, 158, 146, 0.6);
+  --card-hover: rgba(243, 237, 228, 0.035);
+  --brass: #c9a15e;
+  --plan-line: rgba(243, 237, 228, 0.78);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  transition:
+    background-color 560ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 560ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--paper);
+}
+
+a {
+  color: var(--brass);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+@keyframes dj-groove-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

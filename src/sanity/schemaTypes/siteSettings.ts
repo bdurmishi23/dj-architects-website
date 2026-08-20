@@ -1,0 +1,170 @@
+import { defineField, defineType } from "sanity";
+
+export const siteSettings = defineType({
+  name: "siteSettings",
+  title: "Site settings",
+  type: "document",
+  groups: [
+    { name: "hero", title: "Hero", default: true },
+    { name: "about", title: "About" },
+    { name: "contact", title: "Contact" },
+  ],
+  fields: [
+    defineField({
+      name: "heroImage",
+      title: "Hero image",
+      description: "Full-bleed homepage image — a moody, warmly-lit interior render.",
+      type: "image",
+      group: "hero",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "heroTextEn",
+      title: "Hero line (English)",
+      type: "text",
+      rows: 2,
+      group: "hero",
+    }),
+    defineField({
+      name: "heroTextAl",
+      title: "Hero line (Albanian)",
+      type: "text",
+      rows: 2,
+      group: "hero",
+    }),
+    defineField({
+      name: "taglineEn",
+      title: "Footer tagline (English)",
+      type: "string",
+      group: "hero",
+    }),
+    defineField({
+      name: "taglineAl",
+      title: "Footer tagline (Albanian)",
+      type: "string",
+      group: "hero",
+    }),
+    defineField({
+      name: "aboutKickerEn",
+      title: "About kicker (English)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "aboutKickerAl",
+      title: "About kicker (Albanian)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "aboutLeadEn",
+      title: "About lead paragraph (English)",
+      type: "text",
+      rows: 5,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutLeadAl",
+      title: "About lead paragraph (Albanian)",
+      type: "text",
+      rows: 5,
+      group: "about",
+    }),
+    defineField({
+      name: "quoteDeniEn",
+      title: "Deni's quote (English)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "quoteDeniAl",
+      title: "Deni's quote (Albanian)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "quoteJurgenEn",
+      title: "Jurgen's quote (English)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "quoteJurgenAl",
+      title: "Jurgen's quote (Albanian)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "aboutPortrait",
+      title: "Studio portrait",
+      type: "image",
+      group: "about",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "contactLeadEn",
+      title: "Contact lead line (English)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "contactLeadAl",
+      title: "Contact lead line (Albanian)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "contactNoteEn",
+      title: "Contact note (English)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "contactNoteAl",
+      title: "Contact note (Albanian)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "contactEmail",
+      title: "Contact email",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "contactPhone",
+      title: "Contact phone",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "address",
+      title: "Address",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "instagramUrl",
+      title: "Instagram URL",
+      type: "url",
+      group: "contact",
+    }),
+    defineField({
+      name: "pinterestUrl",
+      title: "Pinterest URL",
+      type: "url",
+      group: "contact",
+    }),
+    defineField({
+      name: "linkedinUrl",
+      title: "LinkedIn URL",
+      type: "url",
+      group: "contact",
+    }),
+  ],
+  preview: {
+    prepare() {
+      return { title: "Site settings" };
+    },
+  },
+});
