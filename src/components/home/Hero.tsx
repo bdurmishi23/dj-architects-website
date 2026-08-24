@@ -141,7 +141,7 @@ export default function Hero({
         </div>
       )}
 
-      <section id="top" className="relative h-[82vh] min-h-[520px] overflow-hidden sm:min-h-[600px]">
+      <section id="top" className="relative h-[82vh] min-h-[520px] sm:min-h-[600px]">
         {imageSrc && (
           <Image
             src={imageSrc}
@@ -156,7 +156,7 @@ export default function Hero({
         <svg
           viewBox="0 0 400 400"
           aria-hidden="true"
-          className="pointer-events-none absolute right-[-50px] top-1/2 h-[240px] w-[240px] -translate-y-1/2 sm:right-[-70px] sm:h-[360px] sm:w-[360px] lg:right-[-90px] lg:h-[520px] lg:w-[520px]"
+          className="pointer-events-none absolute right-[-50px] top-1/2 h-[220px] w-[220px] -translate-y-1/2 sm:right-[-90px] sm:h-[520px] sm:w-[520px]"
           style={{ opacity: "var(--grooves-opacity)" }}
         >
           <g fill="none" stroke="var(--ink)" strokeWidth={0.8}>
