@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { draftMode } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import Hero from "@/components/home/Hero";
 import { WorkTracklist } from "@/components/WorkTracklist";
@@ -26,10 +27,11 @@ export default async function HomePage({
   params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
+  const { isEnabled: preview } = draftMode();
   const [settings, projects, rooms, roomCounts, t] = await Promise.all([
-    getSiteSettings(),
-    getFeaturedProjects(),
-    getRoomTypes(),
+    getSiteSettings(preview),
+    getFeaturedProjects(preview),
+    getRoomTypes(preview),
     getRoomProjectCounts(),
     getTranslations("home"),
   ]);

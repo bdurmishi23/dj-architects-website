@@ -1,4 +1,4 @@
-import { client, projectId } from "./client";
+import { getClient, projectId } from "./client";
 import type { Project, RoomType, SiteSettings } from "./types";
 import type { RoomSlug } from "@/lib/marks";
 
@@ -40,42 +40,51 @@ const projectDetailFields = `
 // Sanity's client.fetch() goes through Next.js's patched fetch, which
 // caches indefinitely by default — without this, the first request ever
 // made (often with an empty dataset) gets cached and never re-fetched.
-const FETCH_OPTIONS = { next: { revalidate: 60 } };
+// Preview requests skip caching entirely so Presentation Tool edits show
+// up immediately instead of waiting out the revalidation window.
+function fetchOptions(preview: boolean) {
+  return preview ? { cache: "no-store" as const } : { next: { revalidate: 60 } };
+}
 
-export async function getFeaturedProjects(): Promise<Project[]> {
+export async function getFeaturedProjects(preview = false): Promise<Project[]> {
   if (!projectId) return [];
-  const result: { randomize: boolean; projects: Project[] } = await client.fetch(
+  const result: { randomize: boolean; projects: Project[] } = await getClient(
+    preview
+  ).fetch(
     `{
       "randomize": *[_type == "siteSettings"][0].randomizeHomepageOrder,
       "projects": *[_type == "project" && featuredOnHome == true] | order(orderRank asc) { ${projectFields} }
     }`,
     {},
-    FETCH_OPTIONS
+    fetchOptions(preview)
   );
   return result.randomize ? shuffle(result.projects) : result.projects;
 }
 
 export async function getAllProjects(): Promise<Project[]> {
   if (!projectId) return [];
-  return client.fetch(
+  return getClient(false).fetch(
     `*[_type == "project"] | order(discipline asc, orderRank asc) { ${projectFields} }`,
     {},
-    FETCH_OPTIONS
+    fetchOptions(false)
   );
 }
 
-export async function getProjectBySlug(slug: string): Promise<Project | null> {
+export async function getProjectBySlug(
+  slug: string,
+  preview = false
+): Promise<Project | null> {
   if (!projectId) return null;
-  return client.fetch(
+  return getClient(preview).fetch(
     `*[_type == "project" && slug.current == $slug][0] { ${projectDetailFields} }`,
     { slug },
-    FETCH_OPTIONS
+    fetchOptions(preview)
   );
 }
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
+export async function getSiteSettings(preview = false): Promise<SiteSettings | null> {
   if (!projectId) return null;
-  return client.fetch(
+  return getClient(preview).fetch(
     `*[_type == "siteSettings"][0] {
     heroImage,
     heroTextEn,
@@ -103,55 +112,62 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     linkedinUrl
   }`,
     {},
-    FETCH_OPTIONS
+    fetchOptions(preview)
   );
 }
 
-export async function getRoomTypes(): Promise<RoomType[]> {
+export async function getRoomTypes(preview = false): Promise<RoomType[]> {
   if (!projectId) return [];
-  return client.fetch(
+  return getClient(preview).fetch(
     `*[_type == "roomType"] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
     {},
-    FETCH_OPTIONS
+    fetchOptions(preview)
   );
 }
 
-export async function getRoomTypeBySlug(slug: RoomSlug): Promise<RoomType | null> {
+export async function getRoomTypeBySlug(
+  slug: RoomSlug,
+  preview = false
+): Promise<RoomType | null> {
   if (!projectId) return null;
-  return client.fetch(
+  return getClient(preview).fetch(
     `*[_type == "roomType" && slug == $slug][0] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
     { slug },
-    FETCH_OPTIONS
+    fetchOptions(preview)
   );
 }
 
-export async function getRoomTypesBySlugs(slugs: RoomSlug[]): Promise<RoomType[]> {
+export async function getRoomTypesBySlugs(
+  slugs: RoomSlug[],
+  preview = false
+): Promise<RoomType[]> {
   if (!projectId || slugs.length === 0) return [];
-  return client.fetch(
+  return getClient(preview).fetch(
     `*[_type == "roomType" && slug in $slugs] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
     { slugs },
-    FETCH_OPTIONS
+    fetchOptions(preview)
   );
 }
 
 export async function getRoomProjectCounts(): Promise<Record<string, number>> {
   if (!projectId) return {};
-  const rows: { slug: string; count: number }[] = await client.fetch(
+  const rows: { slug: string; count: number }[] = await getClient(false).fetch(
     `*[_type == "roomType"] { "slug": slug, "count": count(*[_type == "project" && ^.slug in rooms]) }`,
     {},
-    FETCH_OPTIONS
+    fetchOptions(false)
   );
   return Object.fromEntries(rows.map((r) => [r.slug, r.count]));
 }
 
 export async function getProjectsForRoom(
   slug: RoomSlug,
-  limit = 3
+  limit = 3,
+  preview = false
 ): Promise<Project[]> {
   if (!projectId) return [];
-  return client.fetch(
+  return getClient(preview).fetch(
     `*[_type == "project" && $slug in rooms] | order(orderRank asc) [0...$limit] { ${projectFields} }`,
     { slug, limit },
-    FETCH_OPTIONS
+    fetchOptions(preview)
   );
 }

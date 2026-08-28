@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { draftMode } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import {
   getAllProjects,
@@ -36,14 +37,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectPage({ params }: Props) {
   const { locale, slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const { isEnabled: preview } = draftMode();
+  const project = await getProjectBySlug(slug, preview);
   if (!project) notFound();
 
   const [t, tDiscipline, tStatus, rooms] = await Promise.all([
     getTranslations("project"),
     getTranslations("discipline"),
     getTranslations("status"),
-    getRoomTypesBySlugs(project.rooms ?? []),
+    getRoomTypesBySlugs(project.rooms ?? [], preview),
   ]);
 
   const description = pick(locale, project.descriptionEn, project.descriptionAl);

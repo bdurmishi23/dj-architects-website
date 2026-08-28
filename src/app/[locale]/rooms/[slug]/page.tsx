@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { draftMode } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import { getRoomTypeBySlug, getProjectsForRoom } from "@/lib/sanity/queries";
 import { urlForImage } from "@/lib/sanity/image";
@@ -32,10 +33,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function RoomPage({ params }: Props) {
   const { locale, slug } = await params;
   if (!isRoomSlug(slug)) notFound();
+  const { isEnabled: preview } = draftMode();
 
   const [room, related, t] = await Promise.all([
-    getRoomTypeBySlug(slug),
-    getProjectsForRoom(slug, 3),
+    getRoomTypeBySlug(slug, preview),
+    getProjectsForRoom(slug, 3, preview),
     getTranslations("room"),
   ]);
 
