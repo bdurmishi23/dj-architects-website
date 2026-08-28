@@ -69,6 +69,12 @@
 
 html {
   scroll-behavior: auto;
+  /* document.scrollingElement is <html>, not <body> — body's own
+     overflow-x-hidden class doesn't stop the page itself from scrolling
+     horizontally when something (e.g. Hero's decorative grooves SVG,
+     which intentionally bleeds past the right edge) overflows a nested
+     positioned ancestor. This is the actual clip boundary for the page. */
+  overflow-x: hidden;
 }
 
 body {
