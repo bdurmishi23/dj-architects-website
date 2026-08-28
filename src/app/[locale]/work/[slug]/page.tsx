@@ -141,13 +141,14 @@ export default async function ProjectPage({ params }: Props) {
             {t("renders")}
           </p>
           {images.length === 3 ? (
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-[1.4fr_1fr] md:grid-rows-2">
+            <div className="grid grid-cols-[1.4fr_1fr] grid-rows-2 gap-3 sm:gap-4">
               {images.map((src, i) => (
                 <div
                   key={i}
-                  className={`overflow-hidden rounded-card ${
-                    i === 0 ? "h-[220px] md:row-span-2 md:h-auto" : "h-[220px]"
+                  className={`overflow-hidden rounded-card border ${
+                    i === 0 ? "row-span-2 h-auto" : "h-[110px] sm:h-[180px] md:h-[220px]"
                   }`}
+                  style={{ borderColor: "var(--hairline)" }}
                 >
                   <Image
                     src={src}
@@ -163,15 +164,20 @@ export default async function ProjectPage({ params }: Props) {
             // Two columns tile any count without leaving empty cells: an odd
             // count just lets its last image span the full width, instead of
             // a fixed 3-column grid leaving 1-2 blank cells on the last row.
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            // Always 2 columns, even at phone widths — a breakpoint-gated
+            // grid-cols-1 base would collapse to a full-width stack under
+            // sm (640px), which also hits narrowed desktop browser windows,
+            // not just real phones.
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {images.map((src, i) => {
                 const isLastOdd = images.length % 2 === 1 && i === images.length - 1;
                 return (
                   <div
                     key={i}
-                    className={`aspect-[4/3] overflow-hidden rounded-card ${
-                      isLastOdd ? "sm:col-span-2" : ""
+                    className={`aspect-[4/3] overflow-hidden rounded-card border ${
+                      isLastOdd ? "col-span-2" : ""
                     }`}
+                    style={{ borderColor: "var(--hairline)" }}
                   >
                     <Image
                       src={src}
