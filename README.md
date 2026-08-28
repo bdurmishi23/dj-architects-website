@@ -72,6 +72,24 @@ Until a project ID is set, the site still builds and renders — every
 section is simply empty, since data-fetching is guarded to skip calls
 when unconfigured.
 
+### Inviting the client (or anyone else) into Studio
+
+Done at [sanity.io/manage](https://www.sanity.io/manage), not in this
+repo — requires an account with admin access on the project.
+
+1. Select the **DJ Architects** project → **Members** tab → **Invite
+   members**.
+2. Enter their email address(es).
+3. Set the role to **Editor** — lets them create/edit/publish/delete
+   content (projects, room types, site settings) without touching
+   project settings, API tokens, schema, or billing. Avoid
+   **Administrator** (full control, including billing and deleting the
+   project) and **Viewer** (read-only — they wouldn't be able to
+   publish anything).
+4. They accept the emailed invite, then log into `/studio` (local or
+   deployed) with whichever provider they used to accept — Google,
+   GitHub, or email/password.
+
 ---
 
 # Handoff: DJ Architects — bilingual portfolio site
