@@ -28,6 +28,7 @@
   "project": {
     "back": "Back to work",
     "floorPlan": "Floor plan",
+    "renders": "Renders",
     "roomsFeatured": "Rooms featured in this project"
   },
   "discipline": {

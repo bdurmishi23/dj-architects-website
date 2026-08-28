@@ -52,8 +52,8 @@ export default async function RoomPage({ params }: Props) {
       <div className="px-6 pb-5 pt-11 md:px-12">
         <Link
           href="/#rooms"
-          className="mb-[34px] inline-flex items-center gap-[10px] font-mono text-[11px] tracking-[0.1em] transition-colors duration-300 ease-editorial hover:text-brass"
-          style={{ color: "var(--subtle)" }}
+          className="mb-[34px] inline-flex items-center gap-[10px] rounded-pill border py-[9px] pl-[14px] pr-[18px] font-mono text-[11px] tracking-[0.1em] transition-colors duration-300 ease-editorial hover:border-brass hover:text-brass"
+          style={{ borderColor: "var(--hairline)", color: "var(--subtle)" }}
         >
           <span className="text-[13px]">←</span>
           {t("back")}

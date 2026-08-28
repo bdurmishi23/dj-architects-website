@@ -75,8 +75,8 @@ export default async function ProjectPage({ params }: Props) {
       <div className="px-6 pb-5 pt-11 md:px-12">
         <Link
           href="/work"
-          className="mb-[34px] inline-flex items-center gap-[10px] font-mono text-[11px] tracking-[0.1em] transition-colors duration-300 ease-editorial hover:text-brass"
-          style={{ color: "var(--subtle)" }}
+          className="mb-[34px] inline-flex items-center gap-[10px] rounded-pill border py-[9px] pl-[14px] pr-[18px] font-mono text-[11px] tracking-[0.1em] transition-colors duration-300 ease-editorial hover:border-brass hover:text-brass"
+          style={{ borderColor: "var(--hairline)", color: "var(--subtle)" }}
         >
           <span className="text-[13px]">←</span>
           {t("back")}
@@ -132,6 +132,12 @@ export default async function ProjectPage({ params }: Props) {
 
       {images.length > 0 && (
         <div className="px-6 pb-10 pt-5 md:px-12">
+          <p
+            className="mb-4 font-mono text-[11px] tracking-[0.14em]"
+            style={{ color: "var(--subtle)" }}
+          >
+            {t("renders")}
+          </p>
           {images.length === 3 ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-[1.4fr_1fr] md:grid-rows-2">
               {images.map((src, i) => (
@@ -152,18 +158,29 @@ export default async function ProjectPage({ params }: Props) {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {images.map((src, i) => (
-                <div key={i} className="aspect-[4/3] overflow-hidden rounded-card">
-                  <Image
-                    src={src}
-                    alt={`${project.name} — ${i + 1}`}
-                    width={800}
-                    height={600}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
+            // Two columns tile any count without leaving empty cells: an odd
+            // count just lets its last image span the full width, instead of
+            // a fixed 3-column grid leaving 1-2 blank cells on the last row.
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {images.map((src, i) => {
+                const isLastOdd = images.length % 2 === 1 && i === images.length - 1;
+                return (
+                  <div
+                    key={i}
+                    className={`aspect-[4/3] overflow-hidden rounded-card ${
+                      isLastOdd ? "sm:col-span-2" : ""
+                    }`}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${project.name} — ${i + 1}`}
+                      width={800}
+                      height={600}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
