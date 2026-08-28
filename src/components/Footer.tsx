@@ -4,6 +4,8 @@ import { getSiteSettings } from "@/lib/sanity/queries";
 import { pick } from "@/lib/i18n";
 import type { Locale } from "@/i18n/routing";
 
+const FOUNDING_YEAR = 2026;
+
 export default async function Footer() {
   const { isEnabled: preview } = draftMode();
   const [t, settings, locale] = await Promise.all([
@@ -15,6 +17,13 @@ export default async function Footer() {
   const tagline = settings
     ? pick(locale as Locale, settings.taglineEn, settings.taglineAl)
     : "";
+  const hasSocialLinks = Boolean(
+    settings?.instagramUrl || settings?.pinterestUrl || settings?.linkedinUrl
+  );
+
+  const currentYear = new Date().getFullYear();
+  const yearLabel =
+    currentYear > FOUNDING_YEAR ? `${FOUNDING_YEAR}–${currentYear}` : `${FOUNDING_YEAR}—`;
 
   return (
     <footer
@@ -50,10 +59,12 @@ export default async function Footer() {
           </a>
         )}
         <span
-          className="mt-[14px] whitespace-nowrap font-mono text-[11px] tracking-[0.1em]"
+          className={`whitespace-nowrap font-mono text-[11px] tracking-[0.1em] ${
+            hasSocialLinks ? "mt-[14px]" : ""
+          }`}
           style={{ color: "var(--copy-dim)" }}
         >
-          {t("copyright")}
+          {t("copyright")} {yearLabel}
         </span>
       </div>
     </footer>
