@@ -18,11 +18,21 @@ export const client = createClient({
 // never publicly readable, so this only switches perspective when preview
 // is actually requested AND a read token is configured — otherwise callers
 // silently keep reading published content, same as always.
+//
+// stega encodes invisible per-field source info into string results, which
+// is what lets <VisualEditing />'s overlay know which document/field a piece
+// of rendered text came from when you click it — without this, click-to-edit
+// silently does nothing. Only ever enabled here, never on the public client,
+// since stega characters must never leak into production/SEO output.
 export function getClient(preview: boolean) {
   if (!preview || !readToken) return client;
   return client.withConfig({
     token: readToken,
     perspective: "drafts",
     useCdn: false,
+    stega: {
+      enabled: true,
+      studioUrl: "/studio",
+    },
   });
 }
