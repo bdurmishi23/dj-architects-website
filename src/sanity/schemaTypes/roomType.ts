@@ -47,7 +47,8 @@ export const roomType = defineType({
     defineField({
       name: "gallery",
       title: "Gallery",
-      description: "Representative photos for this room type (aim for 3).",
+      description:
+        "Foto përfaqësuese për këtë ambient (synoni 3). Rekomandohet foto horizontale (peizazh), min. 1600px e gjerë.",
       type: "array",
       of: [{ type: "image", options: { hotspot: true } }],
       validation: (rule) => rule.min(1),

@@ -1,5 +1,9 @@
 import { defineField, defineType } from "sanity";
+import { orderRankField } from "@sanity/orderable-document-list";
 import { PROJECT_MARK_OPTIONS, ROOM_SLUGS } from "@/lib/marks";
+
+const IMAGE_SIZE_HINT =
+  "Rekomandohet foto horizontale (peizazh), min. 1600px e gjerë, për cilësi të mirë.";
 
 const disciplines = [
   { title: "Architecture", value: "architecture" },
@@ -128,7 +132,7 @@ export const project = defineType({
     defineField({
       name: "coverImage",
       title: "Cover image",
-      description: "Used as the thumbnail in tracklist rows.",
+      description: `Përdoret si miniaturë në listat e projekteve. ${IMAGE_SIZE_HINT}`,
       type: "image",
       group: "content",
       options: { hotspot: true },
@@ -145,7 +149,7 @@ export const project = defineType({
     defineField({
       name: "renderImages",
       title: "Render images",
-      description: "Gallery of renders/photos shown on the project's own page.",
+      description: `Galeria e renderave/fotove në faqen e projektit. ${IMAGE_SIZE_HINT}`,
       type: "array",
       group: "gallery",
       of: [{ type: "image", options: { hotspot: true } }],
@@ -182,20 +186,21 @@ export const project = defineType({
       group: "display",
       initialValue: false,
     }),
-    defineField({
-      name: "order",
-      title: "Sort order",
-      description: "Lower numbers appear first, within the homepage selection and within each discipline group.",
-      type: "number",
-      group: "display",
-      initialValue: 0,
-    }),
+    orderRankField({ type: "project" }),
   ],
   preview: {
     select: {
       title: "name",
       subtitle: "discipline",
       media: "coverImage",
+      featured: "featuredOnHome",
+    },
+    prepare({ title, subtitle, media, featured }) {
+      return {
+        title,
+        subtitle: featured ? `★ Në ballinë · ${subtitle}` : subtitle,
+        media,
+      };
     },
   },
 });
