@@ -1,6 +1,7 @@
+import { stegaClean } from "@sanity/client/stega";
 import { getClient, projectId } from "./client";
-import type { Project, RoomType, SiteSettings } from "./types";
-import type { RoomSlug } from "@/lib/marks";
+import type { Discipline, Emphasis, Project, ProjectStatus, RoomType, SiteSettings } from "./types";
+import type { ProjectMarkKey, RoomSlug } from "@/lib/marks";
 
 const projectFields = `
   _id,
@@ -19,6 +20,33 @@ const projectFields = `
   emphasis,
   featuredOnHome
 `;
+
+// Stega encodes invisible metadata into EVERY string field the preview
+// client returns — including ones this app uses for object-key lookups
+// (SIZE_MAP[project.emphasis], PROJECT_MARKS[project.signatureMark]),
+// translation keys (t(project.status)), and routing (slug in hrefs and
+// generateStaticParams). A stega-encoded "compact" no longer strictly
+// equals the literal key "compact", so those lookups silently return
+// undefined. Clean exactly the fields used for logic/identity right here,
+// once, so every caller gets safe values — display-only fields (name,
+// descriptions, category labels, etc.) stay stega-encoded so click-to-edit
+// still works on them. stegaClean() is a no-op on already-clean strings,
+// so this is always safe to apply, preview or not.
+function cleanProject(p: Project): Project {
+  return {
+    ...p,
+    slug: stegaClean(p.slug),
+    discipline: stegaClean(p.discipline) as Discipline,
+    status: stegaClean(p.status) as ProjectStatus,
+    emphasis: stegaClean(p.emphasis) as Emphasis,
+    signatureMark: stegaClean(p.signatureMark) as ProjectMarkKey,
+    rooms: p.rooms?.map((slug) => stegaClean(slug) as RoomSlug),
+  };
+}
+
+function cleanRoomType(r: RoomType): RoomType {
+  return { ...r, slug: stegaClean(r.slug) as RoomSlug };
+}
 
 function shuffle<T>(items: T[]): T[] {
   const result = [...items];
@@ -58,16 +86,18 @@ export async function getFeaturedProjects(preview = false): Promise<Project[]> {
     {},
     fetchOptions(preview)
   );
-  return result.randomize ? shuffle(result.projects) : result.projects;
+  const projects = result.projects.map(cleanProject);
+  return result.randomize ? shuffle(projects) : projects;
 }
 
 export async function getAllProjects(): Promise<Project[]> {
   if (!projectId) return [];
-  return getClient(false).fetch(
+  const projects: Project[] = await getClient(false).fetch(
     `*[_type == "project"] | order(discipline asc, orderRank asc) { ${projectFields} }`,
     {},
     fetchOptions(false)
   );
+  return projects.map(cleanProject);
 }
 
 export async function getProjectBySlug(
@@ -75,11 +105,12 @@ export async function getProjectBySlug(
   preview = false
 ): Promise<Project | null> {
   if (!projectId) return null;
-  return getClient(preview).fetch(
+  const project: Project | null = await getClient(preview).fetch(
     `*[_type == "project" && slug.current == $slug][0] { ${projectDetailFields} }`,
     { slug },
     fetchOptions(preview)
   );
+  return project && cleanProject(project);
 }
 
 export async function getSiteSettings(preview = false): Promise<SiteSettings | null> {
@@ -118,11 +149,12 @@ export async function getSiteSettings(preview = false): Promise<SiteSettings | n
 
 export async function getRoomTypes(preview = false): Promise<RoomType[]> {
   if (!projectId) return [];
-  return getClient(preview).fetch(
+  const rooms: RoomType[] = await getClient(preview).fetch(
     `*[_type == "roomType"] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
     {},
     fetchOptions(preview)
   );
+  return rooms.map(cleanRoomType);
 }
 
 export async function getRoomTypeBySlug(
@@ -130,11 +162,12 @@ export async function getRoomTypeBySlug(
   preview = false
 ): Promise<RoomType | null> {
   if (!projectId) return null;
-  return getClient(preview).fetch(
+  const room: RoomType | null = await getClient(preview).fetch(
     `*[_type == "roomType" && slug == $slug][0] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
     { slug },
     fetchOptions(preview)
   );
+  return room && cleanRoomType(room);
 }
 
 export async function getRoomTypesBySlugs(
@@ -142,11 +175,12 @@ export async function getRoomTypesBySlugs(
   preview = false
 ): Promise<RoomType[]> {
   if (!projectId || slugs.length === 0) return [];
-  return getClient(preview).fetch(
+  const rooms: RoomType[] = await getClient(preview).fetch(
     `*[_type == "roomType" && slug in $slugs] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
     { slugs },
     fetchOptions(preview)
   );
+  return rooms.map(cleanRoomType);
 }
 
 export async function getRoomProjectCounts(): Promise<Record<string, number>> {
@@ -165,9 +199,10 @@ export async function getProjectsForRoom(
   preview = false
 ): Promise<Project[]> {
   if (!projectId) return [];
-  return getClient(preview).fetch(
+  const projects: Project[] = await getClient(preview).fetch(
     `*[_type == "project" && $slug in rooms] | order(orderRank asc) [0...$limit] { ${projectFields} }`,
     { slug, limit },
     fetchOptions(preview)
   );
+  return projects.map(cleanProject);
 }
