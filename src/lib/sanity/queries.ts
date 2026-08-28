@@ -70,8 +70,16 @@ const projectDetailFields = `
 // made (often with an empty dataset) gets cached and never re-fetched.
 // Preview requests skip caching entirely so Presentation Tool edits show
 // up immediately instead of waiting out the revalidation window.
+// 5s (not 60s) because this is a low-traffic site where a founder testing
+// "did my publish show up?" cares more about it feeling instant than about
+// shaving Sanity API calls — and Next's stale-while-revalidate means the
+// *actual* worst case is somewhat longer than the window itself (a request
+// right at the boundary still gets the stale copy while a fresh one loads
+// in the background for next time). Time-based on purpose, not cache:
+// "no-store" — that would force these routes out of static generation
+// entirely, a much bigger change than "publishes feel slow."
 function fetchOptions(preview: boolean) {
-  return preview ? { cache: "no-store" as const } : { next: { revalidate: 60 } };
+  return preview ? { cache: "no-store" as const } : { next: { revalidate: 5 } };
 }
 
 export async function getFeaturedProjects(preview = false): Promise<Project[]> {
