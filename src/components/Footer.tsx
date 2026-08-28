@@ -1,12 +1,14 @@
 import { getTranslations, getLocale } from "next-intl/server";
+import { draftMode } from "next/headers";
 import { getSiteSettings } from "@/lib/sanity/queries";
 import { pick } from "@/lib/i18n";
 import type { Locale } from "@/i18n/routing";
 
 export default async function Footer() {
+  const { isEnabled: preview } = draftMode();
   const [t, settings, locale] = await Promise.all([
     getTranslations("footer"),
-    getSiteSettings(),
+    getSiteSettings(preview),
     getLocale(),
   ]);
 
