@@ -118,6 +118,7 @@ export default function SiteNav() {
   }
 
   return (
+    <>
     <header className="sticky top-0 z-40 border-b border-hairline bg-[var(--nav-bg)] backdrop-blur-md transition-colors duration-theme ease-editorial">
       <div className="flex items-center justify-between px-6 py-[22px] md:px-12">
         <Link href="/" className="flex flex-none items-center gap-3 text-ink">
@@ -182,59 +183,69 @@ export default function SiteNav() {
 
       <AnimatePresence>
         {mobileOpen && (
-          <>
-            <motion.div
-              key="nav-scrim"
-              className="fixed inset-0 z-30 lg:hidden"
-              style={{ background: "rgba(10,9,8,0.4)" }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, ease: EASE }}
-              onClick={() => setMobileOpen(false)}
-            />
-            <motion.nav
-              key="nav-panel"
-              className="absolute inset-x-0 top-full z-30 border-b border-hairline bg-[var(--nav-bg)] shadow-[0_24px_48px_-16px_rgba(0,0,0,0.35)] backdrop-blur-md lg:hidden"
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.35, ease: EASE }}
-            >
-              <div className="flex flex-col px-6 pb-6 pt-2">
-                {LINKS.map((link, i) => {
-                  const on = active === link.key;
-                  return (
-                    <Link
-                      key={link.key}
-                      href={isHome ? link.hash : `/${link.hash}`}
-                      onClick={(e) => handleNavClick(e, link.hash)}
-                      className="flex min-h-[56px] items-center gap-3 font-serif text-2xl font-light tracking-[-0.01em] transition-colors duration-300 ease-editorial"
-                      style={{
-                        color: on ? "var(--ink)" : "var(--subtle)",
-                        borderTop: i === 0 ? "none" : "1px solid var(--hairline)",
-                      }}
-                    >
-                      <span
-                        className="h-[6px] w-[6px] flex-none rounded-full transition-opacity duration-300 ease-editorial"
-                        style={{ background: "var(--brass)", opacity: on ? 1 : 0 }}
-                      />
-                      {t(link.key)}
-                    </Link>
-                  );
-                })}
-                <div
-                  className="mt-4 flex items-center justify-between border-t pt-5"
-                  style={{ borderColor: "var(--hairline)" }}
-                >
-                  <LangToggle compact />
-                  <ModeToggle />
-                </div>
+          <motion.nav
+            key="nav-panel"
+            className="absolute inset-x-0 top-full z-30 border-b border-hairline bg-[var(--nav-bg)] shadow-[0_24px_48px_-16px_rgba(0,0,0,0.35)] backdrop-blur-md lg:hidden"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: EASE }}
+          >
+            <div className="flex flex-col px-6 pb-6 pt-2">
+              {LINKS.map((link, i) => {
+                const on = active === link.key;
+                return (
+                  <Link
+                    key={link.key}
+                    href={isHome ? link.hash : `/${link.hash}`}
+                    onClick={(e) => handleNavClick(e, link.hash)}
+                    className="flex min-h-[56px] items-center gap-3 font-serif text-2xl font-light tracking-[-0.01em] transition-colors duration-300 ease-editorial"
+                    style={{
+                      color: on ? "var(--ink)" : "var(--subtle)",
+                      borderTop: i === 0 ? "none" : "1px solid var(--hairline)",
+                    }}
+                  >
+                    <span
+                      className="h-[6px] w-[6px] flex-none rounded-full transition-opacity duration-300 ease-editorial"
+                      style={{ background: "var(--brass)", opacity: on ? 1 : 0 }}
+                    />
+                    {t(link.key)}
+                  </Link>
+                );
+              })}
+              <div
+                className="mt-4 flex items-center justify-between border-t pt-5"
+                style={{ borderColor: "var(--hairline)" }}
+              >
+                <LangToggle compact />
+                <ModeToggle />
               </div>
-            </motion.nav>
-          </>
+            </div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </header>
+
+    {/* Rendered as a sibling of <header>, not a descendant: header has
+        backdrop-blur (backdrop-filter), which per spec makes it the
+        containing block for fixed-position descendants — a scrim nested
+        inside it would resolve "fixed inset-0" against the header's own
+        ~88px height instead of the viewport, leaving no clickable area
+        to close the menu. */}
+    <AnimatePresence>
+      {mobileOpen && (
+        <motion.div
+          key="nav-scrim"
+          className="fixed inset-0 z-30 lg:hidden"
+          style={{ background: "rgba(10,9,8,0.4)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: EASE }}
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+    </AnimatePresence>
+    </>
   );
 }
