@@ -87,6 +87,7 @@ async function uploadPlaceholder(filename, width, height, color) {
 const siteSettings = {
   _id: "siteSettings",
   _type: "siteSettings",
+  randomizeHomepageOrder: false,
   heroTextEn:
     "We design warm, evening-lit interiors for a city that lives after dark.",
   heroTextAl:
@@ -192,7 +193,7 @@ const projects = [
     rooms: ["living", "kitchen", "bedroom", "bath", "entrance", "terrace"],
     emphasis: "feature",
     featuredOnHome: true,
-    order: 10,
+    orderRank: "a00001",
     renderImageCount: 4,
   },
   {
@@ -213,7 +214,7 @@ const projects = [
     rooms: ["kitchen", "bedroom", "terrace"],
     emphasis: "medium",
     featuredOnHome: false,
-    order: 20,
+    orderRank: "a00002",
   },
   {
     name: "Studio Verdhë",
@@ -233,7 +234,7 @@ const projects = [
     rooms: ["living", "entrance"],
     emphasis: "compact",
     featuredOnHome: true,
-    order: 30,
+    orderRank: "a00003",
   },
   {
     name: "Apartament Rugova",
@@ -253,7 +254,7 @@ const projects = [
     rooms: ["kitchen", "bedroom", "bath"],
     emphasis: "medium",
     featuredOnHome: true,
-    order: 40,
+    orderRank: "a00004",
   },
   {
     name: "Loft Ndroq",
@@ -273,7 +274,7 @@ const projects = [
     rooms: ["living"],
     emphasis: "compact",
     featuredOnHome: true,
-    order: 50,
+    orderRank: "a00005",
   },
   {
     name: "Apartament Fresku",
@@ -293,7 +294,7 @@ const projects = [
     rooms: ["kitchen", "bath"],
     emphasis: "medium",
     featuredOnHome: false,
-    order: 60,
+    orderRank: "a00006",
   },
   {
     name: "Kafe Bianco",
@@ -313,7 +314,7 @@ const projects = [
     rooms: ["entrance"],
     emphasis: "feature",
     featuredOnHome: true,
-    order: 70,
+    orderRank: "a00007",
   },
   {
     name: "Bar Kripa",
@@ -333,7 +334,7 @@ const projects = [
     rooms: [],
     emphasis: "compact",
     featuredOnHome: false,
-    order: 80,
+    orderRank: "a00008",
   },
   {
     name: "Guesthouse Theth",
@@ -353,7 +354,7 @@ const projects = [
     rooms: ["living", "bath", "terrace"],
     emphasis: "medium",
     featuredOnHome: true,
-    order: 90,
+    orderRank: "a00009",
   },
   {
     name: "Guesthouse Dhërmi",
@@ -373,7 +374,7 @@ const projects = [
     rooms: [],
     emphasis: "compact",
     featuredOnHome: false,
-    order: 100,
+    orderRank: "a00010",
   },
 ];
 
@@ -419,7 +420,9 @@ async function run() {
     );
     if (existing) {
       console.log(`Updating project: ${project.name}`);
-      await client.patch(existing).set(doc).commit();
+      // .unset() clears the old numeric `order` field, now replaced by the
+      // orderable-document-list plugin's `orderRank`.
+      await client.patch(existing).set(doc).unset(["order"]).commit();
     } else {
       console.log(`Creating project: ${project.name}`);
       await client.create({ _type: "project", ...doc });
