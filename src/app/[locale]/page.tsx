@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import Hero from "@/components/home/Hero";
 import { WorkTracklist } from "@/components/WorkTracklist";
+import ProjectCrate from "@/components/home/ProjectCrate";
 import RoomsGrid from "@/components/home/RoomsGrid";
 import AboutSection from "@/components/home/AboutSection";
 import ContactSection from "@/components/home/ContactSection";
@@ -66,7 +67,15 @@ export default async function HomePage({
           </span>
         </div>
 
-        <WorkTracklist projects={projects} locale={locale} grouping="sides" />
+        <div className="hidden lg:block">
+          <WorkTracklist projects={projects} locale={locale} grouping="sides" />
+        </div>
+        <ProjectCrate
+          projects={projects}
+          locale={locale}
+          prevLabel={t("prevProject")}
+          nextLabel={t("nextProject")}
+        />
 
         <div className="flex justify-center pt-11">
           <Link

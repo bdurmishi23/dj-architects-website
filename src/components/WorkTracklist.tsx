@@ -4,6 +4,8 @@ import { Link } from "@/i18n/navigation";
 import { urlForImage } from "@/lib/sanity/image";
 import { PROJECT_MARKS } from "@/lib/marks";
 import { pick } from "@/lib/i18n";
+import { assignSideCodes } from "@/lib/projectCodes";
+import type { ProjectWithCode } from "@/lib/projectCodes";
 import PlanMark from "@/components/icons/PlanMark";
 import type { Project, Emphasis } from "@/lib/sanity/types";
 import type { Locale } from "@/i18n/routing";
@@ -94,27 +96,27 @@ export async function WorkTracklist({
 }) {
   if (grouping === "sides") {
     const t = await getTranslations("home");
-    const mid = Math.ceil(projects.length / 2);
-    const sideA = projects.slice(0, mid);
-    const sideB = projects.slice(mid);
-    const yearOf = (list: Project[]) =>
-      list.length ? Math.max(...list.map((p) => p.year)) : "";
+    const coded = assignSideCodes(projects);
+    const sideA = coded.filter((c) => c.code.startsWith("A"));
+    const sideB = coded.filter((c) => c.code.startsWith("B"));
+    const yearOf = (list: ProjectWithCode[]) =>
+      list.length ? Math.max(...list.map((c) => c.project.year)) : "";
 
     return (
       <div>
         {sideA.length > 0 && (
           <>
             <SideDivider label={`${t("sideA")} · ${yearOf(sideA)}`} />
-            {sideA.map((p, i) => (
-              <Row key={p._id} project={p} code={`A${i + 1}`} locale={locale} />
+            {sideA.map(({ project, code }) => (
+              <Row key={project._id} project={project} code={code} locale={locale} />
             ))}
           </>
         )}
         {sideB.length > 0 && (
           <>
             <SideDivider label={`${t("sideB")} · ${yearOf(sideB)}`} />
-            {sideB.map((p, i) => (
-              <Row key={p._id} project={p} code={`B${i + 1}`} locale={locale} />
+            {sideB.map(({ project, code }) => (
+              <Row key={project._id} project={project} code={code} locale={locale} />
             ))}
           </>
         )}

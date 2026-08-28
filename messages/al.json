@@ -13,7 +13,9 @@
     "roomsNote": "Arkivi është i indeksuar sipas ambientit, jo sipas tipit të projektit — klientët e dinë hapësirën që duan të ndryshojnë.",
     "portraitCaption": "Deni dhe Jurgen në studion e Tiranës.",
     "sideA": "Ana A",
-    "sideB": "Ana B"
+    "sideB": "Ana B",
+    "prevProject": "Projekti i mëparshëm",
+    "nextProject": "Projekti tjetër"
   },
   "allProjects": {
     "title": "Të gjitha projektet",
