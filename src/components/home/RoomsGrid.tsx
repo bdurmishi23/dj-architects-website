@@ -20,15 +20,12 @@ export default function RoomsGrid({
   );
 
   return (
-    <div
-      className="grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-3"
-      style={{ background: "var(--hairline)" }}
-    >
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
       {ordered.map((room) => (
         <Link
           key={room._id}
           href={`/rooms/${room.slug}`}
-          className="flex flex-col gap-4 bg-[var(--room-bg)] px-7 pb-[30px] pt-[26px] transition-colors duration-300 ease-editorial hover:bg-[var(--card-hover-tint)] hover:shadow-[inset_0_0_0_1px_var(--brass)]"
+          className="flex flex-col gap-3 rounded-card border border-[var(--hairline)] bg-[var(--room-bg)] px-4 pb-5 pt-4 transition-colors duration-300 ease-editorial hover:border-brass hover:bg-[var(--card-hover-tint)] sm:gap-4 sm:px-7 sm:pb-[30px] sm:pt-[26px]"
         >
           <span className="flex items-start justify-between gap-4 font-mono text-xs tracking-[0.1em] text-brass">
             <span className="flex items-center gap-[14px]">
@@ -39,10 +36,13 @@ export default function RoomsGrid({
               {String(counts[room.slug] ?? 0).padStart(2, "0")}
             </span>
           </span>
-          <span className="font-serif text-[26px] font-light leading-[1.15]">
+          <span className="font-serif text-xl font-light leading-[1.15] sm:text-[26px]">
             {pick(locale, room.nameEn, room.nameAl)}
           </span>
-          <span className="text-[13px] leading-[1.65]" style={{ color: "var(--subtle)" }}>
+          <span
+            className="text-xs leading-[1.55] sm:text-[13px] sm:leading-[1.65]"
+            style={{ color: "var(--subtle)" }}
+          >
             {pick(locale, room.descriptionEn, room.descriptionAl)}
           </span>
         </Link>
