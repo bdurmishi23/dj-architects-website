@@ -33,6 +33,15 @@ export const siteSettings = defineType({
       group: "hero",
     }),
     defineField({
+      name: "randomizeHomepageOrder",
+      title: "Renditje e rastësishme në homepage",
+      description:
+        "Nëse aktivizohet, projektet e shfaqura në homepage do të shfaqen në rend të rastësishëm në vend të renditjes manuale më poshtë.",
+      type: "boolean",
+      group: "hero",
+      initialValue: false,
+    }),
+    defineField({
       name: "taglineEn",
       title: "Footer tagline (English)",
       type: "string",

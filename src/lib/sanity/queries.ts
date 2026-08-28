@@ -17,9 +17,17 @@ const projectFields = `
   coverImage,
   signatureMark,
   emphasis,
-  featuredOnHome,
-  order
+  featuredOnHome
 `;
+
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
 
 const projectDetailFields = `
   ${projectFields},
@@ -36,17 +44,21 @@ const FETCH_OPTIONS = { next: { revalidate: 60 } };
 
 export async function getFeaturedProjects(): Promise<Project[]> {
   if (!projectId) return [];
-  return client.fetch(
-    `*[_type == "project" && featuredOnHome == true] | order(order asc) { ${projectFields} }`,
+  const result: { randomize: boolean; projects: Project[] } = await client.fetch(
+    `{
+      "randomize": *[_type == "siteSettings"][0].randomizeHomepageOrder,
+      "projects": *[_type == "project" && featuredOnHome == true] | order(orderRank asc) { ${projectFields} }
+    }`,
     {},
     FETCH_OPTIONS
   );
+  return result.randomize ? shuffle(result.projects) : result.projects;
 }
 
 export async function getAllProjects(): Promise<Project[]> {
   if (!projectId) return [];
   return client.fetch(
-    `*[_type == "project"] | order(discipline asc, order asc) { ${projectFields} }`,
+    `*[_type == "project"] | order(discipline asc, orderRank asc) { ${projectFields} }`,
     {},
     FETCH_OPTIONS
   );
@@ -138,7 +150,7 @@ export async function getProjectsForRoom(
 ): Promise<Project[]> {
   if (!projectId) return [];
   return client.fetch(
-    `*[_type == "project" && $slug in rooms] | order(order asc) [0...$limit] { ${projectFields} }`,
+    `*[_type == "project" && $slug in rooms] | order(orderRank asc) [0...$limit] { ${projectFields} }`,
     { slug, limit },
     FETCH_OPTIONS
   );

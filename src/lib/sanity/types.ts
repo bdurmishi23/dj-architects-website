@@ -30,7 +30,6 @@ export interface Project {
   signatureMark: ProjectMarkKey;
   emphasis: Emphasis;
   featuredOnHome: boolean;
-  order: number;
 }
 
 export interface RoomType {
