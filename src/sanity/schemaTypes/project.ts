@@ -25,6 +25,7 @@ export const project = defineType({
   type: "document",
   groups: [
     { name: "content", title: "Content", default: true },
+    { name: "gallery", title: "Gallery" },
     { name: "display", title: "Display" },
   ],
   fields: [
@@ -34,6 +35,15 @@ export const project = defineType({
       description: 'e.g. "Villa Dajti" — used as-is in both languages.',
       type: "string",
       group: "content",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      description: "Used in the project's URL — generate from the name.",
+      type: "slug",
+      group: "content",
+      options: { source: "name", maxLength: 96 },
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -83,6 +93,28 @@ export const project = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "area",
+      title: "Area (m²)",
+      type: "number",
+      group: "content",
+      validation: (rule) => rule.positive(),
+    }),
+    defineField({
+      name: "descriptionEn",
+      title: "Description (English)",
+      description: "2-3 sentences on the project — the story, not just the meta facts.",
+      type: "text",
+      rows: 4,
+      group: "content",
+    }),
+    defineField({
+      name: "descriptionAl",
+      title: "Description (Albanian)",
+      type: "text",
+      rows: 4,
+      group: "content",
+    }),
+    defineField({
       name: "rooms",
       title: "Rooms featured",
       description: "Which room types this project appears under in \"Browse by room\".",
@@ -96,10 +128,27 @@ export const project = defineType({
     defineField({
       name: "coverImage",
       title: "Cover image",
+      description: "Used as the thumbnail in tracklist rows.",
       type: "image",
       group: "content",
       options: { hotspot: true },
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "floorPlanImage",
+      title: "Floor plan image",
+      description: "Technical floor plan drawing, shown on its own on the project page — separate from the render gallery.",
+      type: "image",
+      group: "gallery",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "renderImages",
+      title: "Render images",
+      description: "Gallery of renders/photos shown on the project's own page.",
+      type: "array",
+      group: "gallery",
+      of: [{ type: "image", options: { hotspot: true } }],
     }),
     defineField({
       name: "signatureMark",

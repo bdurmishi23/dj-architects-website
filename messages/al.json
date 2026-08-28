@@ -25,6 +25,11 @@
     "back": "Kthehu te ambientet",
     "related": "Shfaqet gjithashtu në"
   },
+  "project": {
+    "back": "Kthehu te punët",
+    "floorPlan": "Planimetria",
+    "roomsFeatured": "Ambientet e këtij projekti"
+  },
   "discipline": {
     "architecture": "Arkitekturë",
     "interiors": "Interier",

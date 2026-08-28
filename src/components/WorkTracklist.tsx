@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { urlForImage } from "@/lib/sanity/image";
 import { PROJECT_MARKS } from "@/lib/marks";
 import { pick } from "@/lib/i18n";
@@ -8,7 +9,7 @@ import type { Project, Emphasis } from "@/lib/sanity/types";
 import type { Locale } from "@/i18n/routing";
 
 const SIZE_MAP: Record<Emphasis, { title: string; w: number; h: number; py: number }> = {
-  compact: { title: "text-2xl sm:text-[29px]", w: 230, h: 150, py: 26 },
+  compact: { title: "text-xl sm:text-[29px]", w: 230, h: 150, py: 26 },
   medium: { title: "text-2xl sm:text-[34px]", w: 300, h: 200, py: 26 },
   feature: { title: "text-3xl sm:text-[40px]", w: 360, h: 230, py: 34 },
 };
@@ -28,7 +29,8 @@ function Row({
   const category = pick(locale, project.categoryEn, project.categoryAl);
 
   return (
-    <div
+    <Link
+      href={`/work/${project.slug}`}
       className="group -mx-[18px] flex flex-col gap-4 border-b border-l-[3px] border-l-transparent px-[18px] py-6 transition-[background-color,border-color] duration-300 ease-editorial hover:border-l-brass hover:bg-[var(--row-hover-tint)] sm:flex-row sm:items-start sm:gap-[26px] sm:py-[var(--row-py)] sm:pr-9"
       style={{
         borderBottomColor: "var(--hairline)",
@@ -68,7 +70,7 @@ function Row({
           />
         </span>
       )}
-    </div>
+    </Link>
   );
 }
 

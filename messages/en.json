@@ -25,6 +25,11 @@
     "back": "Back to rooms",
     "related": "Also seen in"
   },
+  "project": {
+    "back": "Back to work",
+    "floorPlan": "Floor plan",
+    "roomsFeatured": "Rooms featured in this project"
+  },
   "discipline": {
     "architecture": "Architecture",
     "interiors": "Interiors",

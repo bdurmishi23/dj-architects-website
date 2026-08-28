@@ -110,7 +110,7 @@ export default async function RoomPage({ params }: Props) {
             {related.map((project) => (
               <Link
                 key={project._id}
-                href="/work"
+                href={`/work/${project.slug}`}
                 className="flex flex-col gap-2 rounded-card border px-[22px] py-5 transition-colors duration-300 ease-editorial hover:border-brass hover:bg-[var(--card-hover)]"
                 style={{ borderColor: "var(--hairline)" }}
               >
