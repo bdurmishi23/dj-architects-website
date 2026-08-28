@@ -103,7 +103,12 @@ export default async function HomePage({
         <RoomsGrid rooms={rooms} counts={roomCounts} locale={locale} />
       </section>
 
-      <AboutSection settings={settings} locale={locale} portraitCaption={t("portraitCaption")} />
+      <AboutSection
+        settings={settings}
+        locale={locale}
+        portraitCaption={t("portraitCaption")}
+        portraitPlaceholder={t("portraitPlaceholder")}
+      />
       <ContactSection settings={settings} locale={locale} />
     </>
   );

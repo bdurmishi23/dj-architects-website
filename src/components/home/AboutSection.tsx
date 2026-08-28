@@ -8,10 +8,12 @@ export default function AboutSection({
   settings,
   locale,
   portraitCaption,
+  portraitPlaceholder,
 }: {
   settings: SiteSettings | null;
   locale: Locale;
   portraitCaption: string;
+  portraitPlaceholder: string;
 }) {
   const portraitSrc = settings?.aboutPortrait
     ? urlForImage(settings.aboutPortrait)?.width(1200).height(1300).fit("crop").url()
@@ -48,8 +50,15 @@ export default function AboutSection({
         </div>
       </div>
       <div className="min-w-0">
-        <div className="h-[320px] w-full overflow-hidden rounded-portrait sm:h-[400px] md:h-[440px] lg:h-[520px]">
-          {portraitSrc && (
+        <div
+          className="h-[320px] w-full overflow-hidden rounded-portrait sm:h-[400px] md:h-[440px] lg:h-[520px]"
+          style={
+            !portraitSrc
+              ? { background: "var(--room-hover)", border: "1px dashed var(--hairline)" }
+              : undefined
+          }
+        >
+          {portraitSrc ? (
             <Image
               src={portraitSrc}
               alt=""
@@ -57,6 +66,36 @@ export default function AboutSection({
               height={1300}
               className="h-full w-full object-cover"
             />
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-3">
+              <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+                <rect
+                  x="4"
+                  y="7"
+                  width="32"
+                  height="26"
+                  rx="3"
+                  fill="none"
+                  stroke="var(--plan-line)"
+                  strokeWidth="1.2"
+                />
+                <circle cx="13" cy="15" r="3" fill="none" stroke="var(--plan-line)" strokeWidth="1.2" />
+                <path
+                  d="M4 27 L14 19 L21 25 L28 17 L36 24"
+                  fill="none"
+                  stroke="var(--plan-line)"
+                  strokeWidth="1.2"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span
+                className="font-mono text-[11px] tracking-[0.12em]"
+                style={{ color: "var(--subtle)" }}
+              >
+                {portraitPlaceholder}
+              </span>
+            </div>
           )}
         </div>
         <p className="mt-[14px] text-[12.5px]" style={{ color: "var(--subtle)" }}>
