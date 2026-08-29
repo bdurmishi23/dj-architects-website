@@ -20,16 +20,13 @@
   },
   "allProjects": {
     "title": "All projects",
-    "back": "Back to homepage",
     "intro": "The full catalogue, side by side, in the order it was made — every project carries the same code, mark and metadata as the selection on the homepage.",
     "count": "{count} projects · 2026"
   },
   "room": {
-    "back": "Back to rooms",
     "related": "Also seen in"
   },
   "project": {
-    "back": "Back to work",
     "floorPlan": "Floor plan",
     "renders": "Renders",
     "roomsFeatured": "Rooms featured in this project"

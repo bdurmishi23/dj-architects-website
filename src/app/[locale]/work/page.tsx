@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { WorkTracklist } from "@/components/WorkTracklist";
 import { getAllProjects } from "@/lib/sanity/queries";
 import { localizedAlternates } from "@/lib/metadata";
@@ -23,15 +22,6 @@ export default async function WorkPage({
 
   return (
     <section className="px-6 pb-[140px] pt-16 sm:pt-24 md:px-12">
-      <Link
-        href="/"
-        className="mb-[30px] inline-flex items-center gap-[10px] rounded-pill border py-[9px] pl-[14px] pr-[18px] font-mono text-[11px] tracking-[0.1em] transition-colors duration-300 ease-editorial hover:border-brass hover:text-brass"
-        style={{ borderColor: "var(--hairline)", color: "var(--subtle)" }}
-      >
-        <span className="text-[13px]">←</span>
-        {t("back")}
-      </Link>
-
       <div
         className="flex flex-col gap-2 border-b pb-[26px] sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
         style={{ borderColor: "var(--hairline)" }}

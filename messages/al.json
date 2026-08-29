@@ -20,16 +20,13 @@
   },
   "allProjects": {
     "title": "Të gjitha projektet",
-    "back": "Kthehu te faqja kryesore",
     "intro": "Katalogu i plotë, sipas rendit kronologjik — çdo projekt mban të njëjtin kod, shenjë dhe metadhëna si përzgjedhja në faqen kryesore.",
     "count": "{count} projekte · 2026"
   },
   "room": {
-    "back": "Kthehu te ambientet",
     "related": "Shfaqet gjithashtu në"
   },
   "project": {
-    "back": "Kthehu te punët",
     "floorPlan": "Planimetria",
     "renders": "Rendera",
     "roomsFeatured": "Ambientet e këtij projekti"

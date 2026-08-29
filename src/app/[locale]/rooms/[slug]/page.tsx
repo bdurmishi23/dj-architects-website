@@ -3,7 +3,6 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { draftMode } from "next/headers";
 import { Link } from "@/i18n/navigation";
-import BackLink from "@/components/BackLink";
 import { getRoomTypeBySlug, getProjectsForRoom } from "@/lib/sanity/queries";
 import { urlForImage } from "@/lib/sanity/image";
 import { pick } from "@/lib/i18n";
@@ -53,14 +52,6 @@ export default async function RoomPage({ params }: Props) {
   return (
     <article>
       <div className="px-6 pb-5 pt-11 md:px-12">
-        <BackLink
-          fallbackHref="/#rooms"
-          className="mb-[34px] inline-flex items-center gap-[10px] rounded-pill border py-[9px] pl-[14px] pr-[18px] font-mono text-[11px] tracking-[0.1em] transition-colors duration-300 ease-editorial hover:border-brass hover:text-brass"
-          style={{ borderColor: "var(--hairline)", color: "var(--subtle)" }}
-        >
-          <span className="text-[13px]">←</span>
-          {t("back")}
-        </BackLink>
         <div className="flex items-start gap-4 sm:gap-[26px]">
           <span className="flex-none pt-[6px]">
             <PlanMark spec={ROOM_MARKS[slug]} scale={60 / 44} />
