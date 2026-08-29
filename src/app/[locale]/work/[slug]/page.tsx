@@ -74,7 +74,7 @@ export default async function ProjectPage({ params }: Props) {
     .filter((src): src is string => Boolean(src));
 
   return (
-    <article>
+    <article className="mx-auto max-w-content">
       <div className="px-6 pb-5 pt-11 md:px-12">
         <BackLink
           fallbackHref="/work"
