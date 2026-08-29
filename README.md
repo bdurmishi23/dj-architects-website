@@ -11,11 +11,7 @@ editorial interface.
 
 _Add screenshot here_
 
-Recommended path once a screenshot exists:
-
-```md
-![DJ Architects homepage preview](./public/preview.png)
-```
+Suggested screenshot path: `public/preview.png`.
 
 ## Features
 
@@ -175,7 +171,3 @@ npm run start
 If `next/font` fails during `npm run build`, check local access to
 `fonts.googleapis.com`; Next.js fetches the project fonts during production
 builds.
-
-## Live Site
-
-_Add deployed URL here_
