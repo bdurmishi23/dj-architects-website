@@ -9,9 +9,9 @@ editorial interface.
 
 ## Preview
 
-_Add screenshot here_
+![DJ Architects homepage](./public/preview-home.png)
 
-Suggested screenshot path: `public/preview.png`.
+![DJ Architects selected work](./public/preview-work.png)
 
 ## Features
 
