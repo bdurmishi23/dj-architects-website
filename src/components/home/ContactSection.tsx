@@ -1,4 +1,4 @@
-import { pick } from "@/lib/i18n";
+import { hasText, pickText } from "@/lib/content";
 import type { SiteSettings } from "@/lib/sanity/types";
 import type { Locale } from "@/i18n/routing";
 
@@ -9,20 +9,31 @@ export default function ContactSection({
   settings: SiteSettings | null;
   locale: Locale;
 }) {
+  const lead = settings ? pickText(locale, settings.contactLeadEn, settings.contactLeadAl) : "";
+  const note = settings ? pickText(locale, settings.contactNoteEn, settings.contactNoteAl) : "";
+
+  if (!hasText(lead) && !hasText(note) && !hasText(settings?.contactEmail)) return null;
+
   return (
     <section id="contact" className="home-section home-section--contact">
       <div
         className="flex flex-wrap items-center justify-between gap-8 rounded-panel border p-6 sm:gap-10 sm:p-10 lg:p-14"
         style={{ borderColor: "var(--panel-border)" }}
       >
-        <div>
-          <p className="mb-3 font-serif text-[24px] font-light tracking-[-0.01em] sm:text-[28px] lg:text-[32px]">
-            {settings ? pick(locale, settings.contactLeadEn, settings.contactLeadAl) : ""}
-          </p>
-          <p className="text-sm" style={{ color: "var(--subtle)" }}>
-            {settings ? pick(locale, settings.contactNoteEn, settings.contactNoteAl) : ""}
-          </p>
-        </div>
+        {(hasText(lead) || hasText(note)) && (
+          <div>
+            {hasText(lead) && (
+              <p className="mb-3 font-serif text-[24px] font-light tracking-[-0.01em] sm:text-[28px] lg:text-[32px]">
+                {lead}
+              </p>
+            )}
+            {hasText(note) && (
+              <p className="text-sm" style={{ color: "var(--subtle)" }}>
+                {note}
+              </p>
+            )}
+          </div>
+        )}
         {settings?.contactEmail && (
           <a
             href={`mailto:${settings.contactEmail}`}

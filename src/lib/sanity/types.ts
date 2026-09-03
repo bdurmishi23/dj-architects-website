@@ -2,7 +2,7 @@ import type { ProjectMarkKey, RoomSlug } from "@/lib/marks";
 
 export interface SanityImage {
   _type: "image";
-  asset: { _ref: string; _type: "reference" };
+  asset?: { _ref: string; _type: "reference" };
   hotspot?: { x: number; y: number; width: number; height: number };
 }
 
@@ -12,33 +12,33 @@ export type Emphasis = "compact" | "medium" | "feature";
 
 export interface Project {
   _id: string;
-  name: string;
-  slug: string;
-  discipline: Discipline;
-  categoryEn: string;
-  categoryAl: string;
-  location: string;
-  year: number;
-  status: ProjectStatus;
+  name?: string;
+  slug?: string;
+  discipline?: Discipline;
+  categoryEn?: string;
+  categoryAl?: string;
+  location?: string;
+  year?: number;
+  status?: ProjectStatus;
   area?: number;
   descriptionEn?: string;
   descriptionAl?: string;
   rooms?: RoomSlug[];
-  coverImage: SanityImage;
+  coverImage?: SanityImage;
   floorPlanImage?: SanityImage;
   renderImages?: SanityImage[];
-  signatureMark: ProjectMarkKey;
-  emphasis: Emphasis;
-  featuredOnHome: boolean;
+  signatureMark?: ProjectMarkKey;
+  emphasis?: Emphasis;
+  featuredOnHome?: boolean;
 }
 
 export interface RoomType {
   _id: string;
-  slug: RoomSlug;
-  nameEn: string;
-  nameAl: string;
-  descriptionEn: string;
-  descriptionAl: string;
+  slug?: RoomSlug;
+  nameEn?: string;
+  nameAl?: string;
+  descriptionEn?: string;
+  descriptionAl?: string;
   gallery?: SanityImage[];
 }
 

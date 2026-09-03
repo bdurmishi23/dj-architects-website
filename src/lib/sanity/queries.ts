@@ -35,17 +35,19 @@ const projectFields = `
 function cleanProject(p: Project): Project {
   return {
     ...p,
-    slug: stegaClean(p.slug),
-    discipline: stegaClean(p.discipline) as Discipline,
-    status: stegaClean(p.status) as ProjectStatus,
-    emphasis: stegaClean(p.emphasis) as Emphasis,
-    signatureMark: stegaClean(p.signatureMark) as ProjectMarkKey,
+    slug: p.slug ? stegaClean(p.slug) : undefined,
+    discipline: p.discipline ? (stegaClean(p.discipline) as Discipline) : undefined,
+    status: p.status ? (stegaClean(p.status) as ProjectStatus) : undefined,
+    emphasis: p.emphasis ? (stegaClean(p.emphasis) as Emphasis) : undefined,
+    signatureMark: p.signatureMark
+      ? (stegaClean(p.signatureMark) as ProjectMarkKey)
+      : undefined,
     rooms: p.rooms?.map((slug) => stegaClean(slug) as RoomSlug),
   };
 }
 
 function cleanRoomType(r: RoomType): RoomType {
-  return { ...r, slug: stegaClean(r.slug) as RoomSlug };
+  return { ...r, slug: r.slug ? (stegaClean(r.slug) as RoomSlug) : undefined };
 }
 
 function shuffle<T>(items: T[]): T[] {
@@ -94,7 +96,7 @@ export async function getFeaturedProjects(preview = false): Promise<Project[]> {
     {},
     fetchOptions(preview)
   );
-  const projects = result.projects.map(cleanProject);
+  const projects = (result?.projects ?? []).map(cleanProject);
   return result.randomize ? shuffle(projects) : projects;
 }
 
@@ -105,7 +107,7 @@ export async function getAllProjects(): Promise<Project[]> {
     {},
     fetchOptions(false)
   );
-  return projects.map(cleanProject);
+  return (projects ?? []).map(cleanProject);
 }
 
 export async function getProjectBySlug(
@@ -162,7 +164,7 @@ export async function getRoomTypes(preview = false): Promise<RoomType[]> {
     {},
     fetchOptions(preview)
   );
-  return rooms.map(cleanRoomType);
+  return (rooms ?? []).map(cleanRoomType);
 }
 
 export async function getRoomTypeBySlug(
@@ -188,7 +190,7 @@ export async function getRoomTypesBySlugs(
     { slugs },
     fetchOptions(preview)
   );
-  return rooms.map(cleanRoomType);
+  return (rooms ?? []).map(cleanRoomType);
 }
 
 export async function getRoomProjectCounts(): Promise<Record<string, number>> {
@@ -198,7 +200,7 @@ export async function getRoomProjectCounts(): Promise<Record<string, number>> {
     {},
     fetchOptions(false)
   );
-  return Object.fromEntries(rows.map((r) => [r.slug, r.count]));
+  return Object.fromEntries((rows ?? []).filter((r) => r.slug).map((r) => [r.slug, r.count]));
 }
 
 export async function getProjectsForRoom(
@@ -212,5 +214,5 @@ export async function getProjectsForRoom(
     { slug, limit },
     fetchOptions(preview)
   );
-  return projects.map(cleanProject);
+  return (projects ?? []).map(cleanProject);
 }

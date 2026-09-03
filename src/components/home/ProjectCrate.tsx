@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { urlForImage } from "@/lib/sanity/image";
 import { PROJECT_MARKS } from "@/lib/marks";
-import { pick } from "@/lib/i18n";
+import { compactText, hasSlug, pickText } from "@/lib/content";
 import { assignSideCodes } from "@/lib/projectCodes";
 import PlanMark from "@/components/icons/PlanMark";
 import type { Project } from "@/lib/sanity/types";
@@ -20,13 +20,15 @@ export default function ProjectCrate({
   locale,
   prevLabel,
   nextLabel,
+  titleFallback,
 }: {
   projects: Project[];
   locale: Locale;
   prevLabel: string;
   nextLabel: string;
+  titleFallback: string;
 }) {
-  const items = assignSideCodes(projects);
+  const items = assignSideCodes(projects.filter(hasSlug));
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
@@ -71,8 +73,10 @@ export default function ProjectCrate({
         className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden px-6 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] md:-mx-12 md:px-12 [&::-webkit-scrollbar]:hidden"
       >
         {items.map(({ project, code }) => {
-          const mark = PROJECT_MARKS[project.signatureMark];
-          const category = pick(locale, project.categoryEn, project.categoryAl);
+          const mark = project.signatureMark ? PROJECT_MARKS[project.signatureMark] : undefined;
+          const category = pickText(locale, project.categoryEn, project.categoryAl);
+          const metadata = compactText([category, project.location, project.year]).join(" \u00b7 ");
+          const title = project.name || titleFallback;
           const src = urlForImage(project.coverImage)
             ?.width(680)
             .height(880)
@@ -86,41 +90,50 @@ export default function ProjectCrate({
               className="w-[calc(100vw-76px)] max-w-[340px] flex-none snap-center overflow-hidden rounded-card border transition-colors duration-300 ease-editorial hover:border-brass"
               style={{ borderColor: "var(--hairline)" }}
             >
-              <span className="relative block h-[56vh] min-h-[340px] w-full overflow-hidden">
+              <span
+                className="relative block h-[56vh] min-h-[340px] w-full overflow-hidden"
+                style={!src ? { background: "var(--room-bg)" } : undefined}
+              >
                 {src && (
                   <Image
                     src={src}
-                    alt={project.name}
+                    alt={title}
                     fill
                     sizes="340px"
                     className="object-cover"
                   />
                 )}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(12,11,10,0.42) 0%, rgba(12,11,10,0) 34%)",
-                  }}
-                />
+                {src && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(12,11,10,0.42) 0%, rgba(12,11,10,0) 34%)",
+                    }}
+                  />
+                )}
                 <span className="absolute left-[18px] top-4 font-mono text-[11.5px] tracking-[0.14em] text-brass">
                   {code}
                 </span>
-                <span className="absolute right-4 top-[14px]">
-                  <PlanMark spec={mark} scale={0.8} />
-                </span>
+                {mark && (
+                  <span className="absolute right-4 top-[14px]">
+                    <PlanMark spec={mark} scale={0.8} />
+                  </span>
+                )}
               </span>
               <span className="block px-5 pb-[22px] pt-[18px]">
                 <span className="block font-serif text-2xl font-light leading-[1.14] tracking-[-0.01em]">
-                  {project.name}
+                  {title}
                 </span>
-                <span
-                  className="mt-[9px] block text-[12.5px] leading-[1.55]"
-                  style={{ color: "var(--subtle)" }}
-                >
-                  {category} · {project.location} · {project.year}
-                </span>
+                {metadata && (
+                  <span
+                    className="mt-[9px] block text-[12.5px] leading-[1.55]"
+                    style={{ color: "var(--subtle)" }}
+                  >
+                    {metadata}
+                  </span>
+                )}
               </span>
             </Link>
           );

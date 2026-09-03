@@ -1,9 +1,11 @@
 import { Link } from "@/i18n/navigation";
 import { ROOM_MARKS, ROOM_CODES, ROOM_SLUGS } from "@/lib/marks";
 import PlanMark from "@/components/icons/PlanMark";
-import { pick } from "@/lib/i18n";
+import { hasSlug, hasText, pickText } from "@/lib/content";
 import type { RoomType } from "@/lib/sanity/types";
 import type { Locale } from "@/i18n/routing";
+
+type RoomWithSlug = RoomType & { slug: NonNullable<RoomType["slug"]> };
 
 export default function RoomsGrid({
   rooms,
@@ -14,9 +16,9 @@ export default function RoomsGrid({
   counts: Record<string, number>;
   locale: Locale;
 }) {
-  const bySlug = new Map(rooms.map((r) => [r.slug, r]));
+  const bySlug = new Map(rooms.filter(hasSlug).map((r) => [r.slug, r]));
   const ordered = ROOM_SLUGS.map((slug) => bySlug.get(slug)).filter(
-    (r): r is RoomType => Boolean(r)
+    (r): r is RoomWithSlug => Boolean(r)
   );
 
   return (
@@ -37,14 +39,16 @@ export default function RoomsGrid({
             </span>
           </span>
           <span className="font-serif text-xl font-light leading-[1.15] sm:text-[26px]">
-            {pick(locale, room.nameEn, room.nameAl)}
+            {pickText(locale, room.nameEn, room.nameAl) || ROOM_CODES[room.slug]}
           </span>
-          <span
-            className="text-xs leading-[1.55] sm:text-[13px] sm:leading-[1.65]"
-            style={{ color: "var(--subtle)" }}
-          >
-            {pick(locale, room.descriptionEn, room.descriptionAl)}
-          </span>
+          {hasText(pickText(locale, room.descriptionEn, room.descriptionAl)) && (
+            <span
+              className="text-xs leading-[1.55] sm:text-[13px] sm:leading-[1.65]"
+              style={{ color: "var(--subtle)" }}
+            >
+              {pickText(locale, room.descriptionEn, room.descriptionAl)}
+            </span>
+          )}
         </Link>
       ))}
     </div>

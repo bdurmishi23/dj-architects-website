@@ -1,7 +1,7 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { draftMode } from "next/headers";
 import { getSiteSettings } from "@/lib/sanity/queries";
-import { pick } from "@/lib/i18n";
+import { hasText, pickText } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
 
 const FOUNDING_YEAR = 2026;
@@ -15,7 +15,7 @@ export default async function Footer() {
   ]);
 
   const tagline = settings
-    ? pick(locale as Locale, settings.taglineEn, settings.taglineAl)
+    ? pickText(locale as Locale, settings.taglineEn, settings.taglineAl)
     : "";
   const hasSocialLinks = Boolean(
     settings?.instagramUrl || settings?.pinterestUrl || settings?.linkedinUrl
@@ -32,18 +32,22 @@ export default async function Footer() {
     >
       <div className="site-footer__brand">
         <p className="site-footer__name font-serif">DJ Architects</p>
-        <p className="site-footer__tagline" style={{ color: "var(--subtle)" }}>
-          {tagline}
-        </p>
+        {hasText(tagline) && (
+          <p className="site-footer__tagline" style={{ color: "var(--subtle)" }}>
+            {tagline}
+          </p>
+        )}
       </div>
-      <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
-        {settings?.address && <span className="site-footer__address">{settings.address}</span>}
-        {settings?.contactPhone && (
+      {(hasText(settings?.address) || hasText(settings?.contactPhone)) && (
+        <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
+          {hasText(settings?.address) && <span className="site-footer__address">{settings.address}</span>}
+          {hasText(settings?.contactPhone) && (
           <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
             {settings.contactPhone}
           </a>
-        )}
-      </div>
+          )}
+        </div>
+      )}
       <div className="site-footer__meta">
         {settings?.instagramUrl && (
           <a href={settings.instagramUrl} target="_blank" rel="noreferrer">

@@ -157,6 +157,10 @@ a:hover {
   line-height: 1.55;
 }
 
+.site-footer__meta {
+  grid-column: 3;
+}
+
 .site-footer__phone,
 .site-footer__copyright {
   white-space: nowrap;

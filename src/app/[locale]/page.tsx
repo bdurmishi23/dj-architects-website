@@ -7,6 +7,7 @@ import ProjectCrate from "@/components/home/ProjectCrate";
 import RoomsGrid from "@/components/home/RoomsGrid";
 import AboutSection from "@/components/home/AboutSection";
 import ContactSection from "@/components/home/ContactSection";
+import EmptyState from "@/components/EmptyState";
 import {
   getFeaturedProjects,
   getRoomTypes,
@@ -15,6 +16,7 @@ import {
 } from "@/lib/sanity/queries";
 import { urlForImage } from "@/lib/sanity/image";
 import { pick } from "@/lib/i18n";
+import { hasSlug } from "@/lib/content";
 import { localizedAlternates } from "@/lib/metadata";
 import type { Locale } from "@/i18n/routing";
 
@@ -41,6 +43,8 @@ export default async function HomePage({
     ? urlForImage(settings.heroImage)?.width(2400).height(1500).fit("crop").url()
     : undefined;
   const heroLine = settings ? pick(locale, settings.heroTextEn, settings.heroTextAl) : "";
+  const hasProjects = projects.some(hasSlug);
+  const hasRooms = rooms.some(hasSlug);
 
   return (
     <>
@@ -67,15 +71,22 @@ export default async function HomePage({
           </span>
         </div>
 
-        <div className="hidden lg:block">
-          <WorkTracklist projects={projects} locale={locale} grouping="sides" />
-        </div>
-        <ProjectCrate
-          projects={projects}
-          locale={locale}
-          prevLabel={t("prevProject")}
-          nextLabel={t("nextProject")}
-        />
+        {hasProjects ? (
+          <>
+            <div className="hidden lg:block">
+              <WorkTracklist projects={projects} locale={locale} grouping="sides" />
+            </div>
+            <ProjectCrate
+              projects={projects}
+              locale={locale}
+              prevLabel={t("prevProject")}
+              nextLabel={t("nextProject")}
+              titleFallback={t("projectUntitled")}
+            />
+          </>
+        ) : (
+          <EmptyState>{t("workEmpty")}</EmptyState>
+        )}
 
         <div className="flex justify-center pt-11">
           <Link
@@ -100,7 +111,11 @@ export default async function HomePage({
             {t("roomsNote")}
           </span>
         </div>
-        <RoomsGrid rooms={rooms} counts={roomCounts} locale={locale} />
+        {hasRooms ? (
+          <RoomsGrid rooms={rooms} counts={roomCounts} locale={locale} />
+        ) : (
+          <EmptyState>{t("roomsEmpty")}</EmptyState>
+        )}
       </section>
 
       <AboutSection

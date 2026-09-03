@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+﻿import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { draftMode } from "next/headers";
@@ -9,7 +9,7 @@ import {
   getRoomTypesBySlugs,
 } from "@/lib/sanity/queries";
 import { urlForImage } from "@/lib/sanity/image";
-import { pick } from "@/lib/i18n";
+import { compactText, hasSlug, pickText } from "@/lib/content";
 import { localizedAlternates } from "@/lib/metadata";
 import { PROJECT_MARKS, ROOM_CODES } from "@/lib/marks";
 import PlanMark from "@/components/icons/PlanMark";
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getProjectBySlug(slug);
   if (!project) return {};
   return {
-    title: project.name,
+    title: project.name ?? "DJ Architects",
     alternates: localizedAlternates(`/work/${slug}`),
   };
 }
@@ -48,21 +48,21 @@ export default async function ProjectPage({ params }: Props) {
     getRoomTypesBySlugs(project.rooms ?? [], preview),
   ]);
 
-  const description = pick(locale, project.descriptionEn, project.descriptionAl);
-  const category = pick(locale, project.categoryEn, project.categoryAl);
-  const mark = PROJECT_MARKS[project.signatureMark];
-  const code = project.signatureMark.toUpperCase();
+  const title = project.name || t("untitled");
+  const description = pickText(locale, project.descriptionEn, project.descriptionAl);
+  const category = pickText(locale, project.categoryEn, project.categoryAl);
+  const mark = project.signatureMark ? PROJECT_MARKS[project.signatureMark] : undefined;
+  const code = project.signatureMark?.toUpperCase();
+  const statusLabel = project.status ? tStatus(project.status) : "";
 
-  const metaLine = [
-    tDiscipline(project.discipline),
+  const metaLine = compactText([
+    project.discipline ? tDiscipline(project.discipline) : "",
     category,
     project.location,
-    String(project.year),
-    tStatus(project.status),
+    project.year,
+    statusLabel,
     project.area ? `${project.area} m²` : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  ]).join(" \u00b7 ");
 
   const floorPlanSrc = project.floorPlanImage
     ? urlForImage(project.floorPlanImage)?.width(1400).fit("max").url()
@@ -71,20 +71,25 @@ export default async function ProjectPage({ params }: Props) {
   const images = (project.renderImages ?? [])
     .map((img) => urlForImage(img)?.width(1200).height(900).fit("crop").url())
     .filter((src): src is string => Boolean(src));
+  const relatedRooms = rooms.filter(hasSlug);
 
   return (
     <article className="mx-auto max-w-content">
       <div className="px-6 pb-5 pt-11 md:px-12">
         <div className="flex items-start gap-4 sm:gap-[26px]">
-          <span className="flex-none pt-[6px]">
-            <PlanMark spec={mark} scale={60 / 44} />
-          </span>
-          <div>
-            <span className="mb-3 block font-mono text-[11px] tracking-[0.16em] text-brass">
-              {code}
+          {mark && (
+            <span className="flex-none pt-[6px]">
+              <PlanMark spec={mark} scale={60 / 44} />
             </span>
+          )}
+          <div>
+            {code && (
+              <span className="mb-3 block font-mono text-[11px] tracking-[0.16em] text-brass">
+                {code}
+              </span>
+            )}
             <h1 className="font-serif text-[32px] font-light tracking-[-0.01em] sm:text-[40px] lg:text-[48px]">
-              {project.name}
+              {title}
             </h1>
             {description && (
               <p
@@ -94,9 +99,11 @@ export default async function ProjectPage({ params }: Props) {
                 {description}
               </p>
             )}
-            <p className="mt-6 text-sm" style={{ color: "var(--subtle)" }}>
-              {metaLine}
-            </p>
+            {metaLine && (
+              <p className="mt-6 text-sm" style={{ color: "var(--subtle)" }}>
+                {metaLine}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -115,7 +122,7 @@ export default async function ProjectPage({ params }: Props) {
           >
             <Image
               src={floorPlanSrc}
-              alt={`${project.name} — floor plan`}
+              alt={`${title} floor plan`}
               width={1400}
               height={1000}
               className="w-full object-contain"
@@ -144,7 +151,7 @@ export default async function ProjectPage({ params }: Props) {
                 >
                   <Image
                     src={src}
-                    alt={`${project.name} — ${i + 1}`}
+                    alt={`${title} ${i + 1}`}
                     width={800}
                     height={600}
                     className="h-full w-full object-cover"
@@ -156,7 +163,7 @@ export default async function ProjectPage({ params }: Props) {
             // Two columns tile any count without leaving empty cells: an odd
             // count just lets its last image span the full width, instead of
             // a fixed 3-column grid leaving 1-2 blank cells on the last row.
-            // Always 2 columns, even at phone widths — a breakpoint-gated
+            // Always 2 columns, even at phone widths â€” a breakpoint-gated
             // grid-cols-1 base would collapse to a full-width stack under
             // sm (640px), which also hits narrowed desktop browser windows,
             // not just real phones.
@@ -173,7 +180,7 @@ export default async function ProjectPage({ params }: Props) {
                   >
                     <Image
                       src={src}
-                      alt={`${project.name} — ${i + 1}`}
+                      alt={`${title} ${i + 1}`}
                       width={800}
                       height={600}
                       className="h-full w-full object-cover"
@@ -186,7 +193,7 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       )}
 
-      {rooms.length > 0 && (
+      {relatedRooms.length > 0 && (
         <div className="px-6 pb-[130px] pt-5 md:px-12">
           <div
             className="mb-[26px] border-b pb-[18px]"
@@ -200,7 +207,7 @@ export default async function ProjectPage({ params }: Props) {
             </span>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {rooms.map((room) => (
+            {relatedRooms.map((room) => (
               <Link
                 key={room._id}
                 href={`/rooms/${room.slug}`}
@@ -211,7 +218,7 @@ export default async function ProjectPage({ params }: Props) {
                   {ROOM_CODES[room.slug]}
                 </span>
                 <span className="font-serif text-xl font-light leading-[1.2]">
-                  {pick(locale, room.nameEn, room.nameAl)}
+                  {pickText(locale, room.nameEn, room.nameAl) || ROOM_CODES[room.slug]}
                 </span>
               </Link>
             ))}

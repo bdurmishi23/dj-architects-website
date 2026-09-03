@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation";
+﻿import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { draftMode } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import { getRoomTypeBySlug, getProjectsForRoom } from "@/lib/sanity/queries";
 import { urlForImage } from "@/lib/sanity/image";
-import { pick } from "@/lib/i18n";
+import { compactText, hasSlug, hasText, pickText } from "@/lib/content";
 import { localizedAlternates } from "@/lib/metadata";
 import { ROOM_MARKS, ROOM_CODES, ROOM_SLUGS, type RoomSlug } from "@/lib/marks";
 import PlanMark from "@/components/icons/PlanMark";
@@ -35,19 +35,21 @@ export default async function RoomPage({ params }: Props) {
   if (!isRoomSlug(slug)) notFound();
   const { isEnabled: preview } = draftMode();
 
-  const [room, related, t] = await Promise.all([
+  const [room, related, t, tProject] = await Promise.all([
     getRoomTypeBySlug(slug, preview),
     getProjectsForRoom(slug, 3, preview),
     getTranslations("room"),
+    getTranslations("project"),
   ]);
 
   if (!room) notFound();
 
-  const name = pick(locale, room.nameEn, room.nameAl);
-  const description = pick(locale, room.descriptionEn, room.descriptionAl);
+  const name = pickText(locale, room.nameEn, room.nameAl) || t("untitled");
+  const description = pickText(locale, room.descriptionEn, room.descriptionAl);
   const images = (room.gallery ?? [])
     .map((img) => urlForImage(img)?.width(1200).height(900).fit("crop").url())
     .filter((src): src is string => Boolean(src));
+  const relatedProjects = related.filter(hasSlug);
 
   return (
     <article>
@@ -63,9 +65,11 @@ export default async function RoomPage({ params }: Props) {
             <h1 className="font-serif text-[32px] font-light tracking-[-0.01em] sm:text-[40px] lg:text-[48px]">
               {name}
             </h1>
-            <p className="mt-[18px] max-w-[480px] text-[15px] leading-[1.75]" style={{ color: "var(--subtle)" }}>
-              {description}
-            </p>
+            {hasText(description) && (
+              <p className="mt-[18px] max-w-[480px] text-[15px] leading-[1.75]" style={{ color: "var(--subtle)" }}>
+                {description}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -82,7 +86,7 @@ export default async function RoomPage({ params }: Props) {
               >
                 <Image
                   src={src}
-                  alt={`${name} — ${i + 1}`}
+                  alt={`${name} ${i + 1}`}
                   width={800}
                   height={600}
                   className="h-full w-full object-cover"
@@ -93,7 +97,7 @@ export default async function RoomPage({ params }: Props) {
         </div>
       )}
 
-      {related.length > 0 && (
+      {relatedProjects.length > 0 && (
         <div className="px-6 pb-[130px] pt-5 md:px-12">
           <div className="mb-[26px] border-b pb-[18px]" style={{ borderColor: "var(--hairline)" }}>
             <span className="font-mono text-[11px] tracking-[0.14em]" style={{ color: "var(--subtle)" }}>
@@ -101,19 +105,32 @@ export default async function RoomPage({ params }: Props) {
             </span>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((project) => (
-              <Link
-                key={project._id}
-                href={`/work/${project.slug}`}
-                className="flex flex-col gap-2 rounded-card border px-[22px] py-5 transition-colors duration-300 ease-editorial hover:border-brass hover:bg-[var(--card-hover)]"
-                style={{ borderColor: "var(--hairline)" }}
-              >
-                <span className="font-mono text-xs text-brass">
-                  {project.signatureMark.toUpperCase()}
-                </span>
-                <span className="font-serif text-xl font-light leading-[1.2]">{project.name}</span>
-              </Link>
-            ))}
+            {relatedProjects.map((project) => {
+              const relatedMeta = compactText([project.location, project.year]).join(" \u00b7 ");
+
+              return (
+                <Link
+                  key={project._id}
+                  href={`/work/${project.slug}`}
+                  className="flex flex-col gap-2 rounded-card border px-[22px] py-5 transition-colors duration-300 ease-editorial hover:border-brass hover:bg-[var(--card-hover)]"
+                  style={{ borderColor: "var(--hairline)" }}
+                >
+                  {project.signatureMark && (
+                    <span className="font-mono text-xs text-brass">
+                      {project.signatureMark.toUpperCase()}
+                    </span>
+                  )}
+                  <span className="font-serif text-xl font-light leading-[1.2]">
+                    {project.name || tProject("untitled")}
+                  </span>
+                  {relatedMeta && (
+                    <span className="text-[12.5px] leading-[1.55]" style={{ color: "var(--subtle)" }}>
+                      {relatedMeta}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}

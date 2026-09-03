@@ -16,20 +16,27 @@
     "sideA": "Side A",
     "sideB": "Side B",
     "prevProject": "Previous project",
-    "nextProject": "Next project"
+    "nextProject": "Next project",
+    "workEmpty": "Projects coming soon.",
+    "roomsEmpty": "Rooms coming soon.",
+    "projectUntitled": "Untitled project"
   },
   "allProjects": {
     "title": "All projects",
     "intro": "The full catalogue, side by side, in the order it was made — every project carries the same code, mark and metadata as the selection on the homepage.",
-    "count": "{count} projects · 2026"
+    "count": "{count} projects · 2026",
+    "empty": "No projects published yet."
   },
   "room": {
-    "related": "Also seen in"
+    "related": "Also seen in",
+    "relatedEmpty": "Related projects coming soon.",
+    "untitled": "Untitled room"
   },
   "project": {
     "floorPlan": "Floor plan",
     "renders": "Renders",
-    "roomsFeatured": "Rooms featured in this project"
+    "roomsFeatured": "Rooms featured in this project",
+    "untitled": "Untitled project"
   },
   "discipline": {
     "architecture": "Architecture",

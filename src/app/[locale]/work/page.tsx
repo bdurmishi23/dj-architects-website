@@ -1,7 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import { WorkTracklist } from "@/components/WorkTracklist";
+import EmptyState from "@/components/EmptyState";
 import { getAllProjects } from "@/lib/sanity/queries";
 import { localizedAlternates } from "@/lib/metadata";
+import { hasSlug } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
 import type { Metadata } from "next";
 
@@ -19,6 +21,7 @@ export default async function WorkPage({
     getAllProjects(),
     getTranslations("allProjects"),
   ]);
+  const hasProjects = projects.some(hasSlug);
 
   return (
     <section className="px-6 pb-[140px] pt-16 sm:pt-24 md:px-12">
@@ -41,7 +44,11 @@ export default async function WorkPage({
       </p>
 
       <div className="pt-5">
-        <WorkTracklist projects={projects} locale={locale} grouping="discipline" />
+        {hasProjects ? (
+          <WorkTracklist projects={projects} locale={locale} grouping="discipline" />
+        ) : (
+          <EmptyState>{t("empty")}</EmptyState>
+        )}
       </div>
     </section>
   );

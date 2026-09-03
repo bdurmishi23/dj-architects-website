@@ -16,20 +16,27 @@
     "sideA": "Ana A",
     "sideB": "Ana B",
     "prevProject": "Projekti i mëparshëm",
-    "nextProject": "Projekti tjetër"
+    "nextProject": "Projekti tjetër",
+    "workEmpty": "Projektet do te shtohen se shpejti.",
+    "roomsEmpty": "Ambientet do te shtohen se shpejti.",
+    "projectUntitled": "Projekt pa titull"
   },
   "allProjects": {
     "title": "Të gjitha projektet",
     "intro": "Katalogu i plotë, sipas rendit kronologjik — çdo projekt mban të njëjtin kod, shenjë dhe metadhëna si përzgjedhja në faqen kryesore.",
-    "count": "{count} projekte · 2026"
+    "count": "{count} projekte · 2026",
+    "empty": "Nuk ka ende projekte te publikuara."
   },
   "room": {
-    "related": "Shfaqet gjithashtu në"
+    "related": "Shfaqet gjithashtu në",
+    "relatedEmpty": "Projektet e lidhura do te shtohen se shpejti.",
+    "untitled": "Ambient pa titull"
   },
   "project": {
     "floorPlan": "Planimetria",
     "renders": "Rendera",
-    "roomsFeatured": "Ambientet e këtij projekti"
+    "roomsFeatured": "Ambientet e këtij projekti",
+    "untitled": "Projekt pa titull"
   },
   "discipline": {
     "architecture": "Arkitekturë",
