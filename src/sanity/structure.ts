@@ -9,7 +9,7 @@ const ROOM_LABELS: Record<RoomSlug, string> = {
   living: "Dhoma ndenjeje",
   kitchen: "Kuzhina",
   bedroom: "Dhoma gjumi",
-  bath: "Banjo",
+  bath: "Tualete",
   entrance: "Hyrje",
   terrace: "Tarraca",
 };

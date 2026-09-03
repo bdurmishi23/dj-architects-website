@@ -145,7 +145,7 @@ const rooms = [
   {
     slug: "bath",
     nameEn: "Bathrooms",
-    nameAl: "Banjo",
+    nameAl: "Tualete",
     descriptionEn:
       "Travertine, green tile, soft edges. Small rooms treated with the same care as the large ones.",
     descriptionAl:

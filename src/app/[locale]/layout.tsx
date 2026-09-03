@@ -41,7 +41,7 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const title = "dj architects";
+  const title = "DJ Architects";
   const description =
     locale === "al"
       ? "Studio arkitekture dhe dizajni të brendshëm në Tiranë."
