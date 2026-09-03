@@ -22,7 +22,7 @@ export default function AboutSection({
   return (
     <section
       id="about"
-      className="grid grid-cols-1 gap-14 px-6 py-16 sm:py-24 md:grid-cols-[1.05fr_0.95fr] md:items-start md:gap-20 md:px-12 lg:py-[120px]"
+      className="home-section home-section--about grid grid-cols-1 gap-14 md:grid-cols-[1.05fr_0.95fr] md:items-start md:gap-20"
     >
       <div>
         <p className="mb-7 font-mono text-xs tracking-[0.14em]" style={{ color: "var(--subtle)" }}>

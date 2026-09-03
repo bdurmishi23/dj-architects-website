@@ -10,7 +10,7 @@ export default function ContactSection({
   locale: Locale;
 }) {
   return (
-    <section id="contact" className="px-6 pb-16 pt-5 sm:pb-[120px] md:px-12">
+    <section id="contact" className="home-section home-section--contact">
       <div
         className="flex flex-wrap items-center justify-between gap-8 rounded-panel border p-6 sm:gap-10 sm:p-10 lg:p-14"
         style={{ borderColor: "var(--panel-border)" }}

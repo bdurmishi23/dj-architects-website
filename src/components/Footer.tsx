@@ -27,22 +27,24 @@ export default async function Footer() {
 
   return (
     <footer
-      className="grid grid-cols-1 gap-10 border-t px-6 py-14 transition-colors duration-theme ease-editorial md:grid-cols-[1.4fr_1fr_1fr] md:gap-[60px] md:px-12"
+      className="site-footer border-t transition-colors duration-theme ease-editorial"
       style={{ borderColor: "var(--footer-border)" }}
     >
-      <div>
-        <p className="mb-[10px] font-serif text-xl">DJ Architects</p>
-        <p className="max-w-[280px] text-[13px] leading-[1.7]" style={{ color: "var(--subtle)" }}>
+      <div className="site-footer__brand">
+        <p className="site-footer__name font-serif">DJ Architects</p>
+        <p className="site-footer__tagline" style={{ color: "var(--subtle)" }}>
           {tagline}
         </p>
       </div>
-      <div className="flex flex-col gap-2 text-[13px]" style={{ color: "var(--subtle)" }}>
-        {settings?.address && <span>{settings.address}</span>}
+      <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
+        {settings?.address && <span className="site-footer__address">{settings.address}</span>}
         {settings?.contactPhone && (
-          <a href={`tel:${settings.contactPhone}`}>{settings.contactPhone}</a>
+          <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
+            {settings.contactPhone}
+          </a>
         )}
       </div>
-      <div className="flex flex-col gap-2 text-[13px]">
+      <div className="site-footer__meta">
         {settings?.instagramUrl && (
           <a href={settings.instagramUrl} target="_blank" rel="noreferrer">
             {t("instagram")}
@@ -59,7 +61,7 @@ export default async function Footer() {
           </a>
         )}
         <span
-          className={`whitespace-nowrap font-mono text-[11px] tracking-[0.1em] ${
+          className={`site-footer__copyright font-mono ${
             hasSocialLinks ? "mt-[14px]" : ""
           }`}
           style={{ color: "var(--copy-dim)" }}

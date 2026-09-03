@@ -68,6 +68,7 @@
 }
 
 html {
+  font-size: 110%;
   scroll-behavior: auto;
   /* document.scrollingElement is <html>, not <body> — body's own
      overflow-x-hidden class doesn't stop the page itself from scrolling
@@ -75,6 +76,12 @@ html {
      which intentionally bleeds past the right edge) overflows a nested
      positioned ancestor. This is the actual clip boundary for the page. */
   overflow-x: hidden;
+}
+
+@media (max-width: 430px) {
+  html {
+    font-size: clamp(16px, 4.25vw, 17.6px);
+  }
 }
 
 body {
@@ -97,6 +104,130 @@ a {
 
 a:hover {
   color: var(--ink);
+}
+
+.home-section {
+  padding-inline: clamp(1.5rem, 4vw, 3.3rem);
+}
+
+.home-section--work {
+  padding-block: clamp(3.75rem, 8vw, 8.25rem) clamp(2.5rem, 5vw, 4rem);
+}
+
+.home-section--rooms {
+  padding-block: clamp(3.75rem, 7vw, 6.9rem) clamp(2.5rem, 5vw, 4rem);
+}
+
+.home-section--about {
+  padding-block: clamp(4rem, 8vw, 8.25rem);
+}
+
+.home-section--contact {
+  padding-block: clamp(1.25rem, 3vw, 2rem) clamp(4rem, 8vw, 8.25rem);
+}
+
+.site-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(9.5rem, 0.9fr) minmax(max-content, 0.65fr);
+  align-items: start;
+  column-gap: clamp(1.35rem, 4vw, 3.75rem);
+  row-gap: clamp(1.25rem, 3vw, 2.25rem);
+  padding: clamp(2.75rem, 5.6vw, 3.85rem) clamp(1.5rem, 4vw, 3.3rem);
+}
+
+.site-footer__name {
+  margin-bottom: 0.55rem;
+  font-size: clamp(1.05rem, 0.95rem + 0.38vw, 1.28rem);
+  line-height: 1.2;
+}
+
+.site-footer__tagline {
+  max-width: 17.5rem;
+  font-size: clamp(0.78rem, 0.73rem + 0.16vw, 0.84rem);
+  line-height: 1.7;
+}
+
+.site-footer__contact,
+.site-footer__meta {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: clamp(0.76rem, 0.71rem + 0.16vw, 0.84rem);
+  line-height: 1.55;
+}
+
+.site-footer__phone,
+.site-footer__copyright {
+  white-space: nowrap;
+}
+
+.site-footer__copyright {
+  display: block;
+  font-size: clamp(0.62rem, 0.58rem + 0.13vw, 0.68rem);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 720px) {
+  .site-footer {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: clamp(1rem, 4.4vw, 1.6rem);
+    row-gap: clamp(1.15rem, 4.6vw, 1.6rem);
+    padding: clamp(2.25rem, 8vw, 3rem) clamp(1rem, 4.4vw, 1.5rem);
+  }
+
+  .site-footer__brand {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .site-footer__meta {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .site-footer__contact {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: start;
+    column-gap: clamp(1rem, 4.4vw, 1.6rem);
+  }
+
+  .site-footer__address {
+    min-width: 0;
+  }
+
+  .site-footer__phone {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__brand,
+  .site-footer__meta,
+  .site-footer__contact {
+    grid-column: 1;
+  }
+
+  .site-footer__meta {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .site-footer__contact {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__phone {
+    justify-self: start;
+  }
 }
 
 @keyframes dj-groove-spin {

@@ -51,7 +51,7 @@ export default async function HomePage({
         yearLine="2026—"
       />
 
-      <section id="work" className="px-6 pb-10 pt-16 sm:pt-[120px] md:px-12">
+      <section id="work" className="home-section home-section--work">
         <div
           className="flex flex-col gap-2 border-b pb-[26px] sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
           style={{ borderColor: "var(--hairline)" }}
@@ -88,7 +88,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section id="rooms" className="px-6 pb-10 pt-16 sm:pt-[100px] md:px-12">
+      <section id="rooms" className="home-section home-section--rooms">
         <div className="mb-9 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10">
           <h2 className="font-serif text-[26px] font-light tracking-[-0.01em] sm:text-[34px]">
             {t("roomsTitle")}
