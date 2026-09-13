@@ -140,12 +140,12 @@ export default async function ProjectPage({ params }: Props) {
             {t("renders")}
           </p>
           {images.length === 3 ? (
-            <div className="grid grid-cols-[1.4fr_1fr] grid-rows-2 gap-3 sm:gap-4">
+            <div className="grid h-[clamp(320px,46vw,620px)] grid-cols-[1.4fr_1fr] grid-rows-2 gap-3 sm:gap-4">
               {images.map(({ image, src }, i) => (
                 <div
                   key={i}
                   className={`overflow-hidden rounded-card border ${
-                    i === 0 ? "row-span-2 h-auto" : "h-[110px] sm:h-[180px] md:h-[220px]"
+                    i === 0 ? "row-span-2" : ""
                   }`}
                   style={{ borderColor: "var(--hairline)" }}
                 >
