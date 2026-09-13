@@ -118,7 +118,7 @@ export default async function ProjectPage({ params }: Props) {
       {floorPlanSrc && (
         <div className="px-6 pb-12 pt-11 md:px-12">
           <p
-            className="mb-5 text-center font-mono text-[11px] tracking-[0.14em]"
+            className="mb-5 font-mono text-[11px] tracking-[0.14em]"
             style={{ color: "var(--subtle)" }}
           >
             {t("floorPlan")}
