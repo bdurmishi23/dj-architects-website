@@ -12,6 +12,7 @@ import { blurDataForImage, urlForImage } from "@/lib/sanity/image";
 import { compactText, hasSlug, pickText } from "@/lib/content";
 import { localizedAlternates } from "@/lib/metadata";
 import { PROJECT_MARKS, ROOM_CODES } from "@/lib/marks";
+import FloorPlanViewer from "@/components/FloorPlanViewer";
 import PlanMark from "@/components/icons/PlanMark";
 import type { Locale } from "@/i18n/routing";
 import type { Metadata } from "next";
@@ -65,7 +66,7 @@ export default async function ProjectPage({ params }: Props) {
   ]).join(" \u00b7 ");
 
   const floorPlanSrc = project.floorPlanImage
-    ? urlForImage(project.floorPlanImage)?.width(1400).fit("max").url()
+    ? urlForImage(project.floorPlanImage)?.width(1800).fit("max").url()
     : undefined;
   const floorPlanBlur = blurDataForImage(project.floorPlanImage);
 
@@ -115,27 +116,18 @@ export default async function ProjectPage({ params }: Props) {
       </div>
 
       {floorPlanSrc && (
-        <div className="px-6 pb-10 pt-11 md:px-12">
+        <div className="px-6 pb-12 pt-11 md:px-12">
           <p
-            className="mb-4 font-mono text-[11px] tracking-[0.14em]"
+            className="mb-5 text-center font-mono text-[11px] tracking-[0.14em]"
             style={{ color: "var(--subtle)" }}
           >
             {t("floorPlan")}
           </p>
-          <div
-            className="overflow-hidden rounded-card border"
-            style={{ borderColor: "var(--hairline)", background: "var(--room-bg)" }}
-          >
-            <Image
-              src={floorPlanSrc}
-              alt={`${title} floor plan`}
-              width={1400}
-              height={1000}
-              placeholder={floorPlanBlur ? "blur" : "empty"}
-              blurDataURL={floorPlanBlur}
-              className="w-full object-contain"
-            />
-          </div>
+          <FloorPlanViewer
+            src={floorPlanSrc}
+            alt={`${title} floor plan`}
+            blurDataURL={floorPlanBlur}
+          />
         </div>
       )}
 
