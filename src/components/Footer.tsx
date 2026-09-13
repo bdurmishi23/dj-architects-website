@@ -31,23 +31,27 @@ export default async function Footer() {
       style={{ borderColor: "var(--footer-border)" }}
     >
       <div className="site-footer__brand">
-        <p className="site-footer__name font-serif">DJ Architects</p>
-        {hasText(tagline) && (
-          <p className="site-footer__tagline" style={{ color: "var(--subtle)" }}>
-            {tagline}
-          </p>
-        )}
-      </div>
-      {(hasText(settings?.address) || hasText(settings?.contactPhone)) && (
-        <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
-          {hasText(settings?.address) && <span className="site-footer__address">{settings.address}</span>}
-          {hasText(settings?.contactPhone) && (
-          <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
-            {settings.contactPhone}
-          </a>
+        <div>
+          <p className="site-footer__name font-serif">DJ Architects</p>
+          {hasText(tagline) && (
+            <p className="site-footer__tagline" style={{ color: "var(--subtle)" }}>
+              {tagline}
+            </p>
           )}
         </div>
-      )}
+        {(hasText(settings?.address) || hasText(settings?.contactPhone)) && (
+          <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
+            {hasText(settings?.address) && (
+              <span className="site-footer__address">{settings.address}</span>
+            )}
+            {hasText(settings?.contactPhone) && (
+              <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
+                {settings.contactPhone}
+              </a>
+            )}
+          </div>
+        )}
+      </div>
       <div className="site-footer__meta">
         {settings?.instagramUrl && (
           <a href={settings.instagramUrl} target="_blank" rel="noreferrer">
