@@ -33,17 +33,17 @@ export default function FloorPlanViewer({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mx-auto block w-full max-w-[820px] overflow-hidden rounded-card border transition-colors duration-300 ease-editorial hover:border-brass"
+        className="mx-auto block h-[min(46vh,520px)] min-h-[280px] w-full max-w-[620px] overflow-hidden rounded-card border p-3 transition-colors duration-300 ease-editorial hover:border-brass sm:p-4"
         style={{ borderColor: "var(--hairline)", background: "var(--room-bg)" }}
       >
         <Image
           src={src}
           alt={alt}
-          width={1000}
-          height={720}
+          width={900}
+          height={640}
           placeholder={blurDataURL ? "blur" : "empty"}
           blurDataURL={blurDataURL}
-          className="h-auto w-full object-contain"
+          className="h-full w-full object-contain"
         />
       </button>
 
