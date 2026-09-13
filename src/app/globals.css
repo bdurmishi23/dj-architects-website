@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --paper: #fae8d1;
-  --ink: #271f17;
-  --subtle: #7b634c;
+  --paper: #f6f1e8;
+  --ink: #21201c;
+  --subtle: #6b6357;
   --subtle-dim: rgba(33, 32, 28, 0.22);
   --hairline: rgba(33, 32, 28, 0.14);
-  --nav-bg: rgba(250, 232, 209, 0.86);
+  --nav-bg: rgba(246, 241, 232, 0.9);
   --nav-home-bg: linear-gradient(
     180deg,
-    rgba(250, 232, 209, 0.94) 0%,
-    rgba(250, 232, 209, 0.68) 46%,
-    rgba(250, 232, 209, 0) 100%
+    rgba(246, 241, 232, 0.94) 0%,
+    rgba(246, 241, 232, 0.68) 46%,
+    rgba(246, 241, 232, 0) 100%
   );
   --nav-border: rgba(33, 32, 28, 0.09);
-  --room-bg: #fae8d1;
-  --room-hover: #f2d9ba;
+  --room-bg: #f6f1e8;
+  --room-hover: #efe8da;
   --scrim: linear-gradient(
     180deg,
-    rgba(250, 232, 209, 0.38) 0%,
+    rgba(246, 241, 232, 0.35) 0%,
     rgba(33, 32, 28, 0.12) 45%,
-    rgba(250, 232, 209, 0.97) 100%
+    rgba(246, 241, 232, 0.97) 100%
   );
   --grooves-opacity: 0.14;
   --dialog-border: rgba(169, 120, 46, 0.5);
