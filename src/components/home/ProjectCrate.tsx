@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { urlForImage } from "@/lib/sanity/image";
+import ImagePlaceholder from "@/components/ImagePlaceholder";
+import { blurDataForImage, urlForImage } from "@/lib/sanity/image";
 import { PROJECT_MARKS } from "@/lib/marks";
 import { compactText, hasSlug, pickText } from "@/lib/content";
 import { assignSideCodes } from "@/lib/projectCodes";
@@ -21,12 +22,14 @@ export default function ProjectCrate({
   prevLabel,
   nextLabel,
   titleFallback,
+  imagePlaceholder,
 }: {
   projects: Project[];
   locale: Locale;
   prevLabel: string;
   nextLabel: string;
   titleFallback: string;
+  imagePlaceholder: string;
 }) {
   const items = assignSideCodes(projects.filter(hasSlug));
   const trackRef = useRef<HTMLDivElement>(null);
@@ -82,6 +85,7 @@ export default function ProjectCrate({
             .height(880)
             .fit("crop")
             .url();
+          const blurDataURL = blurDataForImage(project.coverImage);
 
           return (
             <Link
@@ -100,9 +104,12 @@ export default function ProjectCrate({
                     alt={title}
                     fill
                     sizes="340px"
+                    placeholder={blurDataURL ? "blur" : "empty"}
+                    blurDataURL={blurDataURL}
                     className="object-cover"
                   />
                 )}
+                {!src && <ImagePlaceholder label={imagePlaceholder} />}
                 {src && (
                   <span
                     aria-hidden="true"

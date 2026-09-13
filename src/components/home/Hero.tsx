@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import ImagePlaceholder from "@/components/ImagePlaceholder";
 import LogoMark from "@/components/icons/LogoMark";
 
 const EASE = "cubic-bezier(0.22,0.61,0.36,1)";
@@ -9,11 +10,15 @@ const GROOVE_RADII = [62, 76, 90, 104, 118, 132, 146, 160, 174, 188];
 
 export default function Hero({
   imageSrc,
+  imageBlurDataURL,
+  imagePlaceholder,
   heroLine,
   locationLine,
   yearLine,
 }: {
   imageSrc?: string;
+  imageBlurDataURL?: string;
+  imagePlaceholder: string;
   heroLine: string;
   locationLine: string;
   yearLine: string;
@@ -149,8 +154,15 @@ export default function Hero({
             fill
             priority
             sizes="100vw"
+            placeholder={imageBlurDataURL ? "blur" : "empty"}
+            blurDataURL={imageBlurDataURL}
             className="object-cover"
           />
+        )}
+        {!imageSrc && (
+          <div className="absolute inset-0 bg-[var(--room-bg)]">
+            <ImagePlaceholder label={imagePlaceholder} />
+          </div>
         )}
         <div className="absolute inset-0" style={{ background: "var(--scrim)" }} />
         <svg

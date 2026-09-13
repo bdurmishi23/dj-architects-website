@@ -14,7 +14,7 @@ import {
   getRoomProjectCounts,
   getSiteSettings,
 } from "@/lib/sanity/queries";
-import { urlForImage } from "@/lib/sanity/image";
+import { blurDataForImage, urlForImage } from "@/lib/sanity/image";
 import { pick } from "@/lib/i18n";
 import { hasSlug } from "@/lib/content";
 import { localizedAlternates } from "@/lib/metadata";
@@ -42,6 +42,7 @@ export default async function HomePage({
   const heroImageSrc = settings?.heroImage
     ? urlForImage(settings.heroImage)?.width(2400).height(1500).fit("crop").url()
     : undefined;
+  const heroImageBlur = blurDataForImage(settings?.heroImage);
   const heroLine = settings ? pick(locale, settings.heroTextEn, settings.heroTextAl) : "";
   const hasProjects = projects.some(hasSlug);
   const hasRooms = rooms.some(hasSlug);
@@ -50,6 +51,8 @@ export default async function HomePage({
     <>
       <Hero
         imageSrc={heroImageSrc}
+        imageBlurDataURL={heroImageBlur}
+        imagePlaceholder={t("imagePlaceholder")}
         heroLine={heroLine}
         locationLine="Tirana, AL"
         yearLine="2026—"
@@ -82,6 +85,7 @@ export default async function HomePage({
               prevLabel={t("prevProject")}
               nextLabel={t("nextProject")}
               titleFallback={t("projectUntitled")}
+              imagePlaceholder={t("imagePlaceholder")}
             />
           </>
         ) : (
@@ -122,7 +126,7 @@ export default async function HomePage({
         settings={settings}
         locale={locale}
         portraitCaption={t("portraitCaption")}
-        portraitPlaceholder={t("portraitPlaceholder")}
+        portraitPlaceholder={t("imagePlaceholder")}
       />
       <ContactSection settings={settings} locale={locale} />
     </>

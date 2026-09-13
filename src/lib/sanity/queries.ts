@@ -3,6 +3,19 @@ import { getClient, projectId } from "./client";
 import type { Discipline, Emphasis, Project, ProjectStatus, RoomType, SiteSettings } from "./types";
 import type { ProjectMarkKey, RoomSlug } from "@/lib/marks";
 
+const imageFields = `
+  asset->{
+    "_ref": _id,
+    "_type": "reference",
+    metadata {
+      lqip,
+      dimensions { width, height }
+    }
+  },
+  hotspot,
+  crop
+`;
+
 const projectFields = `
   _id,
   name,
@@ -15,7 +28,7 @@ const projectFields = `
   status,
   area,
   rooms,
-  coverImage,
+  coverImage { ${imageFields} },
   signatureMark,
   emphasis,
   featuredOnHome
@@ -63,8 +76,8 @@ const projectDetailFields = `
   ${projectFields},
   descriptionEn,
   descriptionAl,
-  floorPlanImage,
-  renderImages
+  floorPlanImage { ${imageFields} },
+  renderImages[] { ${imageFields} }
 `;
 
 // Sanity's client.fetch() goes through Next.js's patched fetch, which
@@ -127,7 +140,6 @@ export async function getSiteSettings(preview = false): Promise<SiteSettings | n
   if (!projectId) return null;
   return getClient(preview).fetch(
     `*[_type == "siteSettings"][0] {
-    heroImage,
     heroTextEn,
     heroTextAl,
     taglineEn,
@@ -140,7 +152,8 @@ export async function getSiteSettings(preview = false): Promise<SiteSettings | n
     quoteDeniAl,
     quoteJurgenEn,
     quoteJurgenAl,
-    aboutPortrait,
+    heroImage { ${imageFields} },
+    aboutPortrait { ${imageFields} },
     contactLeadEn,
     contactLeadAl,
     contactNoteEn,
@@ -160,7 +173,7 @@ export async function getSiteSettings(preview = false): Promise<SiteSettings | n
 export async function getRoomTypes(preview = false): Promise<RoomType[]> {
   if (!projectId) return [];
   const rooms: RoomType[] = await getClient(preview).fetch(
-    `*[_type == "roomType"] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
+    `*[_type == "roomType"] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery[] { ${imageFields} } }`,
     {},
     fetchOptions(preview)
   );
@@ -173,7 +186,7 @@ export async function getRoomTypeBySlug(
 ): Promise<RoomType | null> {
   if (!projectId) return null;
   const room: RoomType | null = await getClient(preview).fetch(
-    `*[_type == "roomType" && slug == $slug][0] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
+    `*[_type == "roomType" && slug == $slug][0] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery[] { ${imageFields} } }`,
     { slug },
     fetchOptions(preview)
   );
@@ -186,7 +199,7 @@ export async function getRoomTypesBySlugs(
 ): Promise<RoomType[]> {
   if (!projectId || slugs.length === 0) return [];
   const rooms: RoomType[] = await getClient(preview).fetch(
-    `*[_type == "roomType" && slug in $slugs] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery }`,
+    `*[_type == "roomType" && slug in $slugs] { _id, slug, nameEn, nameAl, descriptionEn, descriptionAl, gallery[] { ${imageFields} } }`,
     { slugs },
     fetchOptions(preview)
   );

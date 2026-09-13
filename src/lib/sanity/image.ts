@@ -8,3 +8,7 @@ export function urlForImage(source: SanityImage | undefined) {
   if (!source?.asset?._ref) return undefined;
   return builder.image(source);
 }
+
+export function blurDataForImage(source: SanityImage | undefined) {
+  return source?.asset?.metadata?.lqip;
+}

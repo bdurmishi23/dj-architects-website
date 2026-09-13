@@ -8,7 +8,7 @@ import {
   getProjectBySlug,
   getRoomTypesBySlugs,
 } from "@/lib/sanity/queries";
-import { urlForImage } from "@/lib/sanity/image";
+import { blurDataForImage, urlForImage } from "@/lib/sanity/image";
 import { compactText, hasSlug, pickText } from "@/lib/content";
 import { localizedAlternates } from "@/lib/metadata";
 import { PROJECT_MARKS, ROOM_CODES } from "@/lib/marks";
@@ -67,10 +67,16 @@ export default async function ProjectPage({ params }: Props) {
   const floorPlanSrc = project.floorPlanImage
     ? urlForImage(project.floorPlanImage)?.width(1400).fit("max").url()
     : undefined;
+  const floorPlanBlur = blurDataForImage(project.floorPlanImage);
 
   const images = (project.renderImages ?? [])
-    .map((img) => urlForImage(img)?.width(1200).height(900).fit("crop").url())
-    .filter((src): src is string => Boolean(src));
+    .map((image) => ({
+      image,
+      src: urlForImage(image)?.width(1200).height(900).fit("crop").url(),
+    }))
+    .filter((item): item is { image: NonNullable<typeof item.image>; src: string } =>
+      Boolean(item.src)
+    );
   const relatedRooms = rooms.filter(hasSlug);
 
   return (
@@ -125,6 +131,8 @@ export default async function ProjectPage({ params }: Props) {
               alt={`${title} floor plan`}
               width={1400}
               height={1000}
+              placeholder={floorPlanBlur ? "blur" : "empty"}
+              blurDataURL={floorPlanBlur}
               className="w-full object-contain"
             />
           </div>
@@ -141,7 +149,7 @@ export default async function ProjectPage({ params }: Props) {
           </p>
           {images.length === 3 ? (
             <div className="grid grid-cols-[1.4fr_1fr] grid-rows-2 gap-3 sm:gap-4">
-              {images.map((src, i) => (
+              {images.map(({ image, src }, i) => (
                 <div
                   key={i}
                   className={`overflow-hidden rounded-card border ${
@@ -154,6 +162,8 @@ export default async function ProjectPage({ params }: Props) {
                     alt={`${title} ${i + 1}`}
                     width={800}
                     height={600}
+                    placeholder={blurDataForImage(image) ? "blur" : "empty"}
+                    blurDataURL={blurDataForImage(image)}
                     className="h-full w-full object-cover"
                   />
                 </div>
@@ -168,7 +178,7 @@ export default async function ProjectPage({ params }: Props) {
             // sm (640px), which also hits narrowed desktop browser windows,
             // not just real phones.
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {images.map((src, i) => {
+              {images.map(({ image, src }, i) => {
                 const isLastOdd = images.length % 2 === 1 && i === images.length - 1;
                 return (
                   <div
@@ -183,6 +193,8 @@ export default async function ProjectPage({ params }: Props) {
                       alt={`${title} ${i + 1}`}
                       width={800}
                       height={600}
+                      placeholder={blurDataForImage(image) ? "blur" : "empty"}
+                      blurDataURL={blurDataForImage(image)}
                       className="h-full w-full object-cover"
                     />
                   </div>

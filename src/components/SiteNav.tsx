@@ -118,10 +118,10 @@ export default function SiteNav() {
   }
 
   const headerClassName = mobileOpen
-    ? `${isHome ? "absolute" : "sticky"} inset-x-0 top-0 z-40 border-b border-transparent bg-[var(--nav-bg)] transition-colors duration-theme ease-editorial`
+    ? `${isHome ? "absolute" : "sticky"} inset-x-0 top-0 z-40 border-b border-transparent bg-[var(--nav-bg)] transition-colors duration-200 ease-editorial`
     : isHome
-      ? "absolute inset-x-0 top-0 z-40 border-b border-transparent backdrop-blur-[1px] transition-colors duration-theme ease-editorial"
-      : "sticky top-0 z-40 border-b border-hairline bg-[var(--nav-bg)] backdrop-blur-md transition-colors duration-theme ease-editorial";
+      ? "absolute inset-x-0 top-0 z-40 border-b border-transparent backdrop-blur-[1px] transition-colors duration-200 ease-editorial"
+      : "sticky top-0 z-40 border-b border-hairline bg-[var(--nav-bg)] backdrop-blur-md transition-colors duration-200 ease-editorial";
 
   return (
     <>

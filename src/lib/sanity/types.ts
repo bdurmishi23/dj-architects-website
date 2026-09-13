@@ -2,8 +2,16 @@ import type { ProjectMarkKey, RoomSlug } from "@/lib/marks";
 
 export interface SanityImage {
   _type: "image";
-  asset?: { _ref: string; _type: "reference" };
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    metadata?: {
+      lqip?: string;
+      dimensions?: { width?: number; height?: number };
+    };
+  };
   hotspot?: { x: number; y: number; width: number; height: number };
+  crop?: { top: number; bottom: number; left: number; right: number };
 }
 
 export type Discipline = "architecture" | "interiors" | "hospitality";

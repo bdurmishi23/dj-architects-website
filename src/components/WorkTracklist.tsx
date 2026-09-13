@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { urlForImage } from "@/lib/sanity/image";
+import { blurDataForImage, urlForImage } from "@/lib/sanity/image";
 import { PROJECT_MARKS } from "@/lib/marks";
 import { compactText, hasSlug, pickText } from "@/lib/content";
 import { assignSideCodes } from "@/lib/projectCodes";
@@ -32,6 +32,7 @@ function Row({
   const size = SIZE_MAP[project.emphasis ?? "compact"];
   const mark = project.signatureMark ? PROJECT_MARKS[project.signatureMark] : undefined;
   const src = urlForImage(project.coverImage)?.width(size.w * 2).height(size.h * 2).fit("crop").url();
+  const blurDataURL = blurDataForImage(project.coverImage);
   const category = pickText(locale, project.categoryEn, project.categoryAl);
   const metadata = compactText([category, project.location, project.year]).join(" \u00b7 ");
   const title = project.name || titleFallback;
@@ -76,6 +77,8 @@ function Row({
             alt={title}
             width={size.w}
             height={size.h}
+            placeholder={blurDataURL ? "blur" : "empty"}
+            blurDataURL={blurDataURL}
             className="h-full w-full object-cover"
           />
         </span>
