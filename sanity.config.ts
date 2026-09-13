@@ -10,7 +10,11 @@ import { resolve } from "./src/sanity/presentation/resolve";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
-const previewOrigin = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const vercelOrigin =
+  process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+const previewOrigin =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (vercelOrigin ? `https://${vercelOrigin}` : "http://localhost:3000");
 
 export default defineConfig({
   basePath: "/studio",
