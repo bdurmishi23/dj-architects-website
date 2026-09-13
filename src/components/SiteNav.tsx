@@ -118,7 +118,7 @@ export default function SiteNav() {
   }
 
   const headerClassName = mobileOpen
-    ? `${isHome ? "absolute" : "sticky"} inset-x-0 top-0 z-40 border-b border-transparent bg-[var(--nav-bg)] transition-colors duration-200 ease-editorial`
+    ? `${isHome ? "absolute" : "sticky"} inset-x-0 top-0 z-40 border-b border-transparent bg-[var(--nav-bg)]`
     : isHome
       ? "absolute inset-x-0 top-0 z-40 border-b border-transparent backdrop-blur-[1px] transition-colors duration-200 ease-editorial"
       : "sticky top-0 z-40 border-b border-hairline bg-[var(--nav-bg)] backdrop-blur-md transition-colors duration-200 ease-editorial";
@@ -200,11 +200,11 @@ export default function SiteNav() {
         {mobileOpen && (
           <motion.nav
             key="nav-panel"
-            className="absolute inset-x-0 top-full z-30 border-b border-hairline bg-[var(--nav-bg)] shadow-[0_24px_48px_-16px_rgba(0,0,0,0.35)] backdrop-blur-md lg:hidden"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.35, ease: EASE }}
+            className="absolute inset-x-0 top-full z-30 border-b border-hairline bg-[var(--nav-bg)] lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.12, ease: EASE }}
           >
             <div className="flex flex-col px-6 pb-6 pt-2">
               {LINKS.map((link, i) => {
