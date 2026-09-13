@@ -40,19 +40,19 @@ export default async function Footer() {
               </p>
             )}
           </div>
-          {(hasText(settings?.address) || hasText(settings?.contactPhone)) && (
-            <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
-              {hasText(settings?.address) && (
-                <span className="site-footer__address">{settings.address}</span>
-              )}
-              {hasText(settings?.contactPhone) && (
-                <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
-                  {settings.contactPhone}
-                </a>
-              )}
-            </div>
-          )}
         </div>
+        {(hasText(settings?.address) || hasText(settings?.contactPhone)) && (
+          <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
+            {hasText(settings?.address) && (
+              <span className="site-footer__address">{settings.address}</span>
+            )}
+            {hasText(settings?.contactPhone) && (
+              <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
+                {settings.contactPhone}
+              </a>
+            )}
+          </div>
+        )}
         <div className="site-footer__meta">
           {settings?.instagramUrl && (
             <a href={settings.instagramUrl} target="_blank" rel="noreferrer">
