@@ -139,12 +139,18 @@ a:hover {
 }
 
 .site-footer {
+  padding-inline: clamp(1.5rem, 4vw, 3.3rem);
+}
+
+.site-footer__inner {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(max-content, 0.65fr);
   align-items: start;
   column-gap: clamp(1.35rem, 4vw, 3.75rem);
   row-gap: clamp(1.25rem, 3vw, 2.25rem);
-  padding: clamp(2.75rem, 5.6vw, 3.85rem) clamp(1.5rem, 4vw, 3.3rem);
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-block: clamp(2.75rem, 5.6vw, 3.85rem);
 }
 
 .site-footer__brand {
@@ -212,10 +218,14 @@ a:hover {
 
 @media (max-width: 720px) {
   .site-footer {
+    padding-inline: clamp(1rem, 4.4vw, 1.5rem);
+  }
+
+  .site-footer__inner {
     grid-template-columns: minmax(0, 1fr) max-content;
     column-gap: clamp(1rem, 4.4vw, 1.6rem);
     row-gap: clamp(1.15rem, 4.6vw, 1.6rem);
-    padding: clamp(2.25rem, 8vw, 3rem) clamp(1rem, 4.4vw, 1.5rem);
+    padding-block: clamp(2.25rem, 8vw, 3rem);
   }
 
   .site-footer__brand {
@@ -240,7 +250,7 @@ a:hover {
 }
 
 @media (max-width: 360px) {
-  .site-footer {
+  .site-footer__inner {
     grid-template-columns: 1fr;
   }
 

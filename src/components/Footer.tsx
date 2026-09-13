@@ -30,52 +30,54 @@ export default async function Footer() {
       className="site-footer border-t transition-colors duration-theme ease-editorial"
       style={{ borderColor: "var(--footer-border)" }}
     >
-      <div className="site-footer__brand">
-        <div>
-          <p className="site-footer__name font-serif">DJ Architects</p>
-          {hasText(tagline) && (
-            <p className="site-footer__tagline" style={{ color: "var(--subtle)" }}>
-              {tagline}
-            </p>
-          )}
-        </div>
-        {(hasText(settings?.address) || hasText(settings?.contactPhone)) && (
-          <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
-            {hasText(settings?.address) && (
-              <span className="site-footer__address">{settings.address}</span>
-            )}
-            {hasText(settings?.contactPhone) && (
-              <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
-                {settings.contactPhone}
-              </a>
+      <div className="site-footer__inner">
+        <div className="site-footer__brand">
+          <div>
+            <p className="site-footer__name font-serif">DJ Architects</p>
+            {hasText(tagline) && (
+              <p className="site-footer__tagline" style={{ color: "var(--subtle)" }}>
+                {tagline}
+              </p>
             )}
           </div>
-        )}
-      </div>
-      <div className="site-footer__meta">
-        {settings?.instagramUrl && (
-          <a href={settings.instagramUrl} target="_blank" rel="noreferrer">
-            {t("instagram")}
-          </a>
-        )}
-        {settings?.pinterestUrl && (
-          <a href={settings.pinterestUrl} target="_blank" rel="noreferrer">
-            {t("pinterest")}
-          </a>
-        )}
-        {settings?.linkedinUrl && (
-          <a href={settings.linkedinUrl} target="_blank" rel="noreferrer">
-            {t("linkedin")}
-          </a>
-        )}
-        <span
-          className={`site-footer__copyright font-mono ${
-            hasSocialLinks ? "mt-[14px]" : ""
-          }`}
-          style={{ color: "var(--copy-dim)" }}
-        >
-          {t("copyright")} {yearLabel}
-        </span>
+          {(hasText(settings?.address) || hasText(settings?.contactPhone)) && (
+            <div className="site-footer__contact" style={{ color: "var(--subtle)" }}>
+              {hasText(settings?.address) && (
+                <span className="site-footer__address">{settings.address}</span>
+              )}
+              {hasText(settings?.contactPhone) && (
+                <a className="site-footer__phone" href={`tel:${settings.contactPhone}`}>
+                  {settings.contactPhone}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+        <div className="site-footer__meta">
+          {settings?.instagramUrl && (
+            <a href={settings.instagramUrl} target="_blank" rel="noreferrer">
+              {t("instagram")}
+            </a>
+          )}
+          {settings?.pinterestUrl && (
+            <a href={settings.pinterestUrl} target="_blank" rel="noreferrer">
+              {t("pinterest")}
+            </a>
+          )}
+          {settings?.linkedinUrl && (
+            <a href={settings.linkedinUrl} target="_blank" rel="noreferrer">
+              {t("linkedin")}
+            </a>
+          )}
+          <span
+            className={`site-footer__copyright font-mono ${
+              hasSocialLinks ? "mt-[14px]" : ""
+            }`}
+            style={{ color: "var(--copy-dim)" }}
+          >
+            {t("copyright")} {yearLabel}
+          </span>
+        </div>
       </div>
     </footer>
   );
