@@ -33,8 +33,7 @@ export default function FloorPlanViewer({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="block h-[min(54vh,640px)] min-h-[340px] w-full overflow-hidden rounded-card border p-3 transition-colors duration-300 ease-editorial hover:border-brass sm:p-5"
-        style={{ borderColor: "var(--hairline)", background: "var(--room-bg)" }}
+        className="block h-[min(54vh,640px)] min-h-[340px] w-full overflow-hidden transition-opacity duration-300 ease-editorial hover:opacity-90"
       >
         <Image
           src={src}
