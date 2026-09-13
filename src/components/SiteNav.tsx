@@ -117,9 +117,22 @@ export default function SiteNav() {
     );
   }
 
+  const headerClassName = isHome
+    ? "absolute inset-x-0 top-0 z-40 border-b border-transparent backdrop-blur-[2px] transition-colors duration-theme ease-editorial"
+    : "sticky top-0 z-40 border-b border-hairline bg-[var(--nav-bg)] backdrop-blur-md transition-colors duration-theme ease-editorial";
+
   return (
     <>
-    <header className="sticky top-0 z-40 border-b border-hairline bg-[var(--nav-bg)] backdrop-blur-md transition-colors duration-theme ease-editorial">
+    <header
+      className={headerClassName}
+      style={
+        isHome
+          ? {
+              background: "var(--nav-home-bg)",
+            }
+          : undefined
+      }
+    >
       <div className="flex items-center justify-between px-6 py-[22px] md:px-12">
         <Link href="/" className="flex flex-none items-center gap-3 text-ink">
           <LogoMark
